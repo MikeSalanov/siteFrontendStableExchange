@@ -1,0 +1,13 @@
+﻿.wrapperForm {
+  @apply bg-black-change-now flex flex-col items-center border border-solid border-gray-500 rounded-lg;
+}
+
+.form {
+  @apply flex p-5 flex-col gap-5;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
