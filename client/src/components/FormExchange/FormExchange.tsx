@@ -1,10 +1,10 @@
 ﻿import { useEffect, useState } from 'react';
-import styles from './FromExchange.module.scss';
+import styles from './FormExchange.module.scss';
 
 function FormExchange(): JSX.Element {
   const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
   const [outputMoneyValue, setOutputMoneyValue] = useState<number>(0);
-  const EXCHANGE_RATE: number = 30; // Захардкодил курс для мгновенного перевода при изменении одного из инпутов в дальнейшем скорее всего он будет приходить из бэка
+  const EXCHANGE_RATE: number = 100; // Захардкодил курс для мгновенного перевода при изменении одного из инпутов в дальнейшем скорее всего он будет приходить из бэка
 
   const [inputCurrencies, setInputCurrencies] = useState<string[]>([
     'USD',
@@ -18,12 +18,12 @@ function FormExchange(): JSX.Element {
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputMoneyValue(Number(e.target.value));
-    setOutputMoneyValue(Number(e.target.value) / EXCHANGE_RATE);
+    setOutputMoneyValue(Number(e.target.value) * EXCHANGE_RATE);
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setOutputMoneyValue(Number(e.target.value));
-    setInputMoneyValue(Number(e.target.value) * EXCHANGE_RATE);
+    setInputMoneyValue(Number(e.target.value) / EXCHANGE_RATE);
   };
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
