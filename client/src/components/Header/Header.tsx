@@ -1,12 +1,45 @@
-﻿import { Link } from 'react-router-dom';
-import styles from './Header.module.scss'
+﻿import { Link, useNavigate } from 'react-router-dom';
+import styles from './Header.module.scss';
+import { useState } from 'react';
 function Header(): JSX.Element {
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+
   return (
     <div className={styles.wrapper}>
-      <Link to="/">Home</Link>
-      <Link to="/register">Sign up</Link>
-      <Link to="/login">Sign in</Link>
-      <Link to="/profile">Profile</Link>
+      <div className=" h-full">
+        {' '}
+        <Link to="/">
+          <img
+            src="../../../public/stablelogo.svg"
+            alt="logo"
+            className=" h-full"
+          />
+        </Link>
+      </div>
+
+      <div className={styles.buttonsBlock}>
+        {' '}
+        {isAuth ? (
+          <div className={styles.buttonAccount}>
+            <div>Profile</div>
+          </div>
+        ) : (
+          <>
+            <Link to="/customer-account/signUp">
+              <div className={styles.buttonAccount}>Создать аккаунт</div>
+            </Link>
+
+            <Link
+              to="/customer-account/signIn"
+              onClick={() => {
+                setIsAuth(true);
+              }}
+            >
+              <div className={styles.buttonAccount}> Войти</div>
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   );
 }

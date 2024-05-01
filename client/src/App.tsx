@@ -8,10 +8,9 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/customer-account/signUp" element={<RegisterPage />} />
+        <Route path="/customer-account/signIn" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-
       </Routes>
     </BrowserRouter>
   );
