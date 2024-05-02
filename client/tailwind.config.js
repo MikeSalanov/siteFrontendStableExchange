@@ -7,6 +7,8 @@ export default {
         'black-change-now': '#343443',
         'input-gray': '#3e3e59',
         'input-currency': '#36324a',
+        'yellow-green-corp': '#cdff00',
+        'blue-corp': '#00ffff',
       },
     },
   },

@@ -1,9 +1,9 @@
 ﻿.wrapperForm {
-  @apply bg-black-change-now flex flex-col items-center border border-solid border-gray-500 rounded-lg;
+  @apply bg-black-change-now flex flex-col justify-center items-center  h-dvh ;
 }
 
 .form {
-  @apply flex p-5 flex-col gap-5;
+  @apply flex p-5 flex-col gap-5 border border-solid border-gray-500 rounded-lg;
 }
 
 input[type='number']::-webkit-inner-spin-button,
