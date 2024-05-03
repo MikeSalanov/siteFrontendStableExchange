@@ -1,9 +1,11 @@
-﻿import FormExchange from '../FormExchange/FormExchange';
+﻿import CurrencyTicker from '../CurrencyTicker/CurrencyTicker';
+import FormExchange from '../FormExchange/FormExchange';
 import Header from '../Header/Header';
 function MainPage(): JSX.Element {
   return (
     <>
-      <Header/>
+      <Header />
+      <CurrencyTicker />
       <FormExchange />
     </>
   );
