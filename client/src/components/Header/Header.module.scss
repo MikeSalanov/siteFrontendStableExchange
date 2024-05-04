@@ -1,13 +1,11 @@
-﻿.wrapper{
-@apply  flex  text-white justify-evenly m-5 h-36 items-center  
+﻿.wrapper {
+  @apply flex  text-white justify-evenly m-5 h-36 items-center;
 }
 
-.buttonsBlock{
-  @apply flex gap-5
+.buttonsBlock {
+  @apply flex gap-5;
 }
 
-.buttonAccount{
-  @apply bg-yellow-green-corp text-black  rounded-lg hover:transform hover:scale-110 transition-transform h-10 p-2
+.buttonAccount {
+  @apply bg-yellow-green-corp text-black  rounded-lg hover:transform hover:scale-110 transition-transform h-10 p-2;
 }
-
-
