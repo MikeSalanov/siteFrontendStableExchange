@@ -1,6 +1,7 @@
 ﻿import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { useState } from 'react';
+import DropDownProfile from '../commons/ProfileDropDown/DropDownProfile';
 function Header(): JSX.Element {
   const [isAuth, setIsAuth] = useState<boolean>(false);
 
@@ -20,9 +21,7 @@ function Header(): JSX.Element {
       <div className={styles.buttonsBlock}>
         {' '}
         {isAuth ? (
-          <div className={styles.buttonAccount}>
-            <div>Profile</div>
-          </div>
+          <DropDownProfile/>
         ) : (
           <>
             <Link to="/customer-account/signUp">

@@ -1,0 +1,27 @@
+﻿.dropDown {
+  @apply bg-yellow-green-corp  text-gray-950 rounded-lg relative hover:transform hover:scale-110 transition-transform;
+}
+
+.dropDownClick {
+  @apply bg-yellow-green-corp  text-gray-950 rounded-t-lg relative;
+}
+
+.headerItem {
+  @apply cursor-pointer p-2  flex gap-2;
+}
+
+.headerItemClick {
+  @apply cursor-pointer p-2  flex gap-2 w-48;
+}
+
+.hiddenMenu {
+  @apply hidden;
+}
+
+.dropDownMenu {
+  @apply absolute bg-yellow-green-corp w-48  rounded-b-lg p-1;
+}
+
+.dropDownItem {
+  @apply flex gap-2 mt-1 cursor-pointer pb-1 hover:backdrop-brightness-90 rounded-lg p-1;
+}
