@@ -1,10 +1,13 @@
 ﻿import { useEffect, useState } from 'react';
 import styles from './FormExchange.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 function FormExchange(): JSX.Element {
   const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
   const [outputMoneyValue, setOutputMoneyValue] = useState<number>(0);
   const EXCHANGE_RATE: number = 100; // Захардкодил курс для мгновенного перевода при изменении одного из инпутов в дальнейшем скорее всего он будет приходить из бэка
+
+  const navigate = useNavigate();
 
   const [inputCurrencies, setInputCurrencies] = useState<string[]>([
     'USD $',
@@ -15,6 +18,13 @@ function FormExchange(): JSX.Element {
     'Tinkoff RUB',
     'Sber RUB',
   ]); // массив с выводимыми валютами (те, которые хочет получить пользователь)
+
+  const currenciesOrder = {
+    'USD $': 'usd',
+    'EUR €': 'eur',
+    'Tinkoff RUB': 'tscrub',
+    'Sber RUB': 'sbrub',
+  };
 
   const [currInputCurrency, setInputCurrency] = useState<string>(
     inputCurrencies[0]
@@ -39,7 +49,9 @@ function FormExchange(): JSX.Element {
   };
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+    navigate(
+      `exchange?from=${currenciesOrder[currInputCurrency]}&to=${currenciesOrder[currOutputCurrency]}`
+    );
   };
 
   const clickOutsideInput = (e) => {
