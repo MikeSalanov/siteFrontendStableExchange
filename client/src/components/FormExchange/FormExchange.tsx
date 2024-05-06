@@ -119,14 +119,18 @@ function FormExchange(): JSX.Element {
                       : styles.customOptions
                   }
                 >
-                  {inputCurrencies?.map((currency) => (
-                    <p
-                      className={styles.customOption}
-                      onClick={(e) => setInputCurrency(e.target.innerText)}
-                    >
-                      {currency}
-                    </p>
-                  ))}
+                  {inputCurrencies?.map((currency) => {
+                    if (currency !== currInputCurrency) {
+                      return (
+                        <p
+                          className={styles.customOption}
+                          onClick={(e) => setInputCurrency(e.target.innerText)}
+                        >
+                          {currency}
+                        </p>
+                      );
+                    }
+                  })}
                 </div>
               </div>
             </div>
@@ -164,14 +168,18 @@ function FormExchange(): JSX.Element {
                       : styles.customOptions
                   }
                 >
-                  {outputCurrencies?.map((currency) => (
-                    <p
-                      className={styles.customOption}
-                      onClick={(e) => setOutputCurrency(e.target.innerText)}
-                    >
-                      {currency}
-                    </p>
-                  ))}
+                  {outputCurrencies?.map((currency) => {
+                    if (currency !== currOutputCurrency) {
+                      return (
+                        <p
+                          className={styles.customOption}
+                          onClick={(e) => setOutputCurrency(e.target.innerText)}
+                        >
+                          {currency}
+                        </p>
+                      );
+                    }
+                  })}
                 </div>
               </div>
             </div>
