@@ -1,5 +1,4 @@
-﻿import CurrencyTicker from '../CurrencyTicker/CurrencyTicker';
-import Footer from '../Footer/Footer';
+﻿import Footer from '../Footer/Footer';
 import FormExchange from '../FormExchange/FormExchange';
 import Header from '../Header/Header';
 import MainDescription from '../MainDescription/MainDescription';
