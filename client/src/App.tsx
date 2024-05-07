@@ -3,10 +3,26 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
+
+import { useContext, useEffect } from 'react';
+import { Context } from './main';
+import {observer} from "mobx-react-lite"
 import ExchangePage from './components/ExchangePage/ExchangePage';
+
 function App(): JSX.Element {
+  const {store} = useContext(Context)
+
+
+useEffect(() => {
+  if(localStorage.getItem('token')) {
+     store.checkAuth()
+  }
+}, [])
+
   return (
+    
     <BrowserRouter>
+         <h1 style={{color: "white"}}>{store.isAuth ? `Пользователь ${store?.user?.email}  авторизован` : "АВТОРИЗУЙТЕСЬ" } </h1>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/customer-account/signUp" element={<RegisterPage />} />
@@ -14,8 +30,10 @@ function App(): JSX.Element {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/exchange" element={<ExchangePage />} />
       </Routes>
+      
     </BrowserRouter>
+     
   );
 }
 
-export default App;
+export default observer(App);

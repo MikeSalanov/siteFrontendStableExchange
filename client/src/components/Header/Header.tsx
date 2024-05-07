@@ -1,9 +1,14 @@
 ﻿import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import DropDownProfile from '../commons/ProfileDropDown/DropDownProfile';
+import { Context } from '../../main';
+
+
+
 function Header(): JSX.Element {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+
+  const {store} = useContext(Context)
 
   return (
     <div className={styles.wrapper}>
@@ -20,7 +25,7 @@ function Header(): JSX.Element {
 
       <div className={styles.buttonsBlock}>
         {' '}
-        {isAuth ? (
+        {store.isAuth ? (
           <DropDownProfile/>
         ) : (
           <>
@@ -30,9 +35,7 @@ function Header(): JSX.Element {
 
             <Link
               to="/customer-account/signIn"
-              onClick={() => {
-                setIsAuth(true);
-              }}
+
             >
               <div className={styles.buttonAccount}> Войти</div>
             </Link>
