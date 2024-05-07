@@ -1,0 +1,54 @@
+﻿.wrapperForm {
+  @apply flex flex-col mx-auto w-2/4;
+}
+
+.form {
+  @apply flex p-5 flex-col gap-5 items-center w-auto;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.customSelect {
+  @apply bg-white h-full w-40;
+}
+.buttonExchange {
+  @apply bg-yellow-green-corp w-max px-4 py-2 rounded-lg hover:transform hover:scale-110 transition-transform text-xl disabled:opacity-75 disabled:transform-none;
+}
+.currOption {
+  @apply flex hover:cursor-pointer  items-center gap-3 text-xl justify-between p-2;
+}
+
+.customOptionsHidden {
+  @apply hidden;
+}
+.customOptions {
+  @apply flex flex-col absolute  bg-white w-40;
+}
+
+.customOption {
+  @apply hover:cursor-pointer hover:bg-slate-400 text-xl p-2 border-t  border-slate-950;
+}
+
+.currCard {
+  @apply flex hover:cursor-pointer  items-center gap-3 text-xl justify-between p-2;
+}
+
+.inputCardHidden {
+  @apply hidden;
+}
+
+.customCardOption {
+  @apply hover:cursor-pointer hover:bg-slate-400 text-xl p-2 border-t  border-slate-950;
+}
+
+.customCardsSelect {
+  @apply bg-white  w-64;
+}
+
+.customCardOptions {
+  @apply flex flex-col absolute  bg-white w-64;
+}
