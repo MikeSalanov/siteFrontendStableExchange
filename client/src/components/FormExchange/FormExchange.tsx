@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState } from 'react';
 import styles from './FormExchange.module.scss';
 import { useNavigate } from 'react-router-dom';
+import CurrencyTicker from '../CurrencyTicker/CurrencyTicker';
 
 function FormExchange(): JSX.Element {
   const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
@@ -97,6 +98,7 @@ function FormExchange(): JSX.Element {
   return (
     <>
       <div className={styles.wrapperForm}>
+      <CurrencyTicker />
         <form className={styles.form} onSubmit={submitHandler}>
           <div className="flex">
             {' '}

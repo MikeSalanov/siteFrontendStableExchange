@@ -6,11 +6,14 @@ import MainDescription from '../MainDescription/MainDescription';
 function MainPage(): JSX.Element {
   return (
     <>
-      <Header />
-      <CurrencyTicker />
-      <FormExchange />
-      <MainDescription/>
-      <Footer/>
+      <div className=" items-center  h-screen flex-auto flex flex-col justify-between">
+        {' '}
+        <Header />
+        <FormExchange />
+        <MainDescription />
+      </div>
+
+      <Footer />
     </>
   );
 }
