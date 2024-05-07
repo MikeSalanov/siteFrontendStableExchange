@@ -2,6 +2,8 @@ import * as yup from "yup"
 import { useForm } from "react-hook-form"
  import {yupResolver} from "@hookform/resolvers/yup"
  import styles from "./RegistrationForm.module.scss"
+import { useContext } from "react";
+import { Context } from "../../../main";
 
 const validationSchema = yup
 .object()
@@ -28,17 +30,20 @@ function RegistrationForm(): JSX.Element {
 
 console.log(errors );
 
+const {store} = useContext(Context)
 
   const onSubmit = async (values: RegValues) => {
     const {password2, ...data} = values
     try {
-    const res = await fetch('http://localhost:3000/api/signUp', {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data)
-    })
+    store.registration(data.email, data.password)
+
+    // const res = await fetch('http://localhost:3000/api/signUp', {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(data)
+    // })
     
       
     } catch (error) {

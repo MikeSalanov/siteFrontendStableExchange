@@ -1,11 +1,16 @@
 ﻿import styles from './DropDownProfile.module.scss';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import DropDownProfileItem from './DropDownProfileItem';
+import { Context } from '../../../main';
+
 
 function DropDown(): JSX.Element {
+
+const {store} = useContext(Context)
+
   const options = [
     {
-      value: 'Имя пользователя',
+      value: store.isAuth ? store.user.email : "Имя пользователя",
       icon: '../../public/bx-user.svg',
       route: '/customer-account/settings',
     },
@@ -60,7 +65,7 @@ function DropDown(): JSX.Element {
               value={option.value}
               icon={option.icon}
               route={option.route}
-            />
+              onClick={option.value === 'Выйти' ? () => store.logout() : undefined}            />
           ))}
         </div>
       </div>

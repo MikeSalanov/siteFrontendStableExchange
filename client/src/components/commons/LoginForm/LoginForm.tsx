@@ -2,6 +2,11 @@ import * as yup from "yup"
 import { useForm } from "react-hook-form"
  import {yupResolver} from "@hookform/resolvers/yup"
  import styles from "./LoginForm.module.scss"
+import { useContext } from "react";
+import { Context } from "../../../main";
+import { Navigate, useNavigate } from "react-router-dom";
+// import {observer} from "mobx-react-lite"
+
 
 const validationSchema = yup
 .object()
@@ -26,18 +31,15 @@ function LoginForm(): JSX.Element {
 
 console.log(errors );
 
+const {store} = useContext(Context)
+const navigate = useNavigate(); 
+
 
   const onSubmit = async (values: RegValues) => {
     const {email, password} = values
     try {
-    await fetch('http://localhost:3000/api/signIn', {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({email, password})
-    })
-    
+    await store.login(email, password)
+    navigate('/')
       
     } catch (error) {
       console.log(error);
