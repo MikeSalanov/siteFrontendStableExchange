@@ -1,6 +1,7 @@
 ﻿import { useSearchParams } from 'react-router-dom';
 import styles from './ExchangePage.module.scss';
 import FormToExchangePage from '../commons/FormToExchangePage/FormToExchangePage';
+import ButtonHome from '../commons/ButtonHome/ButtonHome';
 function ExchangePage(): JSX.Element {
   const [searchParams] = useSearchParams();
   const fromCurrency = searchParams.get('from');
@@ -9,6 +10,7 @@ function ExchangePage(): JSX.Element {
   return (
     <>
       <div className={styles.wrapperExchangePage}>
+      <ButtonHome/>
         {' '}
         <div className='flex justify-center my-5'>
           <p>Пожалуйста заполните форму с деталями транзакции</p>
