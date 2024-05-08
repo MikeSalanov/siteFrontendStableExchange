@@ -65,6 +65,8 @@ function FormToExchangePage({
   const [loader, setLoader] = useState<boolean>(false);
   const [secondSubmit, setSecondSubmit] = useState<boolean>(false);
 
+  const [currentBalance, setCurrentBalance] = useState<number>(0);
+
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputMoneyValue(Number(e.target.value));
     setOutputMoneyValue(Number(e.target.value) * EXCHANGE_RATE);
@@ -116,6 +118,7 @@ function FormToExchangePage({
     e.preventDefault();
     setFirstSubmit(true);
     setLoader(true);
+    setCurrentBalance(outputMoneyValue);
     setTimeout(() => {
       setLoader(false);
     }, 5000);
@@ -289,6 +292,10 @@ function FormToExchangePage({
           <div>
             <div className="flex flex-col items-center">
               <div className=" text-sm mb-4">
+                Баланс на вашем кошелке составляет 
+              </div>
+              <h2 className=" text-xl mb-4">{currentBalance} USDT</h2>
+              <div className=" text-sm mb-4">
                 Выберите карту на которую будут зачислены средства
               </div>
               <div className="flex  items-center bg-white mb-4">
@@ -335,7 +342,10 @@ function FormToExchangePage({
               </div>
               <button
                 type="submit"
-                onClick={() => setSecondSubmit(true)}
+                onClick={() => {
+                  setSecondSubmit(true);
+                  setCurrentBalance((prev) => prev - outputMoneyValue);
+                }}
                 className={styles.buttonExchange}
                 disabled={secondSubmit}
               >
