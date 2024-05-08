@@ -17,8 +17,7 @@ const validationSchema = yup
 
   type RegValues = yup.InferType<typeof validationSchema>
 
-function RegistrationForm(): JSX.Element {
-
+function RegistrationForm({active, setModalActive}): JSX.Element {
   const {
     register,
     handleSubmit,
@@ -36,14 +35,7 @@ const {store} = useContext(Context)
     const {password2, ...data} = values
     try {
     store.registration(data.email, data.password)
-
-    // const res = await fetch('http://localhost:3000/api/signUp', {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(data)
-    // })
+    setModalActive(true)
     
       
     } catch (error) {
