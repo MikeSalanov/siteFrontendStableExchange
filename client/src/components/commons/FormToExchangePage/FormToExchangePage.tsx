@@ -140,15 +140,18 @@ function FormToExchangePage({
                 type="number"
                 onChange={inputMoneyHandler}
                 value={inputMoneyValue}
+                disabled={firstSubmit}
               />
             </div>{' '}
             <div className="flex  items-center bg-white">
               <div className={styles.customSelect}>
                 <div
                   id="input-custom-select"
-                  className={styles.currOption}
+                  className={
+                    !firstSubmit ? styles.currOption : styles.currOptionDisabled
+                  }
                   onClick={() => {
-                    setInputCurrencyHidden((prev) => !prev);
+                    !firstSubmit && setInputCurrencyHidden((prev) => !prev);
                   }}
                 >
                   {' '}
@@ -189,15 +192,18 @@ function FormToExchangePage({
                 type="number"
                 onChange={outputMoneyHandler}
                 value={outputMoneyValue}
+                disabled={firstSubmit}
               />
             </div>{' '}
             <div className="flex  items-center bg-white">
               <div className={styles.customSelect}>
                 <div
                   id="output-custom-select"
-                  className={styles.currOption}
+                  className={
+                    !firstSubmit ? styles.currOption : styles.currOptionDisabled
+                  }
                   onClick={() => {
-                    setOutputCurrencyHidden((prev) => !prev);
+                    !firstSubmit && setOutputCurrencyHidden((prev) => !prev);
                   }}
                 >
                   {' '}
@@ -234,9 +240,11 @@ function FormToExchangePage({
               <div className={styles.customCardsSelect}>
                 <div
                   id="input-card-select"
-                  className={styles.currCard}
+                  className={
+                    !firstSubmit ? styles.currCard : styles.currCardDisabled
+                  }
                   onClick={() => {
-                    setInputCardHidden((prev) => !prev);
+                    !firstSubmit && setInputCardHidden((prev) => !prev);
                   }}
                 >
                   {' '}
@@ -292,7 +300,7 @@ function FormToExchangePage({
           <div>
             <div className="flex flex-col items-center">
               <div className=" text-sm mb-4">
-                Баланс на вашем кошелке составляет 
+                Баланс на вашем кошелке составляет
               </div>
               <h2 className=" text-xl mb-4">{currentBalance} USDT</h2>
               <div className=" text-sm mb-4">
@@ -302,9 +310,11 @@ function FormToExchangePage({
                 <div className={styles.customCardsSelect}>
                   <div
                     id="output-card-select"
-                    className={styles.currCard}
+                    className={
+                      !secondSubmit ? styles.currCard : styles.currCardDisabled
+                    }
                     onClick={() => {
-                      setOutputCardHidden((prev) => !prev);
+                      !secondSubmit && setOutputCardHidden((prev) => !prev);
                     }}
                   >
                     {' '}
