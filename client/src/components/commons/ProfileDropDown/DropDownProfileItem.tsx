@@ -1,10 +1,19 @@
 ﻿import { Link } from 'react-router-dom';
 import styles from './DropDownProfile.module.scss';
+import { MouseEventHandler } from "react";
 
-function DropDownItem({ value, icon, route, onClick }): JSX.Element {
-
-
-
+function DropDownItem(
+  {
+    value,
+    icon,
+    route,
+    onClick
+  }: {
+    value: string,
+    icon: string,
+    route: string,
+    onClick: MouseEventHandler | undefined
+  }): JSX.Element {
   return (
     <Link to={route}>
       <div className={styles.dropDownItem}>
