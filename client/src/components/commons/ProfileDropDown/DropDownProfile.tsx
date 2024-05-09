@@ -28,8 +28,8 @@ const {store} = useContext(Context)
   ];
   const [hiddenDropDown, setHiddenDropDown] = useState<boolean>(true);
 
-  const clickOutside = (e) => {
-    if (e.target.id !== 'header-item') {
+  const clickOutside = (e: Event) => {
+    if ((e.target as Element).id !== 'header-item') {
       setHiddenDropDown(true);
     }
   };
@@ -65,7 +65,7 @@ const {store} = useContext(Context)
               value={option.value}
               icon={option.icon}
               route={option.route}
-              onClick={option.value === 'Выйти' ? () => store.logout() : undefined}            />
+              onClick={option.value === 'Выйти' ? () => store.logout() : undefined} />
           ))}
         </div>
       </div>

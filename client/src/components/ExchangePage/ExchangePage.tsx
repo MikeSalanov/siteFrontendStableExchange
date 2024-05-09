@@ -3,8 +3,8 @@ import styles from './ExchangePage.module.scss';
 import FormToExchangePage from '../commons/FormToExchangePage/FormToExchangePage';
 function ExchangePage(): JSX.Element {
   const [searchParams] = useSearchParams();
-  const fromCurrency = searchParams.get('from');
-  const toCurrency = searchParams.get('to');
+  const fromCurrency: string | null = searchParams.get('from');
+  const toCurrency: string | null = searchParams.get('to');
 
   return (
     <>

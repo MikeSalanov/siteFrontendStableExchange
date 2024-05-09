@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form"
  import styles from "./LoginForm.module.scss"
 import { useContext } from "react";
 import { Context } from "../../../main";
-import { Navigate, useNavigate } from "react-router-dom";
-// import {observer} from "mobx-react-lite"
+import { useNavigate } from "react-router-dom";
 
 
 const validationSchema = yup
@@ -32,7 +31,7 @@ function LoginForm(): JSX.Element {
 console.log(errors );
 
 const {store} = useContext(Context)
-const navigate = useNavigate(); 
+const navigate = useNavigate();
 
 
   const onSubmit = async (values: RegValues) => {
@@ -40,7 +39,7 @@ const navigate = useNavigate();
     try {
     await store.login(email, password)
     navigate('/')
-      
+    
     } catch (error) {
       console.log(error);
     }
