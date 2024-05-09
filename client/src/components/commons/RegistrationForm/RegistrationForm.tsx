@@ -34,10 +34,14 @@ const {store} = useContext(Context)
   const onSubmit = async (values: RegValues) => {
     const {password2, ...data} = values
     try {
-    store.registration(data.email, data.password)
+   const res = await store.registration(data.email, data.password)
+   if (res) {
     setModalActive(true)
+   }
+
+   console.log(res);
+   
     
-      
     } catch (error) {
       console.log(error);
     }
