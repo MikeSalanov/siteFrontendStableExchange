@@ -30,7 +30,6 @@ useEffect(() => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/exchange" element={<ExchangePage />} />
       </Routes>
-      
     </BrowserRouter>
      
   );

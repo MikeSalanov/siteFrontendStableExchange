@@ -3,7 +3,8 @@ import styles from './MailAdvPopUp.module.scss'
 import { Context } from '../../../main';
 
 
-function MailAdvPopUp ({active, setModalActive}): JSX.Element {
+
+function MailAdvPopUp ({ active, setModalActive }: { active: boolean, setModalActive: (isActive: boolean) => void }): JSX.Element {
 
   const {store} = useContext(Context)
 

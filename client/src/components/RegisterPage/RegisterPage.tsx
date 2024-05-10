@@ -5,13 +5,13 @@ import MailAdvPopUp from '../commons/MailAdvPopUp/MailAdvPopUp';
 import RegistrationForm from '../commons/RegistrationForm/RegistrationForm';
 
 function RegisterPage(): JSX.Element {
-  const [modalActive, setModalActive] = useState(false)
+  const [modalActive, setModalActive] = useState<boolean>(false)
 
   return (
     <>
       <Header/>
       {/* <div className={styles.wrapperRegisterPage}>Register Page</div> */}
-      <RegistrationForm active ={modalActive} setModalActive={setModalActive} />
+      <RegistrationForm setModalActive={setModalActive} />
       <MailAdvPopUp active ={modalActive} setModalActive={setModalActive}/>
     </>
   );
