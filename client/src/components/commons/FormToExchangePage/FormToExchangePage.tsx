@@ -118,7 +118,7 @@ function FormToExchangePage({
     e.preventDefault();
     setFirstSubmit(true);
     setLoader(true);
-    setCurrentBalance(outputMoneyValue);
+    setCurrentBalance((prev) => prev + outputMoneyValue);
     setTimeout(() => {
       setLoader(false);
     }, 5000);
