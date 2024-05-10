@@ -6,7 +6,7 @@ function FormToExchangePage({
   fromCurrency,
   toCurrency,
 }: {
-  fromCurrency: string | null
+  fromCurrency: string | null;
   toCurrency: string | null;
 }): JSX.Element {
   const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
@@ -14,7 +14,7 @@ function FormToExchangePage({
   const EXCHANGE_RATE: number = 100; // Захардкодил курс для мгновенного перевода при изменении одного из инпутов в дальнейшем скорее всего он будет приходить из бэка
 
   const currenciesOrder: {
-    [currencyName: string]: string,
+    [currencyName: string]: string;
   } = {
     usd: 'USD $',
     eur: 'EUR €',
@@ -22,15 +22,9 @@ function FormToExchangePage({
     sbrub: 'Sber RUB',
   };
 
-  const [inputCurrencies] = useState<string[]>([
-    'USD $',
-    'EUR €',
-  ]); // массив с вводимыми валютами (те, которые переводит пользователь)
+  const [inputCurrencies] = useState<string[]>(['USD $', 'EUR €']); // массив с вводимыми валютами (те, которые переводит пользователь)
 
-  const [outputCurrencies] = useState<string[]>([
-    'Tinkoff RUB',
-    'Sber RUB',
-  ]); // массив с выводимыми валютами (те, которые хочет получить пользователь)
+  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']); // массив с выводимыми валютами (те, которые хочет получить пользователь)
 
   const inputCards: string[] = [
     '1234 5678 91011 1213',
@@ -44,16 +38,14 @@ function FormToExchangePage({
   ];
   const [currInputCard, setCurrInputCard] = useState<string>(inputCards[0]);
   const [currOutputCard, setCurrOutputCard] = useState<string>(outputCards[0]);
-  
+
   const [currInputCurrency, setInputCurrency] = useState<string>(
     fromCurrency ? currenciesOrder[fromCurrency] : ''
   );
-  
+
   const [currOutputCurrency, setOutputCurrency] = useState<string>(
     toCurrency ? currenciesOrder[toCurrency] : ''
   );
-  
-  
 
   const [inputCurrencyHidden, setInputCurrencyHidden] = useState<boolean>(true);
   const [outputCurrencyHidden, setOutputCurrencyHidden] =
@@ -104,15 +96,39 @@ function FormToExchangePage({
   };
 
   useEffect(() => {
-    document.addEventListener('click', clickOutsideInput as EventListenerOrEventListenerObject);
-    document.addEventListener('click', clickOutsideOutput as EventListenerOrEventListenerObject);
-    document.addEventListener('click', clickOutsideOutputCard as EventListenerOrEventListenerObject);
-    document.addEventListener('click', clickOutsideInputCard as EventListenerOrEventListenerObject);
+    document.addEventListener(
+      'click',
+      clickOutsideInput as EventListenerOrEventListenerObject
+    );
+    document.addEventListener(
+      'click',
+      clickOutsideOutput as EventListenerOrEventListenerObject
+    );
+    document.addEventListener(
+      'click',
+      clickOutsideOutputCard as EventListenerOrEventListenerObject
+    );
+    document.addEventListener(
+      'click',
+      clickOutsideInputCard as EventListenerOrEventListenerObject
+    );
     return () => {
-      document.removeEventListener('click', clickOutsideInput as EventListenerOrEventListenerObject);
-      document.removeEventListener('click', clickOutsideOutput as EventListenerOrEventListenerObject);
-      document.removeEventListener('click', clickOutsideOutputCard as EventListenerOrEventListenerObject);
-      document.removeEventListener('click', clickOutsideInputCard as EventListenerOrEventListenerObject);
+      document.removeEventListener(
+        'click',
+        clickOutsideInput as EventListenerOrEventListenerObject
+      );
+      document.removeEventListener(
+        'click',
+        clickOutsideOutput as EventListenerOrEventListenerObject
+      );
+      document.removeEventListener(
+        'click',
+        clickOutsideOutputCard as EventListenerOrEventListenerObject
+      );
+      document.removeEventListener(
+        'click',
+        clickOutsideInputCard as EventListenerOrEventListenerObject
+      );
     };
   }, []);
 
@@ -120,7 +136,7 @@ function FormToExchangePage({
     e.preventDefault();
     setFirstSubmit(true);
     setLoader(true);
-    setCurrentBalance((prev) => prev + outputMoneyValue);
+    setCurrentBalance((prev: number) => prev + outputMoneyValue);
     setTimeout(() => {
       setLoader(false);
     }, 5000);
@@ -153,7 +169,7 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currOption : styles.currOptionDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setInputCurrencyHidden((prev) => !prev);
+                    !firstSubmit && setInputCurrencyHidden((prev:boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -171,7 +187,11 @@ function FormToExchangePage({
                       return (
                         <p
                           className={styles.customOption}
-                          onClick={(e) => setInputCurrency((e.target as HTMLElement).innerText)}
+                          onClick={(e) =>
+                            setInputCurrency(
+                              (e.target as HTMLElement).innerText
+                            )
+                          }
                         >
                           {currency}
                         </p>
@@ -205,7 +225,7 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currOption : styles.currOptionDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setOutputCurrencyHidden((prev) => !prev);
+                    !firstSubmit && setOutputCurrencyHidden((prev:boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -223,7 +243,11 @@ function FormToExchangePage({
                       return (
                         <p
                           className={styles.customOption}
-                          onClick={(e) => setOutputCurrency((e.target as HTMLElement).innerText)}
+                          onClick={(e) =>
+                            setOutputCurrency(
+                              (e.target as HTMLElement).innerText
+                            )
+                          }
                         >
                           {currency}
                         </p>
@@ -246,7 +270,7 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currCard : styles.currCardDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setInputCardHidden((prev) => !prev);
+                    !firstSubmit && setInputCardHidden((prev:boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -264,7 +288,11 @@ function FormToExchangePage({
                       return (
                         <p
                           className={styles.customCardOption}
-                          onClick={(e) => setCurrInputCard((e.target as HTMLElement).innerText)}
+                          onClick={(e) =>
+                            setCurrInputCard(
+                              (e.target as HTMLElement).innerText
+                            )
+                          }
                         >
                           {card}
                         </p>
@@ -331,7 +359,9 @@ function FormToExchangePage({
                           <p
                             className={styles.customCardOption}
                             onClick={(e) =>
-                              setCurrOutputCard((e.target as HTMLElement).innerText)
+                              setCurrOutputCard(
+                                (e.target as HTMLElement).innerText
+                              )
                             }
                           >
                             {card}
@@ -352,7 +382,7 @@ function FormToExchangePage({
                 type="submit"
                 onClick={() => {
                   setSecondSubmit(true);
-                  setCurrentBalance((prev) => prev - outputMoneyValue);
+                  setCurrentBalance((prev:number) => prev - outputMoneyValue);
                 }}
                 className={styles.buttonExchange}
                 disabled={secondSubmit}

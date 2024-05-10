@@ -44,7 +44,7 @@ function CurrencyTicker(): JSX.Element {
       {price ? (
         <div className={styles.timerCurrencyBlock}>
           <p>Текущий курс: 1 USDT = {price} RUB</p>
-          {/*<p className={colors[String(timer)]}>0{timer}:00</p>*/}
+
           <p className={colors[timer]}>0{timer}:00</p>
         </div>
       ) : (
