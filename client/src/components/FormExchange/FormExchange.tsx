@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import styles from './FormExchange.module.scss';
 import { useNavigate } from 'react-router-dom';
 import CurrencyTicker from '../CurrencyTicker/CurrencyTicker';
@@ -10,17 +10,19 @@ function FormExchange(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const [inputCurrencies, setInputCurrencies] = useState<string[]>([
+  const [inputCurrencies] = useState<string[]>([
     'USD $',
     'EUR €',
   ]); // массив с вводимыми валютами (те, которые переводит пользователь)
 
-  const [outputCurrencies, setOutputCurrencies] = useState<string[]>([
+  const [outputCurrencies] = useState<string[]>([
     'Tinkoff RUB',
     'Sber RUB',
   ]); // массив с выводимыми валютами (те, которые хочет получить пользователь)
 
-  const currenciesOrder = {
+  const currenciesOrder: {
+    [tickerName: string]: string
+  } = {
     'USD $': 'usd',
     'EUR €': 'eur',
     'Tinkoff RUB': 'tscrub',
@@ -49,20 +51,20 @@ function FormExchange(): JSX.Element {
     setInputMoneyValue(Number(e.target.value) / EXCHANGE_RATE);
   };
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
+  const submitHandler = (): void => {
     navigate(
       `exchange?from=${currenciesOrder[currInputCurrency]}&to=${currenciesOrder[currOutputCurrency]}`
     );
   };
 
-  const clickOutsideInput = (e) => {
-    if (e.target.id !== 'input-custom-select') {
+  const clickOutsideInput = (e: MouseEvent) => {
+    if ((e.target as Element).id !== 'input-custom-select') {
       setInputCurrencyHidden(true);
     }
   };
 
-  const clickOutsideOutput = (e) => {
-    if (e.target.id !== 'output-custom-select') {
+  const clickOutsideOutput = (e: MouseEvent) => {
+    if ((e.target as Element).id !== 'output-custom-select') {
       setOutputCurrencyHidden(true);
     }
   };
@@ -76,24 +78,24 @@ function FormExchange(): JSX.Element {
     };
   }, []);
 
-  const changeInputCurrencyHandler = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    console.log(e.target.value);
-
-    //   fetch(`/pairs?from=${e.target.value}`)
-    //     .then((res) => res.json)
-    //     .then((res) => setOutputCurrencies(res.currencies))
-    //     .catch((err) => console.log({ ERROR_GET_OUTPUT_CURRENCIES: err }));
-  };
-
-  //Запрос на получение имеющихся валют (для первого инпута)
-  // useEffect(() => {
-  //   fetch('./currencies')
-  //     .then((res) => res.json())
-  //     .then((res) => setInputCurrencies(res.currencies))
-  //     .catch((err) => console.log({ ERROR_GET_CURRENCIES: err }));
-  // }, []);
+  // const changeInputCurrencyHandler = (
+  //   e: React.ChangeEvent<HTMLInputElement>
+  // ): void => {
+  //   console.log(e.target.value);
+  //
+  //   //   fetch(`/pairs?from=${e.target.value}`)
+  //   //     .then((res) => res.json)
+  //   //     .then((res) => setOutputCurrencies(res.currencies))
+  //   //     .catch((err) => console.log({ ERROR_GET_OUTPUT_CURRENCIES: err }));
+  // };
+  //
+  // //Запрос на получение имеющихся валют (для первого инпута)
+  // // useEffect(() => {
+  // //   fetch('./currencies')
+  // //     .then((res) => res.json())
+  // //     .then((res) => setInputCurrencies(res.currencies))
+  // //     .catch((err) => console.log({ ERROR_GET_CURRENCIES: err }));
+  // // }, []);
 
   return (
     <>
@@ -138,7 +140,7 @@ function FormExchange(): JSX.Element {
                       return (
                         <p
                           className={styles.customOption}
-                          onClick={(e) => setInputCurrency(e.target.innerText)}
+                          onClick={(e) => setInputCurrency((e.target as HTMLElement).innerText)}
                         >
                           {currency}
                         </p>
@@ -187,7 +189,7 @@ function FormExchange(): JSX.Element {
                       return (
                         <p
                           className={styles.customOption}
-                          onClick={(e) => setOutputCurrency(e.target.innerText)}
+                          onClick={(e) => setOutputCurrency((e.target as HTMLElement).innerText)}
                         >
                           {currency}
                         </p>

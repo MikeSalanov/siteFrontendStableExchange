@@ -1,57 +1,59 @@
 ﻿import { useEffect, useState } from 'react';
 import styles from './FormToExchangePage.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { set } from 'react-hook-form';
 import { RotatingLines } from 'react-loader-spinner';
 
 function FormToExchangePage({
   fromCurrency,
   toCurrency,
 }: {
-  fromCurrency: string;
-  toCurrency: string;
+  fromCurrency: string | null
+  toCurrency: string | null;
 }): JSX.Element {
   const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
   const [outputMoneyValue, setOutputMoneyValue] = useState<number>(0);
   const EXCHANGE_RATE: number = 100; // Захардкодил курс для мгновенного перевода при изменении одного из инпутов в дальнейшем скорее всего он будет приходить из бэка
 
-  const currenciesOrder = {
+  const currenciesOrder: {
+    [currencyName: string]: string,
+  } = {
     usd: 'USD $',
     eur: 'EUR €',
     tscrub: 'Tinkoff RUB',
     sbrub: 'Sber RUB',
   };
 
-  const [inputCurrencies, setInputCurrencies] = useState<string[]>([
+  const [inputCurrencies] = useState<string[]>([
     'USD $',
     'EUR €',
   ]); // массив с вводимыми валютами (те, которые переводит пользователь)
 
-  const [outputCurrencies, setOutputCurrencies] = useState<string[]>([
+  const [outputCurrencies] = useState<string[]>([
     'Tinkoff RUB',
     'Sber RUB',
   ]); // массив с выводимыми валютами (те, которые хочет получить пользователь)
 
-  const inputCards = [
+  const inputCards: string[] = [
     '1234 5678 91011 1213',
     '0000 0000 0000 0000',
     '1111 2222 3333 4444',
   ];
-  const outputCards = [
+  const outputCards: string[] = [
     '2222 5678 3333 4444',
     '4444 3333 2222 1111',
     '9999 6666 7777 2222',
   ];
   const [currInputCard, setCurrInputCard] = useState<string>(inputCards[0]);
   const [currOutputCard, setCurrOutputCard] = useState<string>(outputCards[0]);
-
+  
   const [currInputCurrency, setInputCurrency] = useState<string>(
-    currenciesOrder[fromCurrency]
+    fromCurrency ? currenciesOrder[fromCurrency] : ''
   );
-
+  
   const [currOutputCurrency, setOutputCurrency] = useState<string>(
-    currenciesOrder[toCurrency]
+    toCurrency ? currenciesOrder[toCurrency] : ''
   );
+  
+  
 
   const [inputCurrencyHidden, setInputCurrencyHidden] = useState<boolean>(true);
   const [outputCurrencyHidden, setOutputCurrencyHidden] =
@@ -77,40 +79,40 @@ function FormToExchangePage({
     setInputMoneyValue(Number(e.target.value) / EXCHANGE_RATE);
   };
 
-  const clickOutsideInput = (e) => {
-    if (e.target.id !== 'input-custom-select') {
+  const clickOutsideInput = (e: Event): void => {
+    if ((e.target as Element).id !== 'input-custom-select') {
       setInputCurrencyHidden(true);
     }
   };
 
-  const clickOutsideOutput = (e) => {
-    if (e.target.id !== 'output-custom-select') {
+  const clickOutsideOutput = (e: Event): void => {
+    if ((e.target as Element).id !== 'output-custom-select') {
       setOutputCurrencyHidden(true);
     }
   };
 
-  const clickOutsideInputCard = (e) => {
-    if (e.target.id !== 'input-card-select') {
+  const clickOutsideInputCard = (e: Event): void => {
+    if ((e.target as Element).id !== 'input-card-select') {
       setInputCardHidden(true);
     }
   };
 
-  const clickOutsideOutputCard = (e) => {
-    if (e.target.id !== 'output-card-select') {
+  const clickOutsideOutputCard = (e: Event): void => {
+    if ((e.target as Element).id !== 'output-card-select') {
       setOutputCardHidden(true);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('click', clickOutsideInput);
-    document.addEventListener('click', clickOutsideOutput);
-    document.addEventListener('click', clickOutsideOutputCard);
-    document.addEventListener('click', clickOutsideInputCard);
+    document.addEventListener('click', clickOutsideInput as EventListenerOrEventListenerObject);
+    document.addEventListener('click', clickOutsideOutput as EventListenerOrEventListenerObject);
+    document.addEventListener('click', clickOutsideOutputCard as EventListenerOrEventListenerObject);
+    document.addEventListener('click', clickOutsideInputCard as EventListenerOrEventListenerObject);
     return () => {
-      document.removeEventListener('click', clickOutsideInput);
-      document.removeEventListener('click', clickOutsideOutput);
-      document.removeEventListener('click', clickOutsideOutputCard);
-      document.removeEventListener('click', clickOutsideInputCard);
+      document.removeEventListener('click', clickOutsideInput as EventListenerOrEventListenerObject);
+      document.removeEventListener('click', clickOutsideOutput as EventListenerOrEventListenerObject);
+      document.removeEventListener('click', clickOutsideOutputCard as EventListenerOrEventListenerObject);
+      document.removeEventListener('click', clickOutsideInputCard as EventListenerOrEventListenerObject);
     };
   }, []);
 
@@ -169,7 +171,7 @@ function FormToExchangePage({
                       return (
                         <p
                           className={styles.customOption}
-                          onClick={(e) => setInputCurrency(e.target.innerText)}
+                          onClick={(e) => setInputCurrency((e.target as HTMLElement).innerText)}
                         >
                           {currency}
                         </p>
@@ -221,7 +223,7 @@ function FormToExchangePage({
                       return (
                         <p
                           className={styles.customOption}
-                          onClick={(e) => setOutputCurrency(e.target.innerText)}
+                          onClick={(e) => setOutputCurrency((e.target as HTMLElement).innerText)}
                         >
                           {currency}
                         </p>
@@ -262,7 +264,7 @@ function FormToExchangePage({
                       return (
                         <p
                           className={styles.customCardOption}
-                          onClick={(e) => setCurrInputCard(e.target.innerText)}
+                          onClick={(e) => setCurrInputCard((e.target as HTMLElement).innerText)}
                         >
                           {card}
                         </p>
@@ -286,14 +288,10 @@ function FormToExchangePage({
           <div className="flex justify-center">
             <RotatingLines
               visible={true}
-              height="40"
               width="40"
-              color="grey"
               strokeWidth="5"
               animationDuration="0.75"
               ariaLabel="rotating-lines-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
             />
           </div>
         ) : firstSubmit ? (
@@ -333,7 +331,7 @@ function FormToExchangePage({
                           <p
                             className={styles.customCardOption}
                             onClick={(e) =>
-                              setCurrOutputCard(e.target.innerText)
+                              setCurrOutputCard((e.target as HTMLElement).innerText)
                             }
                           >
                             {card}

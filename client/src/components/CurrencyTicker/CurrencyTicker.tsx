@@ -1,19 +1,19 @@
 ﻿import { useEffect, useState } from 'react';
 import styles from './CurrencyTicker.module.scss';
-import { Hourglass, RotatingLines } from 'react-loader-spinner';
+import { Hourglass } from 'react-loader-spinner';
 
 function CurrencyTicker(): JSX.Element {
   const [price, setPrice] = useState<null | number>(null);
   const [timer, setTimer] = useState<number>(5);
 
-  const colors = {
-    0: 'text-red-600',
-    1: 'text-red-600',
-    2: 'text-orange-500',
-    3: 'text-orange-500',
-    4: 'text-green-500',
-    5: 'text-green-500',
-  };
+  const colors: string[] = [
+    'text-red-600',
+    'text-red-600',
+    'text-orange-500',
+    'text-orange-500',
+    'text-green-500',
+    'text-green-500',
+  ];
 
   useEffect(() => {
     const intervalFetch = setInterval(() => {
@@ -44,7 +44,8 @@ function CurrencyTicker(): JSX.Element {
       {price ? (
         <div className={styles.timerCurrencyBlock}>
           <p>Текущий курс: 1 USDT = {price} RUB</p>
-          <p className={colors[String(timer)]}>0{timer}:00</p>
+          {/*<p className={colors[String(timer)]}>0{timer}:00</p>*/}
+          <p className={colors[timer]}>0{timer}:00</p>
         </div>
       ) : (
         <div className={styles.timerCurrencyBlock}>

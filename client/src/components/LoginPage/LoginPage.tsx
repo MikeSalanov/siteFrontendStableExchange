@@ -1,5 +1,4 @@
-﻿import styles from './LoginPage.module.scss';
-import Header from '../Header/Header';
+﻿import Header from '../Header/Header';
 import LoginForm from '../commons/LoginForm/LoginForm';
 function LoginPage(): JSX.Element {
   return (

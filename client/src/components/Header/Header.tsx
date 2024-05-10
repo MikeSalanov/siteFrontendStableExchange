@@ -1,6 +1,6 @@
-﻿import { Link, useNavigate } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import DropDownProfile from '../commons/ProfileDropDown/DropDownProfile';
 import { Context } from '../../main';
 
