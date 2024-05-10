@@ -8,6 +8,7 @@ import { useContext, useEffect } from 'react';
 import { Context } from './main';
 import {observer} from "mobx-react-lite"
 import ExchangePage from './components/ExchangePage/ExchangePage';
+import RegConfirmForm from './components/commons/RegConfirmForm/RegConfirmForm';
 
 function App(): JSX.Element {
   const {store} = useContext(Context)
@@ -29,6 +30,7 @@ useEffect(() => {
         <Route path="/customer-account/signIn" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/exchange" element={<ExchangePage />} />
+        <Route path="/customer-account/confirm-registration" element={< RegConfirmForm/>} />
       </Routes>
       
     </BrowserRouter>
