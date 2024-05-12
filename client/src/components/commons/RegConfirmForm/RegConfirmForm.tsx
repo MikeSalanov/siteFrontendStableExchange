@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { useContext } from "react";
 import { Context } from "../../../main";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { AxiosError } from "axios";
 
 
 const validationSchema = yup
@@ -22,7 +23,9 @@ function RegConfirmForm(): JSX.Element {
   const {
     register,
     handleSubmit,
+    setError
     formState: { errors },
+    reset
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(validationSchema)
@@ -39,11 +42,20 @@ const navigate = useNavigate();
     const {email, password} = values
     const confirmationCode = searchParams.get('confirmationCode')
     try {
-    return await store.confirmRegister(email, password, confirmationCode)
+      
+    const res =  await store.confirmRegister(email, password, confirmationCode)
+
+    if(res.status === 201) {    
+    reset()
     navigate('/')
+    }
+ 
     
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      const error = e as AxiosError<{message:string}>
+      console.log("ERROR", error);
+      const errorMessage = error.message
+      setError("password",  { type: 'custom', message: errorMessage } )     
     }
   }
 
