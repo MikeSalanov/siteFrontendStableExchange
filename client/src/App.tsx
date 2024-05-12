@@ -22,7 +22,7 @@ useEffect(() => {
   return (
     
     <BrowserRouter>
-         <h1 style={{color: "white"}}>{store.isAuth ? `Пользователь ${store?.user?.email}  авторизован` : "АВТОРИЗУЙТЕСЬ" } </h1>
+     
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/customer-account/signUp" element={<RegisterPage />} />
