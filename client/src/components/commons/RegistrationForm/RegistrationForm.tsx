@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
  import styles from "./RegistrationForm.module.scss"
 import { useContext } from "react";
 import { Context } from "../../../main";
+import { AxiosError } from "axios";
 
 const validationSchema = yup
 .object()
@@ -17,12 +18,13 @@ const validationSchema = yup
 
   type RegValues = yup.InferType<typeof validationSchema>
 
-function RegistrationForm(): JSX.Element {
-
+function RegistrationForm({setModalActive} : {setModalActive: (isActive: boolean) => void }): JSX.Element {
   const {
     register,
     handleSubmit,
+    setError, 
     formState: { errors },
+    reset
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(validationSchema)
@@ -35,19 +37,22 @@ const {store} = useContext(Context)
   const onSubmit = async (values: RegValues) => {
     const {password2, ...data} = values
     try {
-    store.registration(data.email, data.password)
+   const res = await store.registration(data.email, data.password)
 
-    // const res = await fetch('http://localhost:3000/api/signUp', {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    
-      
-    } catch (error) {
-      console.log(error);
+   
+   if (res.status === 201) {
+    setModalActive(true)
+    reset() // очистка полей формы
+   }
+
+   console.log(res?.data.message);
+   
+    } catch (e) {
+      const error = e as AxiosError<{message:string}>
+      console.log("ERROR", error);
+      const errorMessage = error.message
+      setError("email",  { type: 'custom', message: errorMessage } )
+
     }
   }
 
