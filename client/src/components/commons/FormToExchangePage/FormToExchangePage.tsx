@@ -1,6 +1,7 @@
-﻿import { useEffect, useState } from 'react';
+﻿import { useContext, useEffect, useState } from 'react';
 import styles from './FormToExchangePage.module.scss';
 import { RotatingLines } from 'react-loader-spinner';
+import { Context } from '../../../main';
 
 function FormToExchangePage({
   fromCurrency,
@@ -12,6 +13,8 @@ function FormToExchangePage({
   const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
   const [outputMoneyValue, setOutputMoneyValue] = useState<number>(0);
   const EXCHANGE_RATE: number = 100; // Захардкодил курс для мгновенного перевода при изменении одного из инпутов в дальнейшем скорее всего он будет приходить из бэка
+
+  const { store } = useContext(Context);
 
   const currenciesOrder: {
     [currencyName: string]: string;
@@ -59,7 +62,11 @@ function FormToExchangePage({
   const [loader, setLoader] = useState<boolean>(false);
   const [secondSubmit, setSecondSubmit] = useState<boolean>(false);
 
-  const [currentBalance, setCurrentBalance] = useState<number>(0);
+  const [currentBalance, setCurrentBalance] = useState<number | undefined>(0);
+
+  useEffect(() => {
+    store.getBalance().then((res) => setCurrentBalance(res));
+  }, [store]);
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputMoneyValue(Number(e.target.value));
@@ -136,7 +143,7 @@ function FormToExchangePage({
     e.preventDefault();
     setFirstSubmit(true);
     setLoader(true);
-    setCurrentBalance((prev: number) => prev + outputMoneyValue);
+    setCurrentBalance((prev) => (prev ? prev + outputMoneyValue : 0));
     setTimeout(() => {
       setLoader(false);
     }, 5000);
@@ -169,7 +176,8 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currOption : styles.currOptionDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setInputCurrencyHidden((prev:boolean) => !prev);
+                    !firstSubmit &&
+                      setInputCurrencyHidden((prev: boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -225,7 +233,8 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currOption : styles.currOptionDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setOutputCurrencyHidden((prev:boolean) => !prev);
+                    !firstSubmit &&
+                      setOutputCurrencyHidden((prev: boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -270,7 +279,8 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currCard : styles.currCardDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setInputCardHidden((prev:boolean) => !prev);
+                    !firstSubmit &&
+                      setInputCardHidden((prev: boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -382,7 +392,7 @@ function FormToExchangePage({
                 type="submit"
                 onClick={() => {
                   setSecondSubmit(true);
-                  setCurrentBalance((prev:number) => prev - outputMoneyValue);
+                  setCurrentBalance((prev: number) => prev - outputMoneyValue);
                 }}
                 className={styles.buttonExchange}
                 disabled={secondSubmit}
