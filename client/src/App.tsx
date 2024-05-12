@@ -31,7 +31,6 @@ useEffect(() => {
         <Route path="/exchange" element={<ExchangePage />} />
         <Route path="/customer-account/confirm-registration" element={< RegConfirmForm/>} />
       </Routes>
-      
     </BrowserRouter>
      
   );

@@ -22,6 +22,10 @@ input[type='number']::-webkit-outer-spin-button {
   @apply flex hover:cursor-pointer  items-center gap-3 text-xl justify-between p-2;
 }
 
+.currOptionDisabled {
+  @apply flex items-center gap-3 text-xl justify-between p-2;
+}
+
 .customOptionsHidden {
   @apply hidden;
 }
@@ -35,6 +39,10 @@ input[type='number']::-webkit-outer-spin-button {
 
 .currCard {
   @apply flex hover:cursor-pointer  items-center gap-3 text-xl justify-between p-2;
+}
+
+.currCardDisabled {
+  @apply flex items-center gap-3 text-xl justify-between p-2;
 }
 
 .inputCardHidden {

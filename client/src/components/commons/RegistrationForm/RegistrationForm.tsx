@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
  import styles from "./RegistrationForm.module.scss"
 import { useContext } from "react";
 import { Context } from "../../../main";
+import { AxiosError } from "axios";
 
 const validationSchema = yup
 .object()
@@ -17,12 +18,13 @@ const validationSchema = yup
 
   type RegValues = yup.InferType<typeof validationSchema>
 
-function RegistrationForm(): JSX.Element {
-
+function RegistrationForm({setModalActive} : {setModalActive: (isActive: boolean) => void }): JSX.Element {
   const {
     register,
     handleSubmit,
+    setError, 
     formState: { errors },
+    reset
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(validationSchema)
@@ -33,13 +35,23 @@ console.log(errors );
 const {store} = useContext(Context)
 
   const onSubmit = async (values: RegValues) => {
-    const {password2, ...data} = values
+    const {email, password} = values
+    const confirmationCode = searchParams.get('confirmationCode')
     try {
-    store.registration(data.email, data.password)
-    
       
-    } catch (error) {
-      console.log(error);
+    const res =  await store.confirmRegister(email, password, confirmationCode)
+
+    if(res.status === 201) {    
+    reset()
+    navigate('/')
+    }
+ 
+    
+    } catch (e) {
+      const error = e as AxiosError<{message:string}>
+      console.log("ERROR", error);
+      const errorMessage = error.message
+      setError("password",  { type: 'custom', message: errorMessage } )     
     }
   }
 
