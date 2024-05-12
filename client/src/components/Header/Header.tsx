@@ -1,6 +1,6 @@
 ﻿import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import DropDownProfile from '../commons/ProfileDropDown/DropDownProfile';
 import { Context } from '../../main';
 
@@ -9,6 +9,8 @@ import { Context } from '../../main';
 function Header(): JSX.Element {
 
   const {store} = useContext(Context)
+  const [dropdownVisiable, setDropdownVisiable] = useState<boolean>(store.isAuth);
+
 
   return (
     <div className={styles.wrapper}>
@@ -25,8 +27,8 @@ function Header(): JSX.Element {
 
       <div className={styles.buttonsBlock}>
         {' '}
-        {store.isAuth ? (
-          <DropDownProfile/>
+        {dropdownVisiable ? (
+          <DropDownProfile setDropdownVisiable = {setDropdownVisiable}/>
         ) : (
           <>
             <Link to="/customer-account/signUp">

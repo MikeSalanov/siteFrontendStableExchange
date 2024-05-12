@@ -3,14 +3,14 @@ import { useContext, useEffect, useState } from 'react';
 import DropDownProfileItem from './DropDownProfileItem';
 import { Context } from '../../../main';
 
-
-function DropDown(): JSX.Element {
-
-const {store} = useContext(Context)
-
+function DropDownProfile(props: {
+  setDropdownVisiable: React.Dispatch<React.SetStateAction<boolean>>;
+}): JSX.Element {
+  const { store } = useContext(Context);
+  const { setDropdownVisiable } = props;
   const options = [
     {
-      value: store.isAuth ? store.user.email : "Имя пользователя",
+      value: store.isAuth ? store.user.email : 'Имя пользователя',
       icon: '../../public/bx-user.svg',
       route: '/customer-account/settings',
     },
@@ -65,7 +65,15 @@ const {store} = useContext(Context)
               value={option.value}
               icon={option.icon}
               route={option.route}
-              onClick={option.value === 'Выйти' ? () => store.logout() : undefined} />
+              onClick={
+                option.value === 'Выйти'
+                  ? () => {
+                      store.logout();
+                      setDropdownVisiable(false);
+                    }
+                  : undefined
+              }
+            />
           ))}
         </div>
       </div>
@@ -73,4 +81,4 @@ const {store} = useContext(Context)
   );
 }
 
-export default DropDown;
+export default DropDownProfile;
