@@ -35,26 +35,26 @@ console.log(errors );
 const {store} = useContext(Context)
 
   const onSubmit = async (values: RegValues) => {
-    const {email, password} = values
-    const confirmationCode = searchParams.get('confirmationCode')
+    const {password2, ...data} = values
     try {
-      
-    const res =  await store.confirmRegister(email, password, confirmationCode)
+   const res = await store.registration(data.email, data.password)
 
-    if(res.status === 201) {    
-    reset()
-    navigate('/')
-    }
- 
-    
+   
+   if (res.status === 201) {
+    setModalActive(true)
+    reset() // очистка формы
+   }
+
+   console.log(res?.data.message);
+   
     } catch (e) {
       const error = e as AxiosError<{message:string}>
       console.log("ERROR", error);
       const errorMessage = error.message
-      setError("password",  { type: 'custom', message: errorMessage } )     
+      setError("email",  { type: 'custom', message: errorMessage } )
+
     }
   }
-
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
