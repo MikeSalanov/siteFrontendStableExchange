@@ -11,7 +11,7 @@
 }
 
 .headerItemClick {
-  @apply cursor-pointer p-2  flex gap-2 w-48;
+  @apply cursor-pointer p-2  flex gap-2 w-max;
 }
 
 .hiddenMenu {
@@ -19,7 +19,7 @@
 }
 
 .dropDownMenu {
-  @apply absolute bg-yellow-green-corp w-48  rounded-b-lg p-1;
+  @apply absolute bg-yellow-green-corp w-max  rounded-b-lg p-1 rounded-r-lg;
 }
 
 .dropDownItem {

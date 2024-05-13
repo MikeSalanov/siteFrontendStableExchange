@@ -23,7 +23,7 @@ function RegConfirmForm(): JSX.Element {
   const {
     register,
     handleSubmit,
-    setError
+    setError,
     formState: { errors },
     reset
   } = useForm({
