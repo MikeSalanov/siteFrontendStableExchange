@@ -42,7 +42,7 @@ const {store} = useContext(Context)
    
    if (res.status === 201) {
     setModalActive(true)
-    reset() // очистка полей формы
+    reset() // очистка формы
    }
 
    console.log(res?.data.message);
