@@ -23,7 +23,7 @@ function RegConfirmForm(): JSX.Element {
   const {
     register,
     handleSubmit,
-    setError
+    setError,
     formState: { errors },
     reset
   } = useForm({
@@ -42,10 +42,10 @@ const navigate = useNavigate();
     const {email, password} = values
     const confirmationCode = searchParams.get('confirmationCode')
     try {
-      
+    
     const res =  await store.confirmRegister(email, password, confirmationCode)
 
-    if(res.status === 201) {    
+    if(res.status === 201) {
     reset()
     navigate('/')
     }
@@ -55,7 +55,7 @@ const navigate = useNavigate();
       const error = e as AxiosError<{message:string}>
       console.log("ERROR", error);
       const errorMessage = error.message
-      setError("password",  { type: 'custom', message: errorMessage } )     
+      setError("password",  { type: 'custom', message: errorMessage } )
     }
   }
 
