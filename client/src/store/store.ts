@@ -1,10 +1,9 @@
 import {IUser} from "../models/IUser";
 import {makeAutoObservable} from "mobx";
 import AuthService from "../services/AuthService";
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import {AuthResponse} from "../models/response/AuthResponse";
 import { API_URL } from "../http";
-import { RegResponse } from "../models/response/RegResponse";
 
 export default class Store {
     user = {} as IUser;
@@ -39,16 +38,28 @@ export default class Store {
         }
     }
 
-    async registration(email: string, password: string): Promise<AxiosResponse<RegResponse>>  {
+    async registration(email: string, password: string) {
         try {
             const response = await AuthService.registration(email, password);
             console.log(response)
+        } catch (e) {
+          console.log(e);
+        }
+    }
+
+
+    async confirmRegister(email: string, password: string, confirmationCode: string | null ) {
+        try {
+            const response = await AuthService.confirmRegister(email, password, confirmationCode);
+            console.log(response)
+            localStorage.setItem('token', response.data.accessToken);
+            this.setAuth(true);
+            this.setUser(response.data.user);
             return response
         } catch (e) {
             const error = e as AxiosError<{message:string}>
             const errorMessage = error?.response?.data.message
-            throw new Error(errorMessage) ;
-        }
+            throw new Error(errorMessage) ;        }
     }
 
     async logout() {
