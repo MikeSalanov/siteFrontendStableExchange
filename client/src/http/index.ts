@@ -3,6 +3,7 @@ import {AuthResponse} from "../models/response/AuthResponse";
 
 export const API_URL = `http://localhost:5000/auth-service`
 
+
 const $api = axios.create({
     withCredentials: true,
     baseURL: API_URL
@@ -17,6 +18,8 @@ $api.interceptors.response.use((config) => {
     return config;
 },async (error) => {
     const originalRequest = error.config;
+    console.log(originalRequest);
+
     if (error.response.status == 401 && error.config && !error.config._isRetry) {
         originalRequest._isRetry = true;
         try {
