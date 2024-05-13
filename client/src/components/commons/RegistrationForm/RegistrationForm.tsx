@@ -22,7 +22,7 @@ function RegistrationForm({setModalActive} : {setModalActive: (isActive: boolean
   const {
     register,
     handleSubmit,
-    setError, 
+    setError,
     formState: { errors },
     reset
   } = useForm({
@@ -37,15 +37,14 @@ const {store} = useContext(Context)
   const onSubmit = async (values: RegValues) => {
     const {password2, ...data} = values
     try {
-   const res = await store.registration(data.email, data.password)
-
-   
-   if (res.status === 201) {
-    setModalActive(true)
-    reset() // очистка формы
-   }
-
-   console.log(res?.data.message);
+    const res = await store.registration(data.email, data.password);
+  
+    if (res.status === 201) {
+     setModalActive(true)
+     reset()
+    }
+  
+    console.log(res?.data.message);
    
     } catch (e) {
       const error = e as AxiosError<{message:string}>

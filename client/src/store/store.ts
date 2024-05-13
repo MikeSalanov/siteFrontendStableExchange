@@ -1,9 +1,12 @@
-import { IUser } from '../models/IUser';
-import { makeAutoObservable } from 'mobx';
-import AuthService from '../services/AuthService';
-import axios, { AxiosError } from 'axios';
-import { AuthResponse } from '../models/response/AuthResponse';
-import { API_URL } from '../http';
+
+import {IUser} from "../models/IUser";
+import {makeAutoObservable} from "mobx";
+import AuthService from "../services/AuthService";
+import axios, {AxiosError, AxiosResponse} from 'axios';
+import {AuthResponse} from "../models/response/AuthResponse";
+import { AUTH_API_URL } from "../http";
+import {RegResponse} from "../models/response/RegResponse.ts";
+
 
 export default class Store {
   user = {} as IUser;
@@ -36,37 +39,36 @@ export default class Store {
     } catch (e) {
       console.log(e);
     }
-  }
 
-  async registration(email: string, password: string) {
-    try {
-      const response = await AuthService.registration(email, password);
-      console.log(response);
-    } catch (e) {
-      console.log(e);
+  
+    async registration(email: string, password: string): Promise<AxiosResponse<RegResponse>>  {
+      try {
+        const response = await AuthService.registration(email, password);
+        console.log(response)
+        return response
+      } catch (e) {
+        const error = e as AxiosError<{message:string}>
+        const errorMessage = error?.response?.data.message
+        throw new Error(errorMessage) ;
+      }
+
     }
   }
 
-  async confirmRegister(
-    email: string,
-    password: string,
-    confirmationCode: string | null
-  ) {
-    try {
-      const response = await AuthService.confirmRegister(
-        email,
-        password,
-        confirmationCode
-      );
-      console.log(response);
-      localStorage.setItem('token', response.data.accessToken);
-      this.setAuth(true);
-      this.setUser(response.data.user);
-      return response;
-    } catch (e) {
-      const error = e as AxiosError<{ message: string }>;
-      const errorMessage = error?.response?.data.message;
-      throw new Error(errorMessage);
+
+    async confirmRegister(email: string, password: string, confirmationCode: string | null ) {
+        try {
+            const response = await AuthService.confirmRegister(email, password, confirmationCode);
+            console.log(response)
+            localStorage.setItem('token', response.data.accessToken);
+            this.setAuth(true);
+            this.setUser(response.data.user);
+            return response
+        } catch (e) {
+            const error = e as AxiosError<{message:string}>
+            const errorMessage = error?.response?.data.message
+            throw new Error(errorMessage) ;        }
+
     }
   }
 
@@ -81,20 +83,21 @@ export default class Store {
     }
   }
 
-  async checkAuth() {
-    this.setLoading(true);
-    try {
-      const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
-        withCredentials: true,
-      });
-      console.log(response);
-      localStorage.setItem('token', response.data.accessToken);
-      this.setAuth(true);
-      this.setUser(response.data.user);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      this.setLoading(false);
+
+    async checkAuth() {
+        this.setLoading(true);
+        try {
+            const response = await axios.get<AuthResponse>(`${AUTH_API_URL}/refresh`, {withCredentials: true})
+            console.log(response);
+            localStorage.setItem('token', response.data.accessToken);
+            this.setAuth(true);
+            this.setUser(response.data.user);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            this.setLoading(false);
+        }
+
     }
   }
 }
