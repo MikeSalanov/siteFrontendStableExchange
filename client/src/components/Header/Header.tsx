@@ -4,13 +4,14 @@ import { useContext, useEffect, useState } from 'react';
 import DropDownProfile from '../commons/ProfileDropDown/DropDownProfile';
 import { Context } from '../../main';
 
-
-
 function Header(): JSX.Element {
-
-  const {store} = useContext(Context)
-  const [dropdownVisiable, setDropdownVisiable] = useState<boolean>(store.isAuth);
-
+  const { store } = useContext(Context);
+  const [dropdownVisiable, setDropdownVisiable] = useState<boolean>(
+    store.isAuth
+  );
+  useEffect(() => {
+    console.log(store.isAuth);
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -28,17 +29,14 @@ function Header(): JSX.Element {
       <div className={styles.buttonsBlock}>
         {' '}
         {dropdownVisiable ? (
-          <DropDownProfile setDropdownVisiable = {setDropdownVisiable}/>
+          <DropDownProfile setDropdownVisiable={setDropdownVisiable} />
         ) : (
           <>
             <Link to="/customer-account/signUp">
               <div className={styles.buttonAccount}>Создать аккаунт</div>
             </Link>
 
-            <Link
-              to="/customer-account/signIn"
-
-            >
+            <Link to="/customer-account/signIn">
               <div className={styles.buttonAccount}> Войти</div>
             </Link>
           </>
