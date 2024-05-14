@@ -29,7 +29,9 @@ useEffect(() => {
         <Route path="/customer-account/signIn" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/exchange" element={<ExchangePage />} />
+        <Route path="/wallet" element={< WalletPage/>} />
         <Route path="/customer-account/confirm-registration" element={< RegConfirmForm/>} />
+
       </Routes>
     </BrowserRouter>
      

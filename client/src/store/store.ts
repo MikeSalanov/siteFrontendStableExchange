@@ -2,9 +2,9 @@ import {IUser} from "../models/IUser";
 import {makeAutoObservable} from "mobx";
 import AuthService from "../services/AuthService";
 import axios, {AxiosError, AxiosResponse} from 'axios';
-import {AuthResponse} from "../models/response/AuthResponse";
+import {AuthResponse} from "../models/response/authService/AuthResponse.ts";
 import { AUTH_API_URL } from "../http";
-import {RegResponse} from "../models/response/RegResponse.ts";
+import {RegResponse} from "../models/response/authService/RegResponse.ts";
 
 export default class Store {
     user = {} as IUser;
