@@ -9,9 +9,6 @@ function Header(): JSX.Element {
   const [dropdownVisiable, setDropdownVisiable] = useState<boolean>(
     store.isAuth
   );
-  useEffect(() => {
-    console.log(store.isAuth);
-  }, []);
 
   return (
     <div className={styles.wrapper}>
