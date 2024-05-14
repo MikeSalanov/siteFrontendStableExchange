@@ -38,7 +38,7 @@ export default class Store {
       this.setUser(response.data.user);
     } catch (e) {
       console.log(e);
-    }
+    }}
 
   
     async registration(email: string, password: string): Promise<AxiosResponse<RegResponse>>  {
@@ -53,7 +53,7 @@ export default class Store {
       }
 
     }
-  }
+  
 
 
     async confirmRegister(email: string, password: string, confirmationCode: string | null ) {
@@ -70,7 +70,7 @@ export default class Store {
             throw new Error(errorMessage) ;        }
 
     }
-  }
+  
 
   async logout() {
     try {
@@ -99,5 +99,5 @@ export default class Store {
         }
 
     }
+  
   }
-}

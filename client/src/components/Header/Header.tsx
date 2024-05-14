@@ -1,6 +1,6 @@
 ﻿import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import DropDownProfile from '../commons/ProfileDropDown/DropDownProfile';
 import { Context } from '../../main';
 
@@ -9,10 +9,7 @@ function Header(): JSX.Element {
   const [dropdownVisiable, setDropdownVisiable] = useState<boolean>(
     store.isAuth
   );
-  useEffect(() => {
-    console.log(store.isAuth);
-  }, []);
-
+ 
   return (
     <div className={styles.wrapper}>
       <div className=" h-full">
