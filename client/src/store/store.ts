@@ -38,10 +38,11 @@ export default class Store {
       this.setUser(response.data.user);
     } catch (e) {
       console.log(e);
-    }}
+    }
+  }
 
   
-    async registration(email: string, password: string): Promise<AxiosResponse<RegResponse>>  {
+    async registration(email: string, password: string): Promise<AxiosResponse<RegResponse>> {
       try {
         const response = await AuthService.registration(email, password);
         console.log(response)
@@ -53,7 +54,6 @@ export default class Store {
       }
 
     }
-  
 
 
     async confirmRegister(email: string, password: string, confirmationCode: string | null ) {
@@ -70,18 +70,18 @@ export default class Store {
             throw new Error(errorMessage) ;        }
 
     }
-  
 
-  async logout() {
-    try {
-      await AuthService.logout();
-      localStorage.removeItem('token');
-      this.setAuth(false);
-      this.setUser({} as IUser);
-    } catch (e) {
-      console.log(e);
+    async logout() {
+      try {
+        console.log(123);
+        await AuthService.logout();
+        localStorage.removeItem('token');
+        this.setAuth(false);
+        this.setUser({} as IUser);
+      } catch (e) {
+        console.log(e);
+      }
     }
-  }
 
 
     async checkAuth() {
@@ -99,5 +99,4 @@ export default class Store {
         }
 
     }
-  
-  }
+}
