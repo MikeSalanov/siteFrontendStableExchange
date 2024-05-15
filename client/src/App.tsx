@@ -11,6 +11,7 @@ import ExchangePage from './components/ExchangePage/ExchangePage';
 import RegConfirmForm from './components/commons/RegConfirmForm/RegConfirmForm';
 import RequireIsAuth from './components/commons/RequireAuth/RequireIsAuth';
 import RequireIsNotAuth from './components/commons/RequireAuth/RequireIsNotAuth';
+import HistoryPage from './components/HistoryPage/HistoryPage';
 
 function App(): JSX.Element {
   const { store } = useContext(Context);
@@ -43,7 +44,14 @@ function App(): JSX.Element {
           }
         />
 
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route
+          path="/customer-account/settings"
+          element={
+            <RequireIsAuth>
+              <ProfilePage />
+            </RequireIsAuth>
+          }
+        />
 
         <Route
           path="/exchange"
@@ -57,6 +65,14 @@ function App(): JSX.Element {
         <Route
           path="/customer-account/confirm-registration"
           element={<RegConfirmForm />}
+        />
+        <Route
+          path="/customer-account/history"
+          element={
+            <RequireIsAuth>
+              <HistoryPage />
+            </RequireIsAuth>
+          }
         />
       </Routes>
     </BrowserRouter>

@@ -68,10 +68,10 @@ function DropDownProfile(props: {
               onClick={
                 option.value === 'Выйти'
                   ? (e) => {
-                    e.stopPropagation();
-                    store.logout();
-                    setDropdownVisiable(false);
-                  }
+                      e.stopPropagation();
+                      store.logout();
+                      setDropdownVisiable(false);
+                    }
                   : undefined
               }
             />
