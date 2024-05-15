@@ -17,7 +17,7 @@ interface propsStackCards {
 function StackCards(props: propsStackCards): JSX.Element {
   const [activeCard, setActiveCard] = useState<number>(0);
   const [formNewCard, setFormNewCard] = useState<boolean>(false);
-  const {cards} = props;
+  const { cards } = props;
 
   return (
     <>
@@ -36,12 +36,14 @@ function StackCards(props: propsStackCards): JSX.Element {
               </div>
             ) : (
               <div
-                className=" w-60 h-7   border-solid  border-t rounded-t-xl border-slate-500 bg-gradient-to-r from-red-400 to-blue-800 order-2 hover: cursor-pointer"
+                className=" w-60 h-7   border-solid  border-t rounded-t-xl border-slate-500 bg-gradient-to-r from-red-400 to-blue-800 order-2 hover: cursor-pointer pl-4"
                 id={`${index}`}
                 onClick={() => {
                   setActiveCard(index);
                 }}
-              ></div>
+              >
+                {String(card.cardNumber).slice(0, 4)} ***
+              </div>
             )}
           </>
         ))}
