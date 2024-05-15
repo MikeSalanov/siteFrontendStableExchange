@@ -1,0 +1,19 @@
+﻿.wrapperUsersPage {
+  @apply  flex flex-col h-full mx-auto;
+}
+
+
+.tableUsers{
+  @apply  mt-8 rounded-2xl  bg-zinc-600 border-collapse
+}
+
+th{
+  @apply  text-black text-lg font-normal
+}
+
+
+
+td{
+  @apply  px-16 py-9
+}
+

@@ -12,6 +12,8 @@ import RegConfirmForm from './components/commons/RegConfirmForm/RegConfirmForm';
 import RequireIsAuth from './components/commons/RequireAuth/RequireIsAuth';
 import RequireIsNotAuth from './components/commons/RequireAuth/RequireIsNotAuth';
 import HistoryPage from './components/HistoryPage/HistoryPage';
+import AdminUsersPage from './components/AdminUsersPage/AdminUsersPage';
+import AdminExchangePage from './components/AdminExchangePage/AdminExchangePage';
 
 function App(): JSX.Element {
   const { store } = useContext(Context);
@@ -74,6 +76,8 @@ function App(): JSX.Element {
             </RequireIsAuth>
           }
         />
+        <Route path="/admin/users" element={<AdminUsersPage />} />
+        <Route path="/admin/exchanges" element={<AdminExchangePage />} />
       </Routes>
     </BrowserRouter>
   );
