@@ -1,0 +1,11 @@
+﻿.modalWrapper {
+  @apply w-screen h-screen backdrop-opacity-10 backdrop-invert bg-white/30 fixed top-0 left-0 flex items-center justify-center text-black;
+}
+
+.modalWindow {
+  @apply p-5 rounded-xl bg-white;
+}
+
+.buttonNewCard {
+  @apply bg-yellow-green-corp  w-max text-black  rounded-lg hover:transform hover:scale-110 transition-transform  p-2;
+}

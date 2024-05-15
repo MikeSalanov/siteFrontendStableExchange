@@ -43,7 +43,14 @@ function App(): JSX.Element {
           }
         />
 
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route
+          path="/customer-account/settings"
+          element={
+            <RequireIsAuth>
+              <ProfilePage />
+            </RequireIsAuth>
+          }
+        />
 
         <Route
           path="/exchange"
