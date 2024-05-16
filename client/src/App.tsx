@@ -15,14 +15,15 @@ import HistoryPage from './components/HistoryPage/HistoryPage';
 import AdminUsersPage from './components/AdminUsersPage/AdminUsersPage';
 import AdminExchangePage from './components/AdminExchangePage/AdminExchangePage';
 
-function App(): JSX.Element {
+
+const App =  observer(()=> {
   const { store } = useContext(Context);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.checkAuth();
     }
-  }, []);
+  }, [store]);
 
   return (
     <BrowserRouter>
@@ -81,6 +82,6 @@ function App(): JSX.Element {
       </Routes>
     </BrowserRouter>
   );
-}
+})
 
-export default observer(App);
+export default App;
