@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {AuthResponse} from "../models/response/authService/AuthResponse";
 
-export const AUTH_API_URL = `http://localhost:3000/auth-service`
+export const AUTH_API_URL = 'http://5.35.80.205:4001/auth-service';
 
 
 const $api = axios.create({
@@ -23,7 +23,7 @@ $api.interceptors.response.use((config) => {
     if (error.response.status == 401 && error.config && !error.config._isRetry) {
         originalRequest._isRetry = true;
         try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true})
+            const response = await axios.get<AuthResponse>(`${AUTH_API_URL}/refresh`, {withCredentials: true})
             localStorage.setItem('token', response.data.accessToken);
             return $api.request(originalRequest);
         } catch (e) {

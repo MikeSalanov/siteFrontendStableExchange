@@ -1,3 +1,4 @@
+
 import {IUser} from "../models/IUser";
 import {makeAutoObservable} from "mobx";
 import AuthService from "../services/AuthService";
@@ -6,40 +7,42 @@ import {AuthResponse} from "../models/response/authService/AuthResponse.ts";
 import { AUTH_API_URL } from "../http";
 import {RegResponse} from "../models/response/authService/RegResponse.ts";
 
+
 export default class Store {
-    user = {} as IUser;
-    isAuth = false;
-    isLoading = false;
+  user = {} as IUser;
+  isAuth = localStorage.getItem('token') !== null;
+  isLoading = false;
 
-    constructor() {
-        makeAutoObservable(this);
-    }
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-    setAuth(bool: boolean) {
-        this.isAuth = bool;
-    }
+  setAuth(bool: boolean) {
+    this.isAuth = bool;
+  }
 
-    setUser(user: IUser) {
-        this.user = user;
-    }
+  setUser(user: IUser) {
+    this.user = user;
+  }
 
-    setLoading(bool: boolean) {
-        this.isLoading = bool;
-    }
+  setLoading(bool: boolean) {
+    this.isLoading = bool;
+  }
 
-    async login(email: string, password: string) {
-        try {
-          const response = await AuthService.login(email, password);
-          console.log(response)
-          localStorage.setItem('token', response.data.accessToken);
-          this.setAuth(true);
-          this.setUser(response.data.user);
-        } catch (e) {
-          console.log(e);
-        }
+  async login(email: string, password: string) {
+    try {
+      const response = await AuthService.login(email, password);
+      console.log(response);
+      localStorage.setItem('token', response.data.accessToken);
+      this.setAuth(true);
+      this.setUser(response.data.user);
+    } catch (e) {
+      console.log(e);
     }
+  }
+
   
-    async registration(email: string, password: string): Promise<AxiosResponse<RegResponse>>  {
+    async registration(email: string, password: string): Promise<AxiosResponse<RegResponse>> {
       try {
         const response = await AuthService.registration(email, password);
         console.log(response)
@@ -49,7 +52,9 @@ export default class Store {
         const errorMessage = error?.response?.data.message
         throw new Error(errorMessage) ;
       }
+
     }
+
 
     async confirmRegister(email: string, password: string, confirmationCode: string | null ) {
         try {
@@ -63,18 +68,21 @@ export default class Store {
             const error = e as AxiosError<{message:string}>
             const errorMessage = error?.response?.data.message
             throw new Error(errorMessage) ;        }
+
     }
 
     async logout() {
-        try {
-          await AuthService.logout();
-          localStorage.removeItem('token');
-          this.setAuth(false);
-          this.setUser({} as IUser);
-        } catch (e) {
-          console.log(e);
-        }
+      try {
+        console.log(123);
+        await AuthService.logout();
+        localStorage.removeItem('token');
+        this.setAuth(false);
+        this.setUser({} as IUser);
+      } catch (e) {
+        console.log(e);
+      }
     }
+
 
     async checkAuth() {
         this.setLoading(true);
@@ -89,5 +97,6 @@ export default class Store {
         } finally {
             this.setLoading(false);
         }
+
     }
 }

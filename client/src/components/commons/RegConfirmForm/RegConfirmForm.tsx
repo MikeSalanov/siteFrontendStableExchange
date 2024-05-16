@@ -45,9 +45,9 @@ const navigate = useNavigate();
     
     const res =  await store.confirmRegister(email, password, confirmationCode)
 
-    if(res.status === 201) {
-    reset()
-    navigate('/')
+    if(res.status === 200) {
+      reset()
+      navigate('/')
     }
  
     
