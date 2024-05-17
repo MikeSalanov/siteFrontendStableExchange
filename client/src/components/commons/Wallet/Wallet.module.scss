@@ -31,4 +31,6 @@ font-weight:bolder;
 
 .publicAddress {
   font-weight:bolder;
+  overflow-wrap: break-word; /* Перенос слов на новую строку при необходимости */
+  overflow: hidden; /* Скрыть текст, выходящий за пределы блока */
 }

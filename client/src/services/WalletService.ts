@@ -4,7 +4,7 @@ import {AuthResponse} from "../models/response/authService/AuthResponse";
 
 export const API_URL_WALLET = `http://5.35.80.205:4000/wallet`
 
-export const API_URL_AUTH = `http://5.35.80.205:4001/auth-service/`
+export const API_URL_AUTH = `http://5.35.80.205:4001/auth-service`
 
 export const $apiWallet = axios.create({
     withCredentials: true,
@@ -36,7 +36,7 @@ $apiWallet.interceptors.response.use((config) => {
 
 
 export default class WalletService {
-  static async getBalance(
+  static async getInfo(
   ): Promise<AxiosResponse<WalletResponse>> {
     return $apiWallet.get<WalletResponse>('/wallet-info');
   }
