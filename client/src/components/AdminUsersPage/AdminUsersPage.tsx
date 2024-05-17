@@ -14,7 +14,7 @@ function AdminUsersPage(): JSX.Element {
   }, [store]);
 
   const deleteUserHandler = async (id: string) => {
-    const response = await store.deleteUser(id);
+    const response = await store.adminDeleteUser(id);
     if (response) {
       setUsers((prev) => prev?.filter((user) => user.id !== response.id));
     }
