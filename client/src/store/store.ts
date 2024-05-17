@@ -120,4 +120,14 @@ export default class Store {
       console.log(e);
     }
   }
+
+  async deleteUser(id:string){
+    try{const response = await AdminService.delUser(id);
+      return response.data;
+    }
+    catch(e){
+      console.log(e);
+      
+    }
+  }
 }
