@@ -1,0 +1,36 @@
+
+
+.wallet {
+  height: 400px;
+  width: 400px;
+  background-color: azure;
+  position: absolute;
+  top: 50%; /* Расположение блока по вертикали на 50% высоты экрана */
+  left: 50%; /* Расположение блока по горизонтали на 50% ширины экрана */
+  transform: translate(-50%, -50%); /* Сдвиг блока на 50% его собственной ширины и высоты назад, чтобы он находился точно посередине */
+  border-radius: 20px;
+  padding-left: 10px;
+}
+
+.balanceContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+.balance {
+font-weight:bolder;
+}
+
+.publicAddressContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.publicAddress {
+  font-weight:bolder;
+  overflow-wrap: break-word; /* Перенос слов на новую строку при необходимости */
+  overflow: hidden; /* Скрыть текст, выходящий за пределы блока */
+}

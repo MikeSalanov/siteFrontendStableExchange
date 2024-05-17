@@ -9,6 +9,7 @@ import { Context } from './main';
 import { observer } from 'mobx-react-lite';
 import ExchangePage from './components/ExchangePage/ExchangePage';
 import RegConfirmForm from './components/commons/RegConfirmForm/RegConfirmForm';
+import WalletPage from './components/WalletPage/WalletPage';
 import RequireIsAuth from './components/commons/RequireAuth/RequireIsAuth';
 import RequireIsNotAuth from './components/commons/RequireAuth/RequireIsNotAuth';
 import HistoryPage from './components/HistoryPage/HistoryPage';
@@ -64,11 +65,9 @@ const App =  observer(()=> {
             </RequireIsAuth>
           }
         />
-
-        <Route
-          path="/customer-account/confirm-registration"
-          element={<RegConfirmForm />}
-        />
+        <Route path="/exchange" element={<ExchangePage />} />
+        <Route path="/customer-account/wallet" element={< WalletPage/>} />
+        <Route path="/customer-account/confirm-registration" element={< RegConfirmForm/>} />
         <Route
           path="/customer-account/history"
           element={
