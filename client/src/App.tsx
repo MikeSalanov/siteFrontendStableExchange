@@ -12,15 +12,19 @@ import RegConfirmForm from './components/commons/RegConfirmForm/RegConfirmForm';
 import WalletPage from './components/WalletPage/WalletPage';
 import RequireIsAuth from './components/commons/RequireAuth/RequireIsAuth';
 import RequireIsNotAuth from './components/commons/RequireAuth/RequireIsNotAuth';
+import HistoryPage from './components/HistoryPage/HistoryPage';
+import AdminUsersPage from './components/AdminUsersPage/AdminUsersPage';
+import AdminExchangePage from './components/AdminExchangePage/AdminExchangePage';
 
-function App(): JSX.Element {
+
+const App =  observer(()=> {
   const { store } = useContext(Context);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.checkAuth();
     }
-  }, []);
+  }, [store]);
 
   return (
     <BrowserRouter>
@@ -44,7 +48,14 @@ function App(): JSX.Element {
           }
         />
 
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route
+          path="/customer-account/settings"
+          element={
+            <RequireIsAuth>
+              <ProfilePage />
+            </RequireIsAuth>
+          }
+        />
 
         <Route
           path="/exchange"
@@ -57,9 +68,19 @@ function App(): JSX.Element {
         <Route path="/exchange" element={<ExchangePage />} />
         <Route path="/customer-account/wallet" element={< WalletPage/>} />
         <Route path="/customer-account/confirm-registration" element={< RegConfirmForm/>} />
+        <Route
+          path="/customer-account/history"
+          element={
+            <RequireIsAuth>
+              <HistoryPage />
+            </RequireIsAuth>
+          }
+        />
+        <Route path="/admin/users" element={<AdminUsersPage />} />
+        <Route path="/admin/exchanges" element={<AdminExchangePage />} />
       </Routes>
     </BrowserRouter>
   );
-}
+})
 
-export default observer(App);
+export default App;

@@ -19,7 +19,7 @@
 }
 
 .dropDownMenu {
-  @apply absolute bg-yellow-green-corp w-max  rounded-b-lg p-1 rounded-r-lg;
+  @apply absolute bg-yellow-green-corp w-max  rounded-b-lg p-1 rounded-r-lg z-10;
 }
 
 .dropDownItem {

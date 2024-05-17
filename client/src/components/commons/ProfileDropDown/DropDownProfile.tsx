@@ -3,11 +3,9 @@ import { useContext, useEffect, useState } from 'react';
 import DropDownProfileItem from './DropDownProfileItem';
 import { Context } from '../../../main';
 
-function DropDownProfile(props: {
-  setDropdownVisiable: React.Dispatch<React.SetStateAction<boolean>>;
-}): JSX.Element {
+function DropDownProfile(): JSX.Element {
   const { store } = useContext(Context);
-  const { setDropdownVisiable } = props;
+
   const options = [
     {
       value: store.isAuth ? store.user.email : 'Имя пользователя',
@@ -68,10 +66,11 @@ function DropDownProfile(props: {
               onClick={
                 option.value === 'Выйти'
                   ? (e) => {
-                    e.stopPropagation();
-                    store.logout();
-                    setDropdownVisiable(false);
-                  }
+                      e.stopPropagation();
+                      store.logout();
+                      console.log('Выход нажат');
+                      
+                    }
                   : undefined
               }
             />
