@@ -1,6 +1,7 @@
 ﻿import { Navigate } from 'react-router-dom';
 import { Context } from '../../../main';
 import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
 function RequireIsNotAuth({
   children,
@@ -10,10 +11,12 @@ function RequireIsNotAuth({
   const { store } = useContext(Context);
 
   if (store.isAuth) {
+    if (store.user.email === 'admin@admin')
+      return <Navigate to="/admin/users" />;
     return <Navigate to="/" />;
   }
 
   return children;
 }
 
-export default RequireIsNotAuth;
+export default observer(RequireIsNotAuth);

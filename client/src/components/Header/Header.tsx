@@ -3,20 +3,17 @@ import styles from './Header.module.scss';
 import { useContext } from 'react';
 import DropDownProfile from '../commons/ProfileDropDown/DropDownProfile';
 import { Context } from '../../main';
+import { observer } from 'mobx-react-lite';
 
 function Header(): JSX.Element {
   const { store } = useContext(Context);
-  
+
   return (
     <div className={styles.wrapper}>
       <div className=" h-full">
         {' '}
         <Link to="/">
-          <img
-            src="stablelogo.svg"
-            alt="logo"
-            className=" h-full"
-          />
+          <img src="stablelogo.svg" alt="logo" className=" h-full" />
         </Link>
       </div>
 
@@ -40,4 +37,4 @@ function Header(): JSX.Element {
   );
 }
 
-export default Header;
+export default observer(Header);

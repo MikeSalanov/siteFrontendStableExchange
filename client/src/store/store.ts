@@ -10,7 +10,7 @@ import UserService from '../services/UserServices.ts';
 
 export default class Store {
   user = {} as IUser;
-  isAuth = localStorage.getItem('token') !== null;
+  isAuth =  false; 
   isLoading = false;
   email = this.user.email;
 
@@ -86,7 +86,6 @@ export default class Store {
     try {
       localStorage.removeItem('token');
       await AuthService.logout();
-
       this.setAuth(false);
       this.setUser({} as IUser);
     } catch (e) {

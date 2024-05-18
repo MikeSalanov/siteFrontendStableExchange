@@ -1,6 +1,7 @@
 ﻿import { Navigate } from 'react-router-dom';
 import { Context } from '../../../main';
 import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
 function RequireIsNotAdmin({
   children,
@@ -16,4 +17,4 @@ function RequireIsNotAdmin({
   return children;
 }
 
-export default RequireIsNotAdmin;
+export default observer(RequireIsNotAdmin);

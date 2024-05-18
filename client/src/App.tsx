@@ -15,8 +15,10 @@ import RequireIsNotAuth from './components/commons/RequireAuth/RequireIsNotAuth'
 import HistoryPage from './components/HistoryPage/HistoryPage';
 import AdminUsersPage from './components/AdminUsersPage/AdminUsersPage';
 import AdminExchangePage from './components/AdminExchangePage/AdminExchangePage';
+import RequireIsNotAdmin from './components/commons/RequireAuth/RequireIsNotAdmin';
+import RequireIsAdmin from './components/commons/RequireAuth/RequireIsAdmin';
 
-const App =() => {
+const App = () => {
   const { store } = useContext(Context);
 
   useEffect(() => {
@@ -28,7 +30,14 @@ const App =() => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route
+          path="/"
+          element={
+            <RequireIsNotAdmin>
+              <MainPage />
+            </RequireIsNotAdmin>
+          }
+        />
 
         <Route
           path="/customer-account/signUp"
@@ -82,13 +91,20 @@ const App =() => {
         <Route
           path="/admin/users"
           element={
-            
+            <RequireIsAdmin>
               <AdminUsersPage />
-            
+            </RequireIsAdmin>
           }
         />
 
-        <Route path="/admin/exchanges" element={<AdminExchangePage />} />
+        <Route
+          path="/admin/exchanges"
+          element={
+            <RequireIsAdmin>
+              <AdminExchangePage />
+            </RequireIsAdmin>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
