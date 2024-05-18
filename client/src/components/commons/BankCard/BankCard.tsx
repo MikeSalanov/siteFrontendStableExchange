@@ -1,5 +1,4 @@
 ﻿import { useState } from 'react';
-import styles from './BankCard.module.scss';
 
 function BankCard(props: {
   cardNumber: number;
