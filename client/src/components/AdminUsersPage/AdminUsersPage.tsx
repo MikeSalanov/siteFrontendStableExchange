@@ -41,7 +41,7 @@ function AdminUsersPage(): JSX.Element {
                 <td>
                   <img
                     width={20}
-                    src="../../../../delete-user.svg"
+                    src="delete-user.svg"
                     alt="delete"
                     className="hover:transform hover:scale-150 hover:cursor-pointer  active:transofrm active:scale-125 transition-transform"
                     onClick={() => {

@@ -25,7 +25,7 @@ function FormNewCard(): JSX.Element {
           <div>
             <img
               width={100}
-              src="../../../public/profile-settings.svg"
+              src="profile-settings.svg"
               alt=""
             />
           </div>

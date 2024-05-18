@@ -9,20 +9,20 @@ function DropDownProfile(): JSX.Element {
   const options = [
     {
       value: store.isAuth ? store.user.email : 'Имя пользователя',
-      icon: '../../public/bx-user.svg',
+      icon: 'bx-user.svg',
       route: '/customer-account/settings',
     },
     {
       value: 'История',
-      icon: '../../public/bx-time.svg',
+      icon: 'bx-time.svg',
       route: '/customer-account/history',
     },
     {
       value: 'Кошелек',
-      icon: '../../public/bx-wallet.svg',
+      icon: 'public/bx-wallet.svg',
       route: '/customer-account/wallet',
     },
-    { value: 'Выйти', icon: '../../public/bx-log-out.svg', route: '' },
+    { value: 'Выйти', icon: 'public/bx-log-out.svg', route: '' },
   ];
   const [hiddenDropDown, setHiddenDropDown] = useState<boolean>(true);
 
@@ -52,7 +52,7 @@ function DropDownProfile(): JSX.Element {
             setHiddenDropDown((prev) => !prev);
           }}
         >
-          <img src="../../public/bx-user-circle.svg" alt="bx-user-circle" />
+          <img src="bx-user-circle.svg" alt="bx-user-circle" />
           <p>Профиль</p>{' '}
         </div>
         <div
@@ -68,7 +68,7 @@ function DropDownProfile(): JSX.Element {
                   ? (e) => {
                       e.stopPropagation();
                       store.logout();
-                      console.log('Выход нажат');
+                      
                       
                     }
                   : undefined

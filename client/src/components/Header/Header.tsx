@@ -13,7 +13,7 @@ function Header(): JSX.Element {
         {' '}
         <Link to="/">
           <img
-            src="../../../public/stablelogo.svg"
+            src="stablelogo.svg"
             alt="logo"
             className=" h-full"
           />
