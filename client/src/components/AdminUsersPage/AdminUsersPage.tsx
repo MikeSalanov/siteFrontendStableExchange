@@ -13,6 +13,13 @@ function AdminUsersPage(): JSX.Element {
     store.getUsers().then((res) => setUsers(res));
   }, [store]);
 
+  const deleteUserHandler = async (id: string) => {
+    const response = await store.adminDeleteUser(id);
+    if (response) {
+      setUsers((prev) => prev?.filter((user) => user.id !== response.id));
+    }
+  };
+
   return (
     <>
       <h1 className="mt-20 text-2xl text-slate-300">Пользователи</h1>
@@ -34,9 +41,12 @@ function AdminUsersPage(): JSX.Element {
                 <td>
                   <img
                     width={20}
-                    src="../../../../delete-user.svg"
+                    src="delete-user.svg"
                     alt="delete"
                     className="hover:transform hover:scale-150 hover:cursor-pointer  active:transofrm active:scale-125 transition-transform"
+                    onClick={() => {
+                      deleteUserHandler(user.id);
+                    }}
                   />
                 </td>
               </tr>

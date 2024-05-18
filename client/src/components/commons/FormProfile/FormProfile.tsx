@@ -1,21 +1,31 @@
 ﻿import { useContext } from 'react';
 import { Context } from '../../../main';
 import styles from './FormProfile.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 function FormNewCard(): JSX.Element {
   const { store } = useContext(Context);
+  const navigate = useNavigate();
+  const deleteUserHandler = async () => {
+    try {
+      const res = await store.deleteUser();
+      res && navigate('/');
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <div className={styles.profileFormWrapper}>
       <div className="flex gap-7 justify-center backdrop-brightness-75 p-10 rounded-3xl">
         <div className="flex flex-col gap-2 items-center">
-          <div className=" text-center mb-4 text-center text-xl text-slate-400">
+          <div className=" text-center mb-4 text-xl text-slate-400">
             Настройки профиля
           </div>
           <div>
             <img
               width={100}
-              src="../../../public/profile-settings.svg"
+              src="profile-settings.svg"
               alt=""
             />
           </div>
@@ -23,7 +33,10 @@ function FormNewCard(): JSX.Element {
           <div className="my-6  text-yellow-green-corp opacity-55 hover:opacity-100 transition hover:cursor-pointer">
             Очистить историю
           </div>
-          <div className=" text-red-700 hover:text-red-600 transition hover:cursor-pointer">
+          <div
+            className=" text-red-700 hover:text-red-600 transition hover:cursor-pointer"
+            onClick={deleteUserHandler}
+          >
             Удалить аккаунт
           </div>
         </div>

@@ -1,19 +1,21 @@
-import axios from 'axios';
+﻿import axios, { AxiosResponse } from 'axios';
+import { DeleteUserResponse } from '../models/response/authService/DeleteUserResponse';
 import { AuthResponse } from '../models/response/authService/AuthResponse';
+import { AUTH_API_URL } from '../http';
 
-export const AUTH_API_URL = 'http://localhost:4001/auth-service';
+const USER_API_URL = 'http://localhost:4001/user-service';
 
-const $api = axios.create({
+const $user_Res = axios.create({
   withCredentials: true,
-  baseURL: AUTH_API_URL,
+  baseURL: USER_API_URL,
 });
 
-$api.interceptors.request.use((config) => {
+$user_Res.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
   return config;
 });
 
-$api.interceptors.response.use(
+$user_Res.interceptors.response.use(
   (config) => {
     return config;
   },
@@ -33,7 +35,7 @@ $api.interceptors.response.use(
           { withCredentials: true }
         );
         localStorage.setItem('token', response.data.accessToken);
-        return $api.request(originalRequest);
+        return $user_Res.request(originalRequest);
       } catch (e) {
         console.log('НЕ АВТОРИЗОВАН');
       }
@@ -42,4 +44,9 @@ $api.interceptors.response.use(
   }
 );
 
-export default $api;
+export default class UserService {
+
+  static async delUser(): Promise<AxiosResponse<DeleteUserResponse>> {
+    return $user_Res.delete<DeleteUserResponse>('/user');
+  }
+}

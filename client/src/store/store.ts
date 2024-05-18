@@ -6,6 +6,7 @@ import { AuthResponse } from '../models/response/authService/AuthResponse.ts';
 import { AUTH_API_URL } from '../http';
 import { RegResponse } from '../models/response/authService/RegResponse.ts';
 import AdminService from '../services/AdminService.ts';
+import UserService from '../services/UserServices.ts';
 
 export default class Store {
   user = {} as IUser;
@@ -116,6 +117,30 @@ export default class Store {
     try {
       const response = await AdminService.getUsers();
       return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async adminDeleteUser(id: string) {
+    try {
+      const response = await AdminService.delUser(id);
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async deleteUser() {
+    try {
+      const response = await UserService.delUser();
+      console.log(response);
+      if (response.status === 200) {
+        await this.logout();
+        return true;
+      } else {
+        console.log('Не удалось выполнить удаление пользователя');
+      }
     } catch (e) {
       console.log(e);
     }
