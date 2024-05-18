@@ -12,7 +12,7 @@ export default class Store {
   user = {} as IUser;
   isAuth = localStorage.getItem('token') !== null;
   isLoading = false;
-  email = '';
+  email = this.user.email;
 
   constructor() {
     makeAutoObservable(this);

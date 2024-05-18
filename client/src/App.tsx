@@ -16,15 +16,14 @@ import HistoryPage from './components/HistoryPage/HistoryPage';
 import AdminUsersPage from './components/AdminUsersPage/AdminUsersPage';
 import AdminExchangePage from './components/AdminExchangePage/AdminExchangePage';
 
-
-const App =  observer(()=> {
+const App =() => {
   const { store } = useContext(Context);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.checkAuth();
     }
-  }, [store]);
+  }, []);
 
   return (
     <BrowserRouter>
@@ -66,8 +65,11 @@ const App =  observer(()=> {
           }
         />
         <Route path="/exchange" element={<ExchangePage />} />
-        <Route path="/customer-account/wallet" element={< WalletPage/>} />
-        <Route path="/customer-account/confirm-registration" element={< RegConfirmForm/>} />
+        <Route path="/customer-account/wallet" element={<WalletPage />} />
+        <Route
+          path="/customer-account/confirm-registration"
+          element={<RegConfirmForm />}
+        />
         <Route
           path="/customer-account/history"
           element={
@@ -76,11 +78,20 @@ const App =  observer(()=> {
             </RequireIsAuth>
           }
         />
-        <Route path="/admin/users" element={<AdminUsersPage />} />
+
+        <Route
+          path="/admin/users"
+          element={
+            
+              <AdminUsersPage />
+            
+          }
+        />
+
         <Route path="/admin/exchanges" element={<AdminExchangePage />} />
       </Routes>
     </BrowserRouter>
   );
-})
+};
 
-export default App;
+export default observer(App);
