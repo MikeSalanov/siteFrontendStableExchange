@@ -1,4 +1,5 @@
 ﻿import Header from '../Header/Header';
+import ExchangeHistoryFilter from '../commons/ExchangeHistoryFilter/ExchangeHistoryFilter';
 import styles from './HistoryPage.module.scss';
 function HistoryPage(): JSX.Element {
   interface HistoryItemInterface {
@@ -49,6 +50,7 @@ function HistoryPage(): JSX.Element {
     <>
       <Header />
       <h1 className=" text-2xl text-slate-400">История операций</h1>
+      <ExchangeHistoryFilter/>
       <div className={styles.wrapperHistoryPage}>
         <table>
           <thead className=" text-black bg-slate-400">
