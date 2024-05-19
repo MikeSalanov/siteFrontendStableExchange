@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { UsersResponse } from '../models/response/UsersResponse';
 import { DeleteUserResponse } from '../models/response/authService/DeleteUserResponse';
 
-const ADMIN_API_URL = 'http://localhost:4001/admin/';
+const ADMIN_API_URL = 'http://localhost:4001/auth-service';
 
 const $adminRes = axios.create({
   withCredentials: true,

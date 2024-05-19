@@ -10,7 +10,7 @@ import UserService from '../services/UserServices.ts';
 
 export default class Store {
   user = {} as IUser;
-  isAuth =  false; 
+  isAuth = false;
   isLoading = false;
   email = this.user.email;
 
@@ -140,6 +140,24 @@ export default class Store {
       } else {
         console.log('Не удалось выполнить удаление пользователя');
       }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async changePasswordUser({
+    oldPassword,
+    newPassword,
+  }: {
+    oldPassword: string;
+    newPassword: string;
+  }) {
+    try {
+      const response = await UserService.changePassword({
+        oldPassword,
+        newPassword,
+      });
+      return response;
     } catch (e) {
       console.log(e);
     }
