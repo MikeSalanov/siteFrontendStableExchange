@@ -10,5 +10,6 @@ export default defineConfig({
   envPrefix: 'VITE_',
   define: {
     'process.env.VITE_BASE_URL': JSON.stringify(process.env.VITE_BASE_URL),
+    'process.env.VITE_STRIPE_PUBLIC_KEY': JSON.stringify(process.env.VITE_STRIPE_PUBLIC_KEY)
   }
 })
