@@ -50,13 +50,14 @@ function FormNewCard(): JSX.Element {
     }
     if (newPassword !== newPasswordConfirm) {
       setErrorMessage('Введенные пароли не совпадают!');
+    } else {
+      const res = await store.changePasswordUser({ oldPassword, newPassword });
+      if (res?.data.isChanged) {
+        store.logout();
+        navigate('/');
+      }
+      setErrorMessage(res?.data.message);
     }
-    const res = await store.changePasswordUser({ oldPassword, newPassword });
-    if (res?.data.isChanged) {
-      store.logout();
-      navigate('/');
-    }
-    setErrorMessage(res?.data.message);
   };
 
   return (
@@ -67,7 +68,7 @@ function FormNewCard(): JSX.Element {
             Настройки профиля
           </div>
           <div>
-            <img width={100} src="profile-settings.svg" alt="" />
+            <img width={100} src="../profile-settings.svg" alt="" />
           </div>
           <p>{store.user.email}</p>
           <div className="my-6  text-yellow-green-corp opacity-55 hover:opacity-100 transition hover:cursor-pointer">

@@ -47,7 +47,7 @@ $user_Res.interceptors.response.use(
 
 export default class UserService {
   static async delUser(): Promise<AxiosResponse<DeleteUserResponse>> {
-    return $user_Res.delete<DeleteUserResponse>('/user');
+    return $user_Res.delete<DeleteUserResponse>('/');
   }
 
   static async changePassword({
@@ -57,7 +57,7 @@ export default class UserService {
     oldPassword: string;
     newPassword: string;
   }): Promise<AxiosResponse<ChangePasswordUserResponse>> {
-    return $user_Res.patch<ChangePasswordUserResponse>('/user', {
+    return $user_Res.patch<ChangePasswordUserResponse>('/', {
       newPassword,
       oldPassword,
     });
