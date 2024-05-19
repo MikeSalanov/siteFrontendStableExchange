@@ -1,7 +1,7 @@
 import * as yup from "yup"
 import { useForm } from "react-hook-form"
- import {yupResolver} from "@hookform/resolvers/yup"
- import styles from "./RegistrationForm.module.scss"
+import { yupResolver } from "@hookform/resolvers/yup"
+import styles from "./RegistrationForm.module.scss"
 import { useContext } from "react";
 import { Context } from "../../../main";
 import { AxiosError } from "axios";
@@ -60,19 +60,19 @@ const {store} = useContext(Context)
       <div className={styles.inputContainer} >
       <label className={styles.label} htmlFor="email">Email</label>
       <input type="text" id="email"  {...register("email")}/>
-      {errors?.email &&  <span className={styles.errorText}>{errors.email.message}</span>}
+      {errors?.email && <span className={styles.errorText}>{errors.email.message}</span>}
       </div>
       <div className={styles.inputContainer} >
       <label className={styles.label} htmlFor="password">Пароль</label>
-      <input type="password"  id="password" {...register("password")}/>
-      {errors?.password &&  <span className={styles.errorText}>{errors.password.message}</span>}
+      <input type="password" id="password" {...register("password")}/>
+      {errors?.password && <span className={styles.errorText}>{errors.password.message}</span>}
       </div>
       <div className={styles.inputContainer} >
       <label className={styles.label} htmlFor="password2">Подтвердите пароль</label>
-      <input type="password"  id="password2" {...register("password2")}/>
-      {errors?.password2 &&  <span className={styles.errorText}>{errors.password2.message}</span>}
+      <input type="password" id="password2" {...register("password2")}/>
+      {errors?.password2 && <span className={styles.errorText}>{errors.password2.message}</span>}
       </div>
-      <button className={styles.btn}  type="submit">Зарегистрироваться</button>
+      <button className={styles.btn} type="submit">Зарегистрироваться</button>
     </form>
   );
 }

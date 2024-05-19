@@ -1,12 +1,11 @@
 import MainPage from './components/MainPage/MainPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RegisterPage from './components/RegisterPage/RegisterPage';
-import LoginPage from './components/LoginPage/LoginPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
-
 import { useContext, useEffect } from 'react';
 import { Context } from './main';
 import { observer } from 'mobx-react-lite';
+import Header from "./components/Header/Header.tsx";
 import ExchangePage from './components/ExchangePage/ExchangePage';
 import RegConfirmForm from './components/commons/RegConfirmForm/RegConfirmForm';
 import WalletPage from './components/WalletPage/WalletPage';
@@ -15,6 +14,8 @@ import RequireIsNotAuth from './components/commons/RequireAuth/RequireIsNotAuth'
 import HistoryPage from './components/HistoryPage/HistoryPage';
 import AdminUsersPage from './components/AdminUsersPage/AdminUsersPage';
 import AdminExchangePage from './components/AdminExchangePage/AdminExchangePage';
+import Footer from "./components/Footer/Footer.tsx";
+import LoginForm from "./components/commons/LoginForm/LoginForm.tsx";
 
 
 const App =  observer(()=> {
@@ -28,9 +29,10 @@ const App =  observer(()=> {
 
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />
-
+        
         <Route
           path="/customer-account/signUp"
           element={
@@ -43,7 +45,7 @@ const App =  observer(()=> {
           path="/customer-account/signIn"
           element={
             <RequireIsNotAuth>
-              <LoginPage />
+              <LoginForm />
             </RequireIsNotAuth>
           }
         />
@@ -79,6 +81,7 @@ const App =  observer(()=> {
         <Route path="/admin/users" element={<AdminUsersPage />} />
         <Route path="/admin/exchanges" element={<AdminExchangePage />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 })

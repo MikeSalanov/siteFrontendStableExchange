@@ -1,27 +1,28 @@
 .form {
+  margin-top: 12vh;
+  max-width: 100vw;
   display: flex;
   flex-direction: column;
   gap: 16px;
   align-items: center;
-  }
-  
-  .inputContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  .errorText {
-    color: rgb(158, 3, 3);
-  
-  }
-  
-  .label {
-    color:rgb(205 255 0)
-  }
-  
-  .btn {
-    background-color: aquamarine;
-  }
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.errorText {
+  color: rgb(158, 3, 3);
+}
+
+.label {
+  color:rgb(205 255 0)
+}
+
+.btn {
+  background-color: aquamarine;
+}

@@ -8,16 +8,15 @@ function MailAdvPopUp ({ active, setModalActive }: { active: boolean, setModalAc
 
   const {store} = useContext(Context)
 
-
-  return ( 
+  return (
     <div className={active ? `${styles.modal} ${styles.modalActive}` : styles.modal} onClick={() => setModalActive(false)}>
       <div className={active ? `${styles.modalContent} ${styles.modalContentActive}` : styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        <img src="../../public/mail.svg" alt="icon" />
+        <img src="mail.svg" alt="icon" />
         <p className={styles.contentTitle}>Проверьте указанную почту</p>
-        <p className ={styles.contentDescription}>{`На адрес электронной почты ${store.user.email ? store.user.email : '' } направлена ссылка для подтверждения регистрации`} </p>      
+        <p className ={styles.contentDescription}>{`На адрес электронной почты ${store.user.email ? store.user.email : '' } направлена ссылка для подтверждения регистрации`} </p>
       </div>
     </div>
    );
 }
- 
+
 export default MailAdvPopUp;

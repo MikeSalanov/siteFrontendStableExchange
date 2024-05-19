@@ -1,7 +1,7 @@
 import * as yup from "yup"
 import { useForm } from "react-hook-form"
- import {yupResolver} from "@hookform/resolvers/yup"
- import styles from "./LoginForm.module.scss"
+import { yupResolver } from "@hookform/resolvers/yup"
+import styles from "./LoginForm.module.scss"
 import { useContext } from "react";
 import { Context } from "../../../main";
 import { useNavigate } from "react-router-dom";
