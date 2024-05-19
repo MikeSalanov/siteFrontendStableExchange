@@ -6,7 +6,6 @@ import Header from "../Header/Header";
 function WalletPage () {
   return (
     <>
-    <Header/>
     <Wallet/>
     </>
     );

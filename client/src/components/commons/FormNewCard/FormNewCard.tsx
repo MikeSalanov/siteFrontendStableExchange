@@ -1,7 +1,8 @@
-﻿import styles from './FormNewCard.module.scss';
+﻿import StripeFormNewCard from '../StripeFormNewCard/StripeFormNewCard';
+import StripePayment from '../StripeFormNewCard/StripePayment';
+import styles from './FormNewCard.module.scss';
 
 function FormNewCard({
-  
   setFormNewCard,
 }: {
   setFormNewCard: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,8 +18,8 @@ function FormNewCard({
           <input type="text" placeholder="IVAN IVANOV" />
           <label>Дата окончания действия:</label>
           <div className="flex">
-            <input className=' w-10' type="text" placeholder="ММ" /> /
-            <input className=' w-10 ml-2' type="text" placeholder="ГГ" />
+            <input className=" w-10" type="text" placeholder="ММ" /> /
+            <input className=" w-10 ml-2" type="text" placeholder="ГГ" />
           </div>
           <label>CVV/CVC:</label>
           <input type="text" placeholder="123" />
@@ -29,7 +30,9 @@ function FormNewCard({
             </button>
           </div>
         </div>
+       
       </div>
+      
     </div>
   );
 }

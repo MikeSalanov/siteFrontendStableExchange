@@ -14,25 +14,33 @@ import RequireIsNotAuth from './components/commons/RequireAuth/RequireIsNotAuth'
 import HistoryPage from './components/HistoryPage/HistoryPage';
 import AdminUsersPage from './components/AdminUsersPage/AdminUsersPage';
 import AdminExchangePage from './components/AdminExchangePage/AdminExchangePage';
+import RequireIsNotAdmin from './components/commons/RequireAuth/RequireIsNotAdmin';
+import RequireIsAdmin from './components/commons/RequireAuth/RequireIsAdmin';
 import Footer from "./components/Footer/Footer.tsx";
 import LoginForm from "./components/commons/LoginForm/LoginForm.tsx";
 
-
-const App =  observer(()=> {
+const App = () => {
   const { store } = useContext(Context);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.checkAuth();
     }
-  }, [store]);
+  }, []);
 
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        
+        <Route
+          path="/"
+          element={
+            <RequireIsNotAdmin>
+              <MainPage />
+            </RequireIsNotAdmin>
+          }
+        />
+
         <Route
           path="/customer-account/signUp"
           element={
@@ -68,8 +76,11 @@ const App =  observer(()=> {
           }
         />
         <Route path="/exchange" element={<ExchangePage />} />
-        <Route path="/customer-account/wallet" element={< WalletPage/>} />
-        <Route path="/customer-account/confirm-registration" element={< RegConfirmForm/>} />
+        <Route path="/customer-account/wallet" element={<WalletPage />} />
+        <Route
+          path="/customer-account/confirm-registration"
+          element={<RegConfirmForm />}
+        />
         <Route
           path="/customer-account/history"
           element={
@@ -78,12 +89,28 @@ const App =  observer(()=> {
             </RequireIsAuth>
           }
         />
-        <Route path="/admin/users" element={<AdminUsersPage />} />
-        <Route path="/admin/exchanges" element={<AdminExchangePage />} />
+
+        <Route
+          path="/admin/users"
+          element={
+            <RequireIsAdmin>
+              <AdminUsersPage />
+            </RequireIsAdmin>
+          }
+        />
+
+        <Route
+          path="/admin/exchanges"
+          element={
+            <RequireIsAdmin>
+              <AdminExchangePage />
+            </RequireIsAdmin>
+          }
+        />
       </Routes>
       <Footer />
     </BrowserRouter>
   );
-})
+};
 
-export default App;
+export default observer(App);

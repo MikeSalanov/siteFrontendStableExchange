@@ -1,4 +1,8 @@
-﻿import styles from './AdminExchangePage.module.scss';
+﻿import { Link } from 'react-router-dom';
+import styles from './AdminExchangePage.module.scss';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../../main';
+import { useContext } from 'react';
 function AdminExchangePage(): JSX.Element {
   interface ExchangeInterface {
     publicId: string;
@@ -63,10 +67,14 @@ function AdminExchangePage(): JSX.Element {
       amountTo: 1,
     },
   ];
-
+  const { store } = useContext(Context);
   return (
     <>
       <h1 className="mt-20 text-2xl text-slate-300">Обменные операции</h1>
+      <div>
+        <Link to="/admin/users">Пользователи</Link>{' '}
+        <div onClick={store.logout}>Выйти</div>{' '}
+      </div>
       <div className={styles.wrapperExchangePage}>
         <table className={styles.tableExchanges}>
           <thead className=" text-black bg-slate-400 rounded-lg">
@@ -125,4 +133,4 @@ function AdminExchangePage(): JSX.Element {
   );
 }
 
-export default AdminExchangePage;
+export default observer(AdminExchangePage);

@@ -43,7 +43,6 @@ function ProfilePage(): JSX.Element {
 
   return (
     <>
-      <Header />
       <div className={styles.wrapperProfilePage}>
         <FormProfile />
         <StackCards cards={cards} />

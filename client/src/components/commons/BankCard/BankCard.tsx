@@ -33,7 +33,7 @@ function BankCard(props: {
         <img
           width={30}
           className="absolute bottom-14 left-1 "
-          src="chip-debit.svg"
+          src="../chip-debit.svg"
           alt="chip"
         />
         <div className="absolute right-3 top-2">
@@ -45,8 +45,8 @@ function BankCard(props: {
             width={20}
             src={
               cvvViseble
-                ? 'eye-close.svg'
-                : 'eye-open.svg'
+                ? '../eye-close.svg'
+                : '../eye-open.svg'
             }
           />
         </div>
