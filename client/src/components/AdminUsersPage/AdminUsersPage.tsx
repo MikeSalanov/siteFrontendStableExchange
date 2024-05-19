@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../../main';
 import { UsersResponse } from '../../models/response/UsersResponse';
 import { Link } from 'react-router-dom';
+import DeleteUserSVG from '../../../public/delete-user.svg';
 
 function AdminUsersPage(): JSX.Element {
   const [users, setUsers] = useState<UsersResponse[] | undefined>([]);
@@ -43,7 +44,7 @@ function AdminUsersPage(): JSX.Element {
                 <td>
                   <img
                     width={20}
-                    src="delete-user.svg"
+                    src={DeleteUserSVG}
                     alt="delete"
                     className="hover:transform hover:scale-150 hover:cursor-pointer  active:transofrm active:scale-125 transition-transform"
                     onClick={() => {

@@ -28,7 +28,7 @@ function LoginForm(): JSX.Element {
   });
 
   console.log(errors);
-
+  
   const { store } = useContext(Context);
   const navigate = useNavigate();
 

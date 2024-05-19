@@ -77,7 +77,7 @@ function AdminExchangePage(): JSX.Element {
       </div>
       <div className={styles.wrapperExchangePage}>
         <table className={styles.tableExchanges}>
-          <thead className=" text-black bg-slate-400 rounded-lg">
+          <thead className="text-black bg-slate-400 rounded-lg">
             <tr className="rounded-t-lg">
               <th className="rounded-tl-lg">ID</th>
               <th>Статус</th>
@@ -105,7 +105,7 @@ function AdminExchangePage(): JSX.Element {
                   <div className="flex flex-col items-center">
                     {' '}
                     <div>{item.date}</div>
-                    <div className=" text-slate-500">{item.time}</div>{' '}
+                    <div className="text-slate-500">{item.time}</div>{' '}
                   </div>
                 </td>
                 <td>

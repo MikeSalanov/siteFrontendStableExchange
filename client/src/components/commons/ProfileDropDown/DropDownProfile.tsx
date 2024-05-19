@@ -2,6 +2,11 @@
 import { useContext, useEffect, useState } from 'react';
 import DropDownProfileItem from './DropDownProfileItem';
 import { Context } from '../../../main';
+import CircleProfileSVG from '../../../../public/bx-user-circle.svg';
+import UserSVG from '../../../../public/bx-user.svg';
+import TimeSVG from '../../../../public/bx-time.svg';
+import WalletSVG from '../../../../public/bx-wallet.svg';
+import LogOutSVG from '../../../../public/bx-log-out.svg';
 
 function DropDownProfile(): JSX.Element {
   const { store } = useContext(Context);
@@ -9,20 +14,20 @@ function DropDownProfile(): JSX.Element {
   const options = [
     {
       value: store.isAuth ? store.user.email : 'Имя пользователя',
-      icon: 'bx-user.svg',
+      icon: UserSVG,
       route: '/customer-account/settings',
     },
     {
       value: 'История',
-      icon: 'bx-time.svg',
+      icon: TimeSVG,
       route: '/customer-account/history',
     },
     {
       value: 'Кошелек',
-      icon: 'public/bx-wallet.svg',
+      icon: WalletSVG,
       route: '/customer-account/wallet',
     },
-    { value: 'Выйти', icon: 'bx-log-out.svg', route: '' },
+    { value: 'Выйти', icon: LogOutSVG, route: '' },
   ];
   const [hiddenDropDown, setHiddenDropDown] = useState<boolean>(true);
 
@@ -52,7 +57,7 @@ function DropDownProfile(): JSX.Element {
             setHiddenDropDown((prev) => !prev);
           }}
         >
-          <img src="bx-user-circle.svg" alt="bx-user-circle" />
+          <img src={CircleProfileSVG} alt="bx-user-circle"/>
           <p>Профиль</p>{' '}
         </div>
         <div

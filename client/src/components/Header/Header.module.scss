@@ -1,11 +1,14 @@
 ﻿.wrapper {
-  @apply flex w-2/4 mx-auto  text-white justify-between mt-1 h-36 items-end;
+  max-width: 100vw;
+  gap: 45vw;
+  @apply flex text-white justify-center mt-1 h-36 items-end;
 }
 
 .buttonsBlock {
-  @apply flex gap-5 w-56 justify-between;
+  margin-right: 7vw;
+  @apply flex w-56 justify-between;
 }
 
 .buttonAccount {
-  @apply bg-yellow-green-corp  w-max text-black  rounded-lg hover:transform hover:scale-110 transition-transform  p-2;
+  @apply bg-yellow-green-corp w-max text-black rounded-lg hover:transform hover:scale-110 transition-transform p-2;
 }
