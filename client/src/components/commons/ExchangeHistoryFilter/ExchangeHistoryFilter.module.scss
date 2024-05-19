@@ -1,0 +1,36 @@
+.clearBtn {
+  color:black;
+  background-color: yellow;
+  padding: 5px;
+  }
+
+  .filterContainer {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .filterOptionsContainer 
+ {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+ }  
+ 
+ .calendar_and_status_filterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  }
+
+
+  .exchangeID_from_to_filterContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
