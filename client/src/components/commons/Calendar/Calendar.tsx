@@ -9,6 +9,31 @@ function Calendar() {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   const [startDate, endDate] = dateRange;
 
+  const handleDateChange = (update: [Date | null, Date | null]) => {
+    setDateRange(update);
+    const [dateFrom, dateTill] = update;
+
+    if (dateFrom && dateTill) {
+      const formattedDateFrom = dateFrom.toISOString().split('T')[0];
+      const formattedDateTill = dateTill.toISOString().split('T')[0];
+
+      axios.get('http://your-server-endpoint', {
+        params: {
+          dateFrom: formattedDateFrom,
+          dateTill: formattedDateTill,
+        },
+      })
+      .then(response => {
+        console.log('Server response:', response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    }
+  };
+
+
+
   return (
     <DatePicker
       selectsRange={true}
