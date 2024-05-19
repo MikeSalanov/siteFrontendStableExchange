@@ -1,6 +1,4 @@
-﻿
-import { useState } from 'react';
-import Header from '../Header/Header';
+﻿import { useState } from 'react';
 import MailAdvPopUp from '../commons/MailAdvPopUp/MailAdvPopUp';
 import RegistrationForm from '../commons/RegistrationForm/RegistrationForm';
 
@@ -9,10 +7,8 @@ function RegisterPage(): JSX.Element {
 
   return (
     <>
-      <Header/>
-      {/* <div className={styles.wrapperRegisterPage}>Register Page</div> */}
       <RegistrationForm setModalActive={setModalActive} />
-      <MailAdvPopUp active ={modalActive} setModalActive={setModalActive}/>
+      <MailAdvPopUp active={modalActive} setModalActive={setModalActive}/>
     </>
   );
 }

@@ -4,7 +4,7 @@ import { AuthResponse } from '../models/response/authService/AuthResponse';
 import { AUTH_API_URL } from '../http';
 import { ChangePasswordUserResponse } from '../models/response/authService/ChangePasswordUserResponse';
 
-const USER_API_URL = 'http://localhost:4001/auth-service';
+const USER_API_URL = `${AUTH_API_URL}/user`;
 
 const $user_Res = axios.create({
   withCredentials: true,

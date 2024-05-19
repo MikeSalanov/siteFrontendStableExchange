@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { AuthResponse } from '../models/response/authService/AuthResponse';
 
-export const AUTH_API_URL = 'http://localhost:4001/auth-service';
+export const BASE_URL: string = import.meta.env.VITE_BASE_URL ?
+  `${import.meta.env.VITE_BASE_URL}` :
+  `http://localhost`;
+
+export const AUTH_API_URL: string = `${
+  BASE_URL.includes('localhost') ?
+  `${BASE_URL}:4001` :
+  `${BASE_URL}`
+}/auth-service`;
 
 const $api = axios.create({
   withCredentials: true,

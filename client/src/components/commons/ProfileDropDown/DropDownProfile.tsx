@@ -22,7 +22,7 @@ function DropDownProfile(): JSX.Element {
       icon: 'public/bx-wallet.svg',
       route: '/customer-account/wallet',
     },
-    { value: 'Выйти', icon: 'public/bx-log-out.svg', route: '' },
+    { value: 'Выйти', icon: 'bx-log-out.svg', route: '' },
   ];
   const [hiddenDropDown, setHiddenDropDown] = useState<boolean>(true);
 

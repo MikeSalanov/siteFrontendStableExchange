@@ -7,4 +7,8 @@ export default defineConfig({
   // server: {proxy: {
   //   '/api': "http://localhost:3000"
   // }}
+  envPrefix: 'VITE_',
+  define: {
+    'process.env.VITE_BASE_URL': JSON.stringify(process.env.VITE_BASE_URL),
+  }
 })
