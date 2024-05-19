@@ -13,10 +13,10 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .customSelect {
-  @apply bg-white h-full w-40;
+  @apply  bg-input-currency h-full w-40;
 }
 .buttonExchange {
-  @apply bg-yellow-green-corp w-max px-4 py-2 rounded-lg hover:transform hover:scale-110 transition-transform text-xl disabled:opacity-75 disabled:transform-none;
+  @apply bg-yellow-green-corp w-max px-4 py-2 rounded-lg hover:transform hover:scale-110 transition-transform text-xl disabled:opacity-75 disabled:transform-none text-black;
 }
 .currOption {
   @apply flex hover:cursor-pointer  items-center gap-3 text-xl justify-between p-2;
@@ -30,7 +30,7 @@ input[type='number']::-webkit-outer-spin-button {
   @apply hidden;
 }
 .customOptions {
-  @apply flex flex-col absolute  bg-white w-40;
+  @apply flex flex-col absolute  bg-input-currency w-40;
 }
 
 .customOption {
@@ -54,9 +54,9 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .customCardsSelect {
-  @apply bg-white  w-64;
+  @apply  bg-input-currency  w-64;
 }
 
 .customCardOptions {
-  @apply flex flex-col absolute  bg-white w-64;
+  @apply flex flex-col absolute   bg-input-currency w-64;
 }

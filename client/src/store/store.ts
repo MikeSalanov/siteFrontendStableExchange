@@ -13,6 +13,8 @@ export default class Store {
   isAuth = false;
   isLoading = false;
   email = this.user.email;
+  price = 0;
+  currAmount = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -31,6 +33,14 @@ export default class Store {
   }
   setEmail(email: string) {
     this.email = email;
+  }
+
+  setPrice(price: number) {
+    this.price = price;
+  }
+
+  setCurrAmount(amount: number) {
+    this.currAmount = amount;
   }
 
   async login(email: string, password: string) {

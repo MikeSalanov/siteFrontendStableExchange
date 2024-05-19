@@ -1,27 +1,24 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿import React, { useContext, useEffect, useState } from 'react';
 import styles from './FormExchange.module.scss';
 import { useNavigate } from 'react-router-dom';
 import CurrencyTicker from '../CurrencyTicker/CurrencyTicker';
+import { Context } from '../../main';
+import { observer } from 'mobx-react-lite';
 
 function FormExchange(): JSX.Element {
+  const { store } = useContext(Context);
+
   const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
   const [outputMoneyValue, setOutputMoneyValue] = useState<number>(0);
-  const EXCHANGE_RATE: number = 100; // Захардкодил курс для мгновенного перевода при изменении одного из инпутов в дальнейшем скорее всего он будет приходить из бэка
 
   const navigate = useNavigate();
 
-  const [inputCurrencies] = useState<string[]>([
-    'USD $',
-    'EUR €',
-  ]); // массив с вводимыми валютами (те, которые переводит пользователь)
+  const [inputCurrencies] = useState<string[]>(['USD $', 'EUR €']); // массив с вводимыми валютами (те, которые переводит пользователь)
 
-  const [outputCurrencies] = useState<string[]>([
-    'Tinkoff RUB',
-    'Sber RUB',
-  ]); // массив с выводимыми валютами (те, которые хочет получить пользователь)
+  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']); // массив с выводимыми валютами (те, которые хочет получить пользователь)
 
   const currenciesOrder: {
-    [tickerName: string]: string
+    [tickerName: string]: string;
   } = {
     'USD $': 'usd',
     'EUR €': 'eur',
@@ -43,15 +40,16 @@ function FormExchange(): JSX.Element {
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputMoneyValue(Number(e.target.value));
-    setOutputMoneyValue(Number(e.target.value) * EXCHANGE_RATE);
+    setOutputMoneyValue(Number(e.target.value) * store.price);
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setOutputMoneyValue(Number(e.target.value));
-    setInputMoneyValue(Number(e.target.value) / EXCHANGE_RATE);
+    setInputMoneyValue(Number(e.target.value) / store.price);
   };
 
   const submitHandler = (): void => {
+    store.setCurrAmount(inputMoneyValue);
     navigate(
       `exchange?from=${currenciesOrder[currInputCurrency]}&to=${currenciesOrder[currOutputCurrency]}`
     );
@@ -100,17 +98,17 @@ function FormExchange(): JSX.Element {
   return (
     <>
       <div className={styles.wrapperForm}>
-      <CurrencyTicker />
+        <CurrencyTicker />
         <form className={styles.form} onSubmit={submitHandler}>
           <div className="flex">
             {' '}
             <div className="flex flex-col">
               {' '}
-              <span className=" bg-input-gray text-xs text-gray-500 text-left p-1">
+              <span className=" bg-input-gray text-xs text-gray-500 text-left p-2 rounded-tl-xl">
                 Вы отправите
               </span>{' '}
               <input
-                className=" bg-input-gray focus:outline-none text-white pl-2 h-full"
+                className=" bg-input-gray focus:outline-none text-white pl-4 pb-2 h-full rounded-bl-xl"
                 type="number"
                 onChange={inputMoneyHandler}
                 value={inputMoneyValue}
@@ -140,7 +138,11 @@ function FormExchange(): JSX.Element {
                       return (
                         <p
                           className={styles.customOption}
-                          onClick={(e) => setInputCurrency((e.target as HTMLElement).innerText)}
+                          onClick={(e) =>
+                            setInputCurrency(
+                              (e.target as HTMLElement).innerText
+                            )
+                          }
                         >
                           {currency}
                         </p>
@@ -155,11 +157,11 @@ function FormExchange(): JSX.Element {
             {' '}
             <div className="flex flex-col">
               {' '}
-              <span className=" bg-input-gray text-xs text-gray-500 text-left p-1">
+              <span className=" bg-input-gray text-xs text-gray-500 text-left p-2 rounded-tl-xl">
                 Вы получите
               </span>{' '}
               <input
-                className=" bg-input-gray focus:outline-none text-white appearance-none pl-2 h-full"
+                className=" bg-input-gray focus:outline-none text-white appearance-none pl-4 pb-2 h-full rounded-bl-xl"
                 type="number"
                 onChange={outputMoneyHandler}
                 value={outputMoneyValue}
@@ -189,7 +191,11 @@ function FormExchange(): JSX.Element {
                       return (
                         <p
                           className={styles.customOption}
-                          onClick={(e) => setOutputCurrency((e.target as HTMLElement).innerText)}
+                          onClick={(e) =>
+                            setOutputCurrency(
+                              (e.target as HTMLElement).innerText
+                            )
+                          }
                         >
                           {currency}
                         </p>
@@ -211,4 +217,4 @@ function FormExchange(): JSX.Element {
   );
 }
 
-export default FormExchange;
+export default observer(FormExchange);
