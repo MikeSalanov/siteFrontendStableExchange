@@ -1,12 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import { UsersResponse } from '../models/response/UsersResponse';
 import { DeleteUserResponse } from '../models/response/authService/DeleteUserResponse';
-
-const ADMIN_API_URL = 'http://localhost:4001/admin/';
+import { AUTH_API_URL } from '../http';
 
 const $adminRes = axios.create({
   withCredentials: true,
-  baseURL: ADMIN_API_URL,
+  baseURL: AUTH_API_URL,
 });
 
 $adminRes.interceptors.request.use((config) => {

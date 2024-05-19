@@ -52,7 +52,7 @@ function DropDownProfile(): JSX.Element {
             setHiddenDropDown((prev) => !prev);
           }}
         >
-          <img src="bx-user-circle.svg" alt="bx-user-circle" />
+          <img src="../../../public/bx-user-circle.svg" alt="bx-user-circle" />
           <p>Профиль</p>{' '}
         </div>
         <div

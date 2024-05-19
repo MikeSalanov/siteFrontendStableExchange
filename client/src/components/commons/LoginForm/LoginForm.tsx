@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { useContext } from "react";
 import { Context } from "../../../main";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../../http";
 
 
 const validationSchema = yup
@@ -28,18 +29,18 @@ function LoginForm(): JSX.Element {
     resolver: yupResolver(validationSchema)
   })
 
-console.log(errors );
+console.log(errors);
 
-const {store} = useContext(Context)
+const { store } = useContext(Context)
 const navigate = useNavigate();
 
 
   const onSubmit = async (values: RegValues) => {
     const {email, password} = values
     try {
-    await store.login(email, password)
-    navigate('/')
-    
+      console.log(import.meta.env.VITE_BASE_URL, BASE_URL);
+      await store.login(email, password)
+      navigate('/')
     } catch (error) {
       console.log(error);
     }
