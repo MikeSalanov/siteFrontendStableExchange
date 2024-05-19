@@ -65,8 +65,8 @@ function DropDownProfile(): JSX.Element {
               route={option.route}
               onClick={
                 option.value === 'Выйти'
-                  ? (e) => {
-                      e.stopPropagation();
+                  ? () => {
+                      
                       store.logout();
                       
                       
