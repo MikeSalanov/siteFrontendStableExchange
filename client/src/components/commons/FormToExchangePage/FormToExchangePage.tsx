@@ -1,6 +1,7 @@
-﻿import { useEffect, useState } from 'react';
+﻿import { useContext, useEffect, useState } from 'react';
 import styles from './FormToExchangePage.module.scss';
 import { RotatingLines } from 'react-loader-spinner';
+import { Context } from '../../../main';
 
 function FormToExchangePage({
   fromCurrency,
@@ -9,9 +10,14 @@ function FormToExchangePage({
   fromCurrency: string | null;
   toCurrency: string | null;
 }): JSX.Element {
-  const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
-  const [outputMoneyValue, setOutputMoneyValue] = useState<number>(0);
-  const EXCHANGE_RATE: number = 100; // Захардкодил курс для мгновенного перевода при изменении одного из инпутов в дальнейшем скорее всего он будет приходить из бэка
+  const { store } = useContext(Context);
+
+  const [inputMoneyValue, setInputMoneyValue] = useState<number>(
+    store.currAmount
+  );
+  const [outputMoneyValue, setOutputMoneyValue] = useState<number>(
+    store.currAmount * store.price
+  );
 
   const currenciesOrder: {
     [currencyName: string]: string;
@@ -63,12 +69,12 @@ function FormToExchangePage({
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputMoneyValue(Number(e.target.value));
-    setOutputMoneyValue(Number(e.target.value) * EXCHANGE_RATE);
+    setOutputMoneyValue(Number(e.target.value) * store.price);
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setOutputMoneyValue(Number(e.target.value));
-    setInputMoneyValue(Number(e.target.value) / EXCHANGE_RATE);
+    setInputMoneyValue(Number(e.target.value) / store.price);
   };
 
   const clickOutsideInput = (e: Event): void => {
@@ -150,18 +156,18 @@ function FormToExchangePage({
             {' '}
             <div className="flex flex-col">
               {' '}
-              <span className=" bg-white text-xs  text-left p-1">
+              <span className=" bg-input-gray text-xs text-gray-500 text-left p-2 rounded-tl-xl">
                 Вы отправите
               </span>{' '}
               <input
-                className=" bg-white focus:outline-none  pl-2 h-full"
+                className=" bg-input-gray focus:outline-none text- pl-4 pb-2 h-full rounded-bl-xl"
                 type="number"
                 onChange={inputMoneyHandler}
                 value={inputMoneyValue}
                 disabled={firstSubmit}
               />
             </div>{' '}
-            <div className="flex  items-center bg-white">
+            <div className="flex  items-center bg-input-currency">
               <div className={styles.customSelect}>
                 <div
                   id="input-custom-select"
@@ -169,7 +175,8 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currOption : styles.currOptionDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setInputCurrencyHidden((prev:boolean) => !prev);
+                    !firstSubmit &&
+                      setInputCurrencyHidden((prev: boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -206,18 +213,18 @@ function FormToExchangePage({
             {' '}
             <div className="flex flex-col">
               {' '}
-              <span className=" bg-white text-xs text-left p-1">
+              <span className=" bg-input-gray text-xs text-gray-500 text-left p-2 rounded-tl-xl">
                 Вы получите
               </span>{' '}
               <input
-                className=" bg-white focus:outline-none appearance-none pl-2 h-full"
+                className=" bg-input-gray focus:outline-none text-white appearance-none pl-4 pb-2 h-full rounded-bl-xl"
                 type="number"
                 onChange={outputMoneyHandler}
                 value={outputMoneyValue}
                 disabled={firstSubmit}
               />
             </div>{' '}
-            <div className="flex  items-center bg-white">
+            <div className="flex  items-center bg-input-currency">
               <div className={styles.customSelect}>
                 <div
                   id="output-custom-select"
@@ -225,7 +232,8 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currOption : styles.currOptionDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setOutputCurrencyHidden((prev:boolean) => !prev);
+                    !firstSubmit &&
+                      setOutputCurrencyHidden((prev: boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -270,7 +278,8 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currCard : styles.currCardDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setInputCardHidden((prev:boolean) => !prev);
+                    !firstSubmit &&
+                      setInputCardHidden((prev: boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -382,7 +391,7 @@ function FormToExchangePage({
                 type="submit"
                 onClick={() => {
                   setSecondSubmit(true);
-                  setCurrentBalance((prev:number) => prev - outputMoneyValue);
+                  setCurrentBalance((prev: number) => prev - outputMoneyValue);
                 }}
                 className={styles.buttonExchange}
                 disabled={secondSubmit}

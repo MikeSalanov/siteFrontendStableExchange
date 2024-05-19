@@ -1,10 +1,14 @@
-﻿import { useEffect, useState } from 'react';
+﻿import { useContext, useEffect, useState } from 'react';
 import styles from './CurrencyTicker.module.scss';
 import { Hourglass } from 'react-loader-spinner';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../../main';
 
 function CurrencyTicker(): JSX.Element {
-  const [price, setPrice] = useState<null | number>(null);
+  const {store} = useContext(Context);
+  
   const [timer, setTimer] = useState<number>(5);
+  
 
   const colors: string[] = [
     'text-red-600',
@@ -22,7 +26,7 @@ function CurrencyTicker(): JSX.Element {
           setTimer(5);
           return res.json();
         })
-        .then((res) => setPrice(res[0].exchange_rate.toFixed(4)))
+        .then((res) => store.setPrice(res[0].exchange_rate.toFixed(4)))
         .catch((e) => console.log({ ERROR_GET_CURRENCY: e }));
     }, 6000);
     return () => {
@@ -41,9 +45,9 @@ function CurrencyTicker(): JSX.Element {
 
   return (
     <div className={styles.wrapperCurrencyTicker}>
-      {price ? (
+      {store.price ? (
         <div className={styles.timerCurrencyBlock}>
-          <p>Текущий курс: 1 USDT = {price} RUB</p>
+          <p>Текущий курс: 1 USDT = {store.price} RUB</p>
 
           <p className={colors[timer]}>0{timer}:00</p>
         </div>
@@ -64,4 +68,4 @@ function CurrencyTicker(): JSX.Element {
   );
 }
 
-export default CurrencyTicker;
+export default observer (CurrencyTicker);
