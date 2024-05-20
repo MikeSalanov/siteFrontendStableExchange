@@ -5,8 +5,8 @@ function MainDescription(): JSX.Element {
       <div className={styles.wrapperDescription}>
         <div className=" w-2/4">
           <p className="text-3xl mb-2">Ваш лучший криптообменник</p>
-          <div className="flex ">
-            <div className="flex flex-col w-1/3">
+          <div className="flex flex-col sm:flex-row ">
+            <div className="flex flex-col sm:w-1/3">
               <div className=" flex opacity-25">
                 {' '}
                 <img width={100} src="number-1.svg" alt="number-1.svg" />{' '}
@@ -17,7 +17,7 @@ function MainDescription(): JSX.Element {
                 <p className='mt-2'>Выберите из более чем 50000 поддерживаемых пар</p>
               </div>
             </div>
-            <div className="flex flex-col w-1/3">
+            <div className="flex flex-col sm:w-1/3">
               <div className=" flex opacity-25">
                 {' '}
                 <img width={100} src="number-2.svg" alt="number-3.svg" />{' '}
@@ -31,7 +31,7 @@ function MainDescription(): JSX.Element {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col w-1/3">
+            <div className="flex flex-col sm:w-1/3">
               <div className=" flex">
                 {' '}
                 <img width={100} className='opacity-25' src="number-3.svg" alt="number-3.svg" />{' '}

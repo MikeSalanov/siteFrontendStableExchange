@@ -65,7 +65,12 @@ function RegConfirmForm(): JSX.Element {
           <label className={styles.label} htmlFor="email">
             Email
           </label>
-          <input type="text" id="email" {...register('email')} />
+          <input
+            className={styles.inputCustom}
+            type="text"
+            id="email"
+            {...register('email')}
+          />
           {errors?.email && (
             <span className={styles.errorText}>{errors.email.message}</span>
           )}
@@ -74,12 +79,17 @@ function RegConfirmForm(): JSX.Element {
           <label className={styles.label} htmlFor="password">
             Пароль
           </label>
-          <input type="password" id="password" {...register('password')} />
+          <input
+            className={styles.inputCustom}
+            type="password"
+            id="password"
+            {...register('password')}
+          />
           {errors?.password && (
             <span className={styles.errorText}>{errors.password.message}</span>
           )}
         </div>
-        <button className={styles.btn} type="submit">
+        <button className={styles.buttonConfirm} type="submit">
           Авторизоваться
         </button>
       </form>

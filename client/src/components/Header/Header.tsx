@@ -16,7 +16,7 @@ function Header(): JSX.Element {
           <img
             src="../stablelogo.svg"
             alt="logo"
-            className=" h-full"
+            className=" h-36"
           />
         </Link>
       </div>
