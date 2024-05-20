@@ -9,7 +9,14 @@ table {
 .tableHead {
   @apply text-slate-600 p-1 sm:p-5 text-xs sm:text-sm;
 }
-
+tr {
+  :first-child {
+    @apply rounded-tl-lg;
+  }
+  :last-child {
+    @apply rounded-tr-lg;
+  }
+}
 .tableCeil {
   @apply px-2 py-1  sm:px-16 sm:py-9 text-xs sm:text-sm;
 }
