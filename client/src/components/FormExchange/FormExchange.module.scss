@@ -1,5 +1,5 @@
 ﻿.wrapperForm {
-  @apply bg-black-change-now flex flex-col justify-center items-center mt-6;
+  @apply bg-black-change-now flex flex-col justify-center items-center mt-14 gap-10;
 }
 
 .form {
@@ -21,6 +21,7 @@
 .customOptionsHidden {
   @apply hidden;
 }
+
 .customOptions {
   @apply flex flex-col absolute  bg-input-currency w-40;
 }

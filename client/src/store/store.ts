@@ -14,7 +14,8 @@ export default class Store {
   isAuth = false;
   isLoading = false;
   email = this.user.email;
-  price = 0;
+  priceFrom = 0;
+  priceTo = 0;
   currAmount = 0;
   activeTabOfCardForm = CardFormType.WORLD;
   userCards = [];
@@ -38,8 +39,12 @@ export default class Store {
     this.email = email;
   }
 
-  setPrice(price: number) {
-    this.price = price;
+  setPriceFrom(price: number) {
+    this.priceFrom = price;
+  }
+  
+  setPriceTo(price: number) {
+    this.priceTo = price;
   }
 
   setCurrAmount(amount: number) {

@@ -101,20 +101,18 @@ function FormExchange(): JSX.Element {
         <CurrencyTicker />
         <form className={styles.form} onSubmit={submitHandler}>
           <div className="flex">
-            {' '}
             <div className="flex flex-col">
-              {' '}
-              <span className=" bg-input-gray text-xs text-gray-500 text-left p-2 rounded-tl-xl">
+              <span className="bg-input-gray text-xs text-gray-500 text-left p-2 rounded-tl-xl">
                 Вы отправите
-              </span>{' '}
+              </span>
               <input
-                className=" bg-input-gray focus:outline-none text-white pl-4 pb-2 h-full rounded-bl-xl"
+                className="bg-input-gray focus:outline-none text-white pl-4 pb-2 h-full rounded-bl-xl"
                 type="number"
                 onChange={inputMoneyHandler}
                 value={inputMoneyValue}
               />
             </div>{' '}
-            <div className="flex  items-center bg-input-currency">
+            <div className="flex items-center bg-input-currency">
               <div className={styles.customSelect}>
                 <div
                   id="input-custom-select"

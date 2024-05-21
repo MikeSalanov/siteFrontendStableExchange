@@ -26,7 +26,14 @@ function CurrencyTicker(): JSX.Element {
           setTimer(5);
           return res.json();
         })
-        .then((res) => store.setPrice(res[0].exchange_rate.toFixed(4)))
+        .then((res) => store.setPriceTo(res[0].exchange_rate.toFixed(4)))
+        .catch((e) => console.log({ ERROR_GET_CURRENCY: e }));
+      fetch('https://alfabit.org/api/v1/cashe/operations/%D0%A2%D0%B8%D0%BD%D1%8C%D0%BA%D0%BE%D1%84%D1%84(RUB)')
+        .then((res) => {
+          setTimer(5);
+          return res.json();
+        })
+        .then((res) => store.setPriceFrom(res[20].exchange_rate.toFixed(4)))
         .catch((e) => console.log({ ERROR_GET_CURRENCY: e }));
     }, 6000);
     return () => {
@@ -45,10 +52,11 @@ function CurrencyTicker(): JSX.Element {
 
   return (
     <div className={styles.wrapperCurrencyTicker}>
-      {store.price ? (
+      {store.priceTo && store.priceFrom ? (
         <div className={styles.timerCurrencyBlock}>
-          <p>Текущий курс: 1 USDT = {store.price} RUB</p>
-
+          <p>Текущий курс:</p>
+          <p>1 USD = {store.priceTo} RUB</p>
+          <p>{store.priceFrom} RUB = 1 USD</p>
           <p className={colors[timer]}>0{timer}:00</p>
         </div>
       ) : (
