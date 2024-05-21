@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import {FormEvent, useEffect} from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardNumberElement } from '@stripe/react-stripe-js';
 import './ForeignCardForm.module.scss';
@@ -73,7 +73,7 @@ const ForeignCardForm = () => {
     };
   }, [stripe, elements]);
   
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     
     if (!stripe || !elements) {

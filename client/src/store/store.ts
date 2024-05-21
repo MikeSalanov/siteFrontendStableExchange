@@ -17,6 +17,7 @@ export default class Store {
   price = 0;
   currAmount = 0;
   activeTabOfCardForm = CardFormType.WORLD;
+  userCards = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -48,6 +49,10 @@ export default class Store {
   setActiveTab(cardFormType: CardFormType) {
     this.activeTabOfCardForm = cardFormType ;
   }
+  
+  // setUserCards(cards: Array<{card_number: string, expiry_date: string}>) {
+  //   cards.forEach(card => this.userCards.push(card));
+  // }
 
   async login(email: string, password: string) {
     try {

@@ -4,11 +4,8 @@ import FormNewCard from '../FormNewCard/FormNewCard';
 import AddCardSVG from '../../../../public/add-card.svg';
 
 interface CardInterface {
-  cardNumber: number;
-  cvv: number;
-  month: number;
-  year: number;
-  owner: string;
+  cardNumber: string;
+  expiry_date: string
 }
 
 interface PropsStackCards {
@@ -29,10 +26,7 @@ function StackCards(props: PropsStackCards): JSX.Element {
               <div className=" order-3">
                 <BankCard
                   cardNumber={card.cardNumber}
-                  cvv={card.cvv}
-                  month={card.month}
-                  year={card.year}
-                  owner={card.owner}
+                  expiry_date={card.expiry_date}
                 />
               </div>
             ) : (

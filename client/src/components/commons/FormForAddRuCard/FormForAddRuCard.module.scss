@@ -4,7 +4,6 @@
 
 .modalWindow {
   @apply p-5 rounded-xl bg-white flex justify-center items-center;
-  height: 30vh;
 }
 
 .buttonNewCard {
@@ -13,5 +12,4 @@
 
 .btn {
   @apply opacity-50 hover:opacity-100 hover:cursor-pointer w-32 m-2;
-  margin-bottom: 3vh;
 }
