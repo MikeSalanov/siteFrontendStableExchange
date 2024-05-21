@@ -1,12 +1,9 @@
 ﻿.wrapper {
-  max-width: 100vw;
-  gap: 45vw;
-  @apply flex text-white justify-center mt-1 h-36 items-end;
+  @apply w-screen flex text-white justify-center mt-1 min-h-36 sm:items-end flex-col  sm:flex-row  items-center sm:justify-evenly mb-2;
 }
 
 .buttonsBlock {
-  margin-right: 7vw;
-  @apply flex w-56 justify-between;
+  @apply flex w-56 justify-center mt-5 gap-7;
 }
 
 .buttonAccount {

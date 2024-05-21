@@ -62,7 +62,7 @@ function FormNewCard(): JSX.Element {
 
   return (
     <div className={styles.profileFormWrapper}>
-      <div className="flex gap-7 justify-center backdrop-brightness-75 p-10 rounded-3xl">
+      <div className="flex gap-7 justify-center backdrop-brightness-75 p-10 rounded-3xl flex-col sm:flex-row">
         <div className="flex flex-col gap-2 items-center">
           <div className=" text-center mb-4 text-xl text-slate-400">
             Настройки профиля
@@ -82,7 +82,7 @@ function FormNewCard(): JSX.Element {
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 mb-6">
           <div className=" text-center text-xl text-slate-400 mb-4">
             Сменить пароль
           </div>
