@@ -99,7 +99,7 @@ const ForeignCardForm = () => {
   };
   
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} name="addCardForm">
       <div>
         <div id="example3-card-number"></div>
         <div id="example3-card-expiry"></div>
