@@ -4,6 +4,8 @@ import Calendar from "./FIlterComponents/Calendar/Calendar";
 import styles from "./ExchangeHistoryFilter.module.scss";
 import StatusFilter from "./FIlterComponents/StatusFilter/StatusFilter";
 import { $apiExchanges } from "../../../services/ExchangesService";
+import CurrencyFromFilter from "./FIlterComponents/CurrencyFromFilter/CurrencyFromFilter";
+import CurrencyToFilter from "./FIlterComponents/CurrencyToFilter/CurrencyToFilter";
 
 
 export type DateRange = {
@@ -27,7 +29,14 @@ function ExchangeHistoryFilter() {
 
 
 const [filter, setFilter] = useState<FilterObj>({})
+
   console.log(filter);
+
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const id = event.target.value;
+    setFilter((prevFilter) => ({ ...prevFilter, publicId : id}));
+  }
   
 useEffect(() => {
   const {dateRange, ...filters} = filter
@@ -63,34 +72,14 @@ useEffect(() => {
           </div>
           <div className={styles.exchangeID_from_to_filterContainer}>
             <div>
-              <input type="text" placeholder="ID" name="exchangeId" onChange={(e) => setFilter()} />
+              <input type="text" placeholder="ID" name="exchangeId" onChange={handleInputChange} />
             </div>
-            <div>
-              <select defaultValue="From">
-                <option disabled hidden>
-                  From
-                </option>
-                <option value="sberRub">Sber rub</option>
-                <option value="tinkRub">Tinkof rub</option>
-                <option value="dol">Dollar</option>
-                <option value="eur">Euro</option>
-              </select>
-            </div>
-            <div>
-              <select defaultValue="To">
-                <option disabled hidden>
-                  To
-                </option>
-                <option value="sberRub">Sber rub</option>
-                <option value="tinkRub">Tinkof rub</option>
-                <option value="dol">Dollar</option>
-                <option value="eur">Euro</option>
-              </select>
-            </div>
+            <CurrencyFromFilter setFilter={setFilter}/>
+            <CurrencyToFilter setFilter={setFilter}/>
           </div>
         </div>
         <div className={styles.divClearBtn}>
-          <button className={styles.clearBtn}>Clear</button>
+          <button className={styles.clearBtn} onClick={() => setFilter({})}>Clear</button>
         </div>
       </div>
     </div>

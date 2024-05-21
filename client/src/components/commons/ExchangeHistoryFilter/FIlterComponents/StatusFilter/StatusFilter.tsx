@@ -1,32 +1,27 @@
 import { useState } from "react";
 import styles from "./StatusFilter.module.scss";
+import { FilterObj } from "../../ExchangeHistoryFilter";
 
-type DateRange = [Date | null, Date | null];
-
-type FilterObj = {
-  dateRange: DateRange;
-  status: string;
-  publicId: string;
-  currencyFrom: string;
-  currencyTo: string;
-};
 
 type StatusFilterProps = {
-  setFilter: (filter: (prevFilter: FilterObj) => FilterObj) => void;
-  status: string;
+  setFilter: React.Dispatch<React.SetStateAction<FilterObj>>;
+  status:  FilterObj["status"];
 };
 
-function StatusFilter({ setFilter, status }: StatusFilterProps) {
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+function StatusFilter({ setFilter }: StatusFilterProps) {
+
+
+
+  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const update = event.target.value;
-    setFilter((prevFilter: FilterObj) => ({ ...prevFilter, status: update }));
+    setFilter((prevFilter) => ({ ...prevFilter, status: update }));
 
     
   };
 
   return (
     <div>
-      <select defaultValue="Status" onChange={handleChange}>
+      <select defaultValue="Status" onChange={handleStatusChange}>
         <option disabled hidden>
           Status
         </option>
