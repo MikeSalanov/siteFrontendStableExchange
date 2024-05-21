@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./ExchangeHistoryFilter.module.scss";
 import Calendar from "./FIlterComponents/Calendar/Calendar";
 import styles from "./ExchangeHistoryFilter.module.scss";
@@ -6,6 +6,8 @@ import StatusFilter from "./FIlterComponents/StatusFilter/StatusFilter";
 import { $apiExchanges } from "../../../services/ExchangesService";
 import CurrencyFromFilter from "./FIlterComponents/CurrencyFromFilter/CurrencyFromFilter";
 import CurrencyToFilter from "./FIlterComponents/CurrencyToFilter/CurrencyToFilter";
+import { format } from "date-fns";
+import { Context } from "../../../main";
 
 
 export type DateRange = {
@@ -23,10 +25,11 @@ export type FilterObj = {
 };
 
 function ExchangeHistoryFilter() {
+
   const [toggleCalendar, setToggleCalendar] = useState<boolean>(false);
 
 
-
+const {exchanges} = useContext(Context)
 
 const [filter, setFilter] = useState<FilterObj>({})
 
@@ -41,12 +44,17 @@ const [filter, setFilter] = useState<FilterObj>({})
 useEffect(() => {
   const {dateRange, ...filters} = filter
 
-  const formattedDateFrom = dateRange?.dateFrom?.toISOString()
-  const formattedDateTo = dateRange?.dateTo?.toISOString()
+  const formattedDateFrom = dateRange?.dateFrom ? format(dateRange.dateFrom, "yyyy-MM-dd'T'HH:mm:ssXXX") : undefined;
+  const formattedDateTo = dateRange?.dateTo ? format(dateRange.dateTo, "yyyy-MM-dd'T'HH:mm:ssXXX") : undefined;
+
+  console.log(formattedDateFrom, formattedDateTo);
   
-  dateRange
-  $apiExchanges.get('/exchanges', {
-    params: {...filters, dateFrom: formattedDateFrom, dateTo: formattedDateTo}
+  
+  // dateRange
+  exchanges.getExchanges({
+    ...filters,
+    dateFrom: formattedDateFrom,
+    dateTo: formattedDateTo
   })
   .then(response => {
     console.log('Server response:', response.data);

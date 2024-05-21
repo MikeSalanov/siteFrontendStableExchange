@@ -10,10 +10,16 @@ export default class Exchanges {
     makeAutoObservable(this);
 }
 
-async getExchanges () {
+async getExchanges (filters: { 
+  dateFrom?: string, 
+  dateTo?: string, 
+  status?: string, 
+  publicId?: string, 
+  currencyFrom?: string, 
+  currencyTo?: string 
+}) {
   try {
-    const response = await ExchangesService.getExchanges
-    ()
+    const response = await ExchangesService.getExchanges(filters)
     console.log(response.data);
     this.exchanges = response.data.exchanges
   } catch (error) {

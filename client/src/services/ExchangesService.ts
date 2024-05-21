@@ -36,8 +36,15 @@ $apiExchanges.interceptors.response.use((config) => {
 
 
 export default class ExchangesService {
-  static async getExchanges(
+  static async getExchanges(filters: {
+    dateFrom?: string, 
+    dateTo?: string, 
+    status?: string, 
+    publicId?: string, 
+    currencyFrom?: string, 
+    currencyTo?: string 
+  }
   ): Promise<AxiosResponse<ExchangesResponse>> {
-    return $apiExchanges.get<ExchangesResponse>('/exchanges');
+    return $apiExchanges.get<ExchangesResponse>('/exchanges', {params: filters} );
   }
 }
