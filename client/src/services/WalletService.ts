@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { WalletResponse } from '../models/response/walletService/WalletResponse';
 import {AuthResponse} from "../models/response/authService/AuthResponse";
 
+
 export const API_URL_WALLET = `http://5.35.80.205:4000/wallet`
 
 export const API_URL_AUTH = `http://5.35.80.205:4001/auth-service`

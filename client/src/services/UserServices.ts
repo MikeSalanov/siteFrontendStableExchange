@@ -3,7 +3,7 @@ import { DeleteUserResponse } from '../models/response/authService/DeleteUserRes
 import { AuthResponse } from '../models/response/authService/AuthResponse';
 import { AUTH_API_URL } from '../http';
 
-const USER_API_URL = 'http://localhost:4001/user-service';
+const USER_API_URL = 'http://localhost:3000/user-service';
 
 const $user_Res = axios.create({
   withCredentials: true,
