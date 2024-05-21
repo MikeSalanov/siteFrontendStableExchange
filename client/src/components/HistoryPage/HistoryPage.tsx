@@ -1,5 +1,4 @@
-﻿import Header from '../Header/Header';
-import styles from './HistoryPage.module.scss';
+﻿import styles from './HistoryPage.module.scss';
 function HistoryPage(): JSX.Element {
   interface HistoryItemInterface {
     publicId: string;

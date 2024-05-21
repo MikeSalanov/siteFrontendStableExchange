@@ -7,6 +7,7 @@ import { AUTH_API_URL } from '../http';
 import { RegResponse } from '../models/response/authService/RegResponse.ts';
 import AdminService from '../services/AdminService.ts';
 import UserService from '../services/UserServices.ts';
+import CardFormType from "../../classes/CardFormType.ts";
 
 export default class Store {
   user = {} as IUser;
@@ -15,6 +16,7 @@ export default class Store {
   email = this.user.email;
   price = 0;
   currAmount = 0;
+  activeTabOfCardForm = CardFormType.WORLD;
 
   constructor() {
     makeAutoObservable(this);
@@ -41,6 +43,10 @@ export default class Store {
 
   setCurrAmount(amount: number) {
     this.currAmount = amount;
+  }
+  
+  setActiveTab(cardFormType: CardFormType) {
+    this.activeTabOfCardForm = cardFormType ;
   }
 
   async login(email: string, password: string) {
