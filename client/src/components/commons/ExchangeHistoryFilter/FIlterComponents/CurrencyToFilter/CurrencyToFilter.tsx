@@ -18,9 +18,9 @@ function CurrencyToFilter({setFilter}: CurrencyToFilterProps) {
   
     return (  
       <div>
-      <select defaultValue="From" onChange={handleCurrencyTo}>
+      <select defaultValue="To" onChange={handleCurrencyTo}>
         <option disabled hidden>
-          From
+          To
         </option>
         <option value="sberRub">Sber rub</option>
         <option value="tinkRub">Tinkof rub</option>

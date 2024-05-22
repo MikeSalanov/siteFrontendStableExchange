@@ -39,6 +39,7 @@ const {dateFrom, dateTo} = dateRange || {}
       isClearable={true}
       locale={ru}
       className={styles.datePickerInput}
+      placeholderText="Укажите период"
     />
 
   );
