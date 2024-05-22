@@ -16,8 +16,8 @@ function FormToExchangePage({
     store.currAmount
   );
   const [outputMoneyValue, setOutputMoneyValue] = useState<number>(
-    store.currAmount * store.priceTo
-  );
+    Number((store.currAmount * store.priceTo/store.priceFrom).toFixed(2)))
+  ;
 
   const currenciesOrder: {
     [currencyName: string]: string;

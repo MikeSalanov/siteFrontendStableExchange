@@ -13,9 +13,9 @@ function FormExchange(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const [inputCurrencies] = useState<string[]>(['USD $']); 
+  const [inputCurrencies] = useState<string[]>(['USD $']);
 
-  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']); 
+  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']);
 
   const currenciesOrder: {
     [tickerName: string]: string;
@@ -39,20 +39,30 @@ function FormExchange(): JSX.Element {
     useState<boolean>(true);
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
-    setOutputMoneyValue(Number((Number(e.target.value.replace(/\D/g,'')) * store.priceTo/store.priceFrom).toFixed(2)));
+    setInputMoneyValue(Number(e.target.value.replace(/\D/g, '')));
+    setOutputMoneyValue(
+      Number(
+        (
+          (Number(e.target.value.replace(/\D/g, '')) * store.priceTo) /
+          store.priceFrom
+        ).toFixed(2)
+      )
+    );
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setOutputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
+    setOutputMoneyValue(Number(e.target.value.replace(/\D/g, '')));
     setInputMoneyValue(Number(e.target.value) / store.priceTo);
   };
 
-  const submitHandler = (): void => {
-    store.setCurrAmount(inputMoneyValue);
-    navigate(
-      `exchange?from=${currenciesOrder[currInputCurrency]}&to=${currenciesOrder[currOutputCurrency]}`
-    );
+  const submitHandler = (e: MouseEvent): void => {
+    e.preventDefault();
+    if (store.priceTo) {
+      store.setCurrAmount(inputMoneyValue);
+      navigate(
+        `exchange?from=${currenciesOrder[currInputCurrency]}&to=${currenciesOrder[currOutputCurrency]}`
+      );
+    }
   };
 
   const clickOutsideInput = (e: MouseEvent) => {
@@ -107,9 +117,9 @@ function FormExchange(): JSX.Element {
               </span>
               <input
                 className="bg-input-gray focus:outline-none text-white pl-4 pb-2 h-full rounded-bl-xl"
-                type='text'
+                type="text"
                 onChange={inputMoneyHandler}
-                value={inputMoneyValue}
+                value={store.priceTo ? inputMoneyValue : 'Обновление курса...'}
                 disabled={!store.priceTo}
               />
             </div>{' '}
