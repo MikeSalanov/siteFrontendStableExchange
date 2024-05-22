@@ -17,3 +17,6 @@ td{
   @apply  px-16 py-9
 }
 
+.buttonCustom {
+  @apply bg-yellow-green-corp w-max px-4 py-2 rounded-lg hover:transform hover:scale-110 transition-transform text-xl disabled:opacity-75 text-black m-4 hover:cursor-pointer;
+}
