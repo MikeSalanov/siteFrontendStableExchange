@@ -110,6 +110,7 @@ function FormExchange(): JSX.Element {
                 type='text'
                 onChange={inputMoneyHandler}
                 value={inputMoneyValue}
+                disabled={!store.priceTo}
               />
             </div>{' '}
             <div className="flex items-center bg-input-currency">
