@@ -69,7 +69,7 @@ function FormToExchangePage({
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
-    setOutputMoneyValue(Number(e.target.value.replace(/\D/g,'')) * store.priceTo);
+    setOutputMoneyValue(Number((Number(e.target.value.replace(/\D/g,'')) * store.priceTo/store.priceFrom).toFixed(2)));
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -308,7 +308,6 @@ function FormToExchangePage({
                       );
                     }
                   })}
-                  <p className={styles.customOption}>Добавить новую карту +</p>
                 </div>
               </div>
             </div>
@@ -378,12 +377,6 @@ function FormToExchangePage({
                         );
                       }
                     })}
-                    <p className={styles.customOption}>
-                      Добавить новую карту +
-                    </p>
-                    <p className={styles.customOption}>
-                      Оставить средства в кошелке
-                    </p>
                   </div>
                 </div>
               </div>

@@ -40,7 +40,7 @@ function FormExchange(): JSX.Element {
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
-    setOutputMoneyValue(Number(e.target.value.replace(/\D/g,'')) * store.priceTo);
+    setOutputMoneyValue(Number((Number(e.target.value.replace(/\D/g,'')) * store.priceTo/store.priceFrom).toFixed(2)));
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
