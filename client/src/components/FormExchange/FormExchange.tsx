@@ -55,7 +55,7 @@ function FormExchange(): JSX.Element {
     setInputMoneyValue(Number(e.target.value) / store.priceTo);
   };
 
-  const submitHandler = (e: MouseEvent): void => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (store.priceTo) {
       store.setCurrAmount(inputMoneyValue);
