@@ -7,6 +7,7 @@ import UserSVG from '../../../../public/bx-user.svg';
 import TimeSVG from '../../../../public/bx-time.svg';
 import WalletSVG from '../../../../public/bx-wallet.svg';
 import LogOutSVG from '../../../../public/bx-log-out.svg';
+import { observer } from 'mobx-react-lite';
 
 function DropDownProfile(): JSX.Element {
   const { store } = useContext(Context);
@@ -43,10 +44,10 @@ function DropDownProfile(): JSX.Element {
       document.removeEventListener('click', clickOutside);
     };
   }, []);
-
+  
   return (
     <>
-      <div className={hiddenDropDown ? styles.dropDown : styles.dropDownClick}>
+      {store.user.email!=='admin@admin'&&<div className={hiddenDropDown ? styles.dropDown : styles.dropDownClick}>
         <div
           className={
             hiddenDropDown ? styles.headerItem : styles.headerItemClick
@@ -81,9 +82,10 @@ function DropDownProfile(): JSX.Element {
             />
           ))}
         </div>
-      </div>
+      </div>}
+      
     </>
   );
 }
 
-export default DropDownProfile;
+export default observer(DropDownProfile);
