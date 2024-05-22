@@ -13,9 +13,9 @@ function FormExchange(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const [inputCurrencies] = useState<string[]>(['USD $', 'EUR €']); // массив с вводимыми валютами (те, которые переводит пользователь)
+  const [inputCurrencies] = useState<string[]>(['USD $']); 
 
-  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']); // массив с выводимыми валютами (те, которые хочет получить пользователь)
+  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']); 
 
   const currenciesOrder: {
     [tickerName: string]: string;
@@ -39,13 +39,13 @@ function FormExchange(): JSX.Element {
     useState<boolean>(true);
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInputMoneyValue(Number(e.target.value));
-    setOutputMoneyValue(Number(e.target.value) * store.price);
+    setInputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
+    setOutputMoneyValue(Number(e.target.value.replace(/\D/g,'')) * store.priceTo);
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setOutputMoneyValue(Number(e.target.value));
-    setInputMoneyValue(Number(e.target.value) / store.price);
+    setOutputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
+    setInputMoneyValue(Number(e.target.value) / store.priceTo);
   };
 
   const submitHandler = (): void => {
@@ -107,7 +107,7 @@ function FormExchange(): JSX.Element {
               </span>
               <input
                 className="bg-input-gray focus:outline-none text-white pl-4 pb-2 h-full rounded-bl-xl"
-                type="number"
+                type='text'
                 onChange={inputMoneyHandler}
                 value={inputMoneyValue}
               />
@@ -160,9 +160,10 @@ function FormExchange(): JSX.Element {
               </span>{' '}
               <input
                 className=" bg-input-gray focus:outline-none text-white appearance-none pl-4 pb-2 h-full rounded-bl-xl"
-                type="number"
+                type="text"
                 onChange={outputMoneyHandler}
                 value={outputMoneyValue}
+                disabled={true}
               />
             </div>{' '}
             <div className="flex  items-center bg-input-currency">
