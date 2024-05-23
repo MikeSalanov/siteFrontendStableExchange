@@ -173,7 +173,7 @@ function FormToExchangePage({
         currency_from: currenciesReverseOrder[currInputCurrency],
         currency_to: currenciesReverseOrder[currOutputCurrency],
         amount_from: Number(inputMoneyValue),
-        amount_to: Number(outputMoneyValue),
+        amount_to: Number(outputMoneyValue*100),
         card_number_from: currInputCard.replace(/ /g, ''),
       }),
     });
