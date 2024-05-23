@@ -1,7 +1,11 @@
 .clearBtn {
   color:black;
-  background-color: yellow;
+  background-color: rgb(205 255 0);
   padding: 5px;
+  &:hover {
+    background-color: rgb(160 199 0);
+
+  }
   }
 
   .filterContainer {

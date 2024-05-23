@@ -8,7 +8,7 @@ type StatusFilterProps = {
   status:  FilterObj["status"];
 };
 
-function StatusFilter({ setFilter }: StatusFilterProps) {
+function StatusFilter({ setFilter, status }: StatusFilterProps) {
 
 
 
@@ -21,7 +21,7 @@ function StatusFilter({ setFilter }: StatusFilterProps) {
 
   return (
     <div>
-      <select defaultValue="Status" onChange={handleStatusChange}>
+      <select defaultValue="Status" onChange={handleStatusChange} value={status}>
         <option disabled hidden>
           Status
         </option>

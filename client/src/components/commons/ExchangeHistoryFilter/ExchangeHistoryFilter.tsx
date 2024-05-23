@@ -41,16 +41,16 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilter((prevFilter) => ({ ...prevFilter, publicId : id}));
 }
   
-// const handleClearChange = () => {
-//   setFilter({
-//     dateRange: undefined,
-//     status: "Status",
-//     publicId: "",
-//     currencyFrom: "From",
-//     currencyTo: "To",
-//   });
-//   setToggleCalendar(false);
-// };
+const handleClearChange = () => {
+  setFilter({
+    dateRange: undefined,
+    status: "Status",
+    publicId: "",
+    currencyFrom: "From",
+    currencyTo: "To",
+  });
+  setToggleCalendar(false);
+};
 
 
 useEffect(() => {
@@ -58,12 +58,8 @@ useEffect(() => {
 
   const formattedDateFrom = dateRange?.dateFrom ? format(dateRange.dateFrom, "yyyy-MM-dd'T'HH:mm:ssXXX") : undefined;
   const formattedDateTo = dateRange?.dateTo ? format(dateRange.dateTo, "yyyy-MM-dd'T'HH:mm:ssXXX") : undefined;
-
-  console.log(formattedDateFrom, formattedDateTo);
   
-  
-  // dateRange
-  exchanges.getExchanges({
+    exchanges.getExchanges({
     ...filters,
     dateFrom: formattedDateFrom,
     dateTo: formattedDateTo
@@ -99,7 +95,7 @@ useEffect(() => {
           </div>
         </div>
         <div className={styles.divClearBtn}>
-          <button className={styles.clearBtn} onClick={() => setFilter({})}>Clear</button>
+          <button className={styles.clearBtn} onClick={handleClearChange}>Clear</button>
         </div>
       </div>
     </div>
