@@ -12,6 +12,9 @@ const FormNewCard = observer(({
 }: {
   setFormNewCard: React.Dispatch<React.SetStateAction<boolean>>;
 }): JSX.Element => {
+
+
+  
   
   return (
     <div className={styles.modalWrapper} onClick={() => setFormNewCard(false)}>
