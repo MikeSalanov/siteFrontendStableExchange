@@ -38,25 +38,25 @@ function CurrencyTicker(): JSX.Element {
       //   .catch((e) => console.log({ ERROR_GET_CURRENCY: e }));
 
       fetch(
-        'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=ETH'
+        'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=USDT'
       )
         .then((res) => {
           setTimer(5);
           return res.json();
         })
-        .then((res) => {store.setPriceTo(res.ETH);
+        .then((res) => {store.setPriceTo(res.USDT);
           
         }
         );
         fetch(
-          'https://min-api.cryptocompare.com/data/price?fsym=RUB&tsyms=ETH'
+          'https://min-api.cryptocompare.com/data/price?fsym=RUB&tsyms=USDT'
         )
           .then((res) => {
             setTimer(5);
             return res.json();
           })
           .then((res) => {
-            store.setPriceFrom(res.ETH);
+            store.setPriceFrom(res.USDT);
           }
           );
     }, 6000);
@@ -79,8 +79,8 @@ function CurrencyTicker(): JSX.Element {
       {store.priceTo && store.priceFrom ? (
         <div className={styles.timerCurrencyBlock}>
           <p>Текущий курс:</p>
-          <p>1 USD = {store.priceTo} ETH</p>
-          <p>{store.priceFrom} ETH = 1 RUB</p>
+          <p>1 USD = {store.priceTo} USDT</p>
+          <p>{store.priceFrom} USDT = 1 RUB</p>
           <p className={colors[timer]}>0{timer}:00</p>
         </div>
       ) : (
