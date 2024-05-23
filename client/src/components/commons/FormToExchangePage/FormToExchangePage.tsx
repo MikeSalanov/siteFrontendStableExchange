@@ -189,7 +189,7 @@ function FormToExchangePage({
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
-        card_number_from: currOutputCard.replace(/ /g, ''),
+        card_number_to: currOutputCard.replace(/ /g, ''),
       }),
     });
 
