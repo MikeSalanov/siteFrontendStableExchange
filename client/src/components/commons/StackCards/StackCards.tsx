@@ -29,7 +29,7 @@ store.setUserCards().then(response => {
 .catch(error => {
   console.error('Error fetching data:', error);
 });
-}, [])
+}, [store])
 
 console.log(store.userCards);
 
@@ -55,7 +55,7 @@ console.log(store.userCards);
                   setActiveCard(index);
                 }}
               >
-                {String(card.cardNumber).slice(0, 4)} ***
+                {String(card.card_number).slice(0, 4)} ***
               </div>
             )}
           </>
