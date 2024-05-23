@@ -16,8 +16,8 @@ function FormToExchangePage({
     store.currAmount
   );
   const [outputMoneyValue, setOutputMoneyValue] = useState<number>(
-    store.currAmount * store.price
-  );
+    Number((store.currAmount * store.priceTo/store.priceFrom).toFixed(2)))
+  ;
 
   const currenciesOrder: {
     [currencyName: string]: string;
@@ -28,9 +28,9 @@ function FormToExchangePage({
     sbrub: 'Sber RUB',
   };
 
-  const [inputCurrencies] = useState<string[]>(['USD $', 'EUR €']); // массив с вводимыми валютами (те, которые переводит пользователь)
+  const [inputCurrencies] = useState<string[]>(['USD $', ]); 
 
-  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']); // массив с выводимыми валютами (те, которые хочет получить пользователь)
+  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']);
 
   const inputCards: string[] = [
     '1234 5678 91011 1213',
@@ -68,13 +68,13 @@ function FormToExchangePage({
   const [currentBalance, setCurrentBalance] = useState<number>(0);
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInputMoneyValue(Number(e.target.value));
-    setOutputMoneyValue(Number(e.target.value) * store.price);
+    setInputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
+    setOutputMoneyValue(Number((Number(e.target.value.replace(/\D/g,'')) * store.priceTo/store.priceFrom).toFixed(2)));
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setOutputMoneyValue(Number(e.target.value));
-    setInputMoneyValue(Number(e.target.value) / store.price);
+    setOutputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
+    setInputMoneyValue(Number(e.target.value.replace(/\D/g,'')) / store.priceTo);
   };
 
   const clickOutsideInput = (e: Event): void => {
@@ -161,7 +161,7 @@ function FormToExchangePage({
               </span>{' '}
               <input
                 className=" bg-input-gray focus:outline-none text- pl-4 pb-2 h-full rounded-bl-xl"
-                type="number"
+                type="text"
                 onChange={inputMoneyHandler}
                 value={inputMoneyValue}
                 disabled={firstSubmit}
@@ -218,10 +218,10 @@ function FormToExchangePage({
               </span>{' '}
               <input
                 className=" bg-input-gray focus:outline-none text-white appearance-none pl-4 pb-2 h-full rounded-bl-xl"
-                type="number"
+                type="text"
                 onChange={outputMoneyHandler}
                 value={outputMoneyValue}
-                disabled={firstSubmit}
+                disabled={true}
               />
             </div>{' '}
             <div className="flex  items-center bg-input-currency">
@@ -308,7 +308,6 @@ function FormToExchangePage({
                       );
                     }
                   })}
-                  <p className={styles.customOption}>Добавить новую карту +</p>
                 </div>
               </div>
             </div>
@@ -378,12 +377,6 @@ function FormToExchangePage({
                         );
                       }
                     })}
-                    <p className={styles.customOption}>
-                      Добавить новую карту +
-                    </p>
-                    <p className={styles.customOption}>
-                      Оставить средства в кошелке
-                    </p>
                   </div>
                 </div>
               </div>
