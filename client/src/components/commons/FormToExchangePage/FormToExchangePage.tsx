@@ -16,9 +16,8 @@ function FormToExchangePage({
     store.currAmount
   );
   const [outputMoneyValue, setOutputMoneyValue] = useState<number>(
-    Number((store.currAmount * store.priceTo/store.priceFrom).toFixed(2)))
-  ;
-
+    Number(((store.currAmount * store.priceTo) / store.priceFrom).toFixed(2))
+  );
   const currenciesOrder: {
     [currencyName: string]: string;
   } = {
@@ -28,7 +27,16 @@ function FormToExchangePage({
     sbrub: 'Sber RUB',
   };
 
-  const [inputCurrencies] = useState<string[]>(['USD $', ]); 
+  const currenciesReverseOrder: {
+    [currencyName: string]: string;
+  } = {
+    'USD $': 'usd',
+    'EUR €': 'eur',
+    'Tinkoff RUB': 'tscrub',
+    'Sber RUB': 'sbrub',
+  };
+
+  const [inputCurrencies] = useState<string[]>(['USD $']);
 
   const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']);
 
@@ -68,13 +76,22 @@ function FormToExchangePage({
   const [currentBalance, setCurrentBalance] = useState<number>(0);
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
-    setOutputMoneyValue(Number((Number(e.target.value.replace(/\D/g,'')) * store.priceTo/store.priceFrom).toFixed(2)));
+    setInputMoneyValue(Number(e.target.value.replace(/\D/g, '')));
+    setOutputMoneyValue(
+      Number(
+        (
+          (Number(e.target.value.replace(/\D/g, '')) * store.priceTo) /
+          store.priceFrom
+        ).toFixed(2)
+      )
+    );
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setOutputMoneyValue(Number(e.target.value.replace(/\D/g,'')));
-    setInputMoneyValue(Number(e.target.value.replace(/\D/g,'')) / store.priceTo);
+    setOutputMoneyValue(Number(e.target.value.replace(/\D/g, '')));
+    setInputMoneyValue(
+      Number(e.target.value.replace(/\D/g, '')) / store.priceTo
+    );
   };
 
   const clickOutsideInput = (e: Event): void => {
@@ -138,20 +155,53 @@ function FormToExchangePage({
     };
   }, []);
 
-  const confirmInputCardHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const firstSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFirstSubmit(true);
     setLoader(true);
-    setCurrentBalance((prev: number) => prev + outputMoneyValue);
-    setTimeout(() => {
-      setLoader(false);
-    }, 5000);
+    setCurrentBalance((prev: number) =>
+      Number((prev + inputMoneyValue * store.priceTo).toFixed(2))
+    );
+
+    const res = await fetch('http://stable-exchange.top/exchanges', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({
+        currency_from: currenciesReverseOrder[currInputCurrency],
+        currency_to: currenciesReverseOrder[currOutputCurrency],
+        amount_from: Number(inputMoneyValue),
+        amount_to: Number(outputMoneyValue*100),
+        card_number_from: currInputCard.replace(/ /g, ''),
+      }),
+    });
+    setLoader(false);
+  };
+
+  const secondSubmitHandler = async () => {
+    setCurrentBalance(0);
+    const res = await fetch('http://stable-exchange.top/exchanges/payout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({
+        card_number_to: currOutputCard.replace(/ /g, ''),
+      }),
+    });
+
+    if (res.ok) {
+      setSecondSubmit(true);
+    }
   };
 
   return (
     <>
       <div className={styles.wrapperForm}>
-        <form onSubmit={confirmInputCardHandler} className={styles.form}>
+        <form onSubmit={firstSubmitHandler} className={styles.form}>
           <div className="flex">
             {' '}
             <div className="flex flex-col">
@@ -382,10 +432,7 @@ function FormToExchangePage({
               </div>
               <button
                 type="submit"
-                onClick={() => {
-                  setSecondSubmit(true);
-                  setCurrentBalance((prev: number) => prev - outputMoneyValue);
-                }}
+                onClick={secondSubmitHandler}
                 className={styles.buttonExchange}
                 disabled={secondSubmit}
               >
