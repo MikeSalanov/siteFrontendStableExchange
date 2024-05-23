@@ -2,7 +2,12 @@
 import styles from './FormForAddRuCard.module.scss';
 import { Context } from '../../../main';
 
-function FormForAddRuCard(): JSX.Element {
+
+
+
+function FormForAddRuCard({setFormNewCard}:{
+  setFormNewCard: React.Dispatch<React.SetStateAction<boolean>>;
+}): JSX.Element {
   const [cardNumInput, setCardNumInput] = useState<string>('');
   const [cardExpiryMonthInput, setCardExpiryMonthInput] = useState<string>('');
   const [cardExpiryYearInput, setCardExpiryYearInput] = useState<string>('');
@@ -14,6 +19,7 @@ function FormForAddRuCard(): JSX.Element {
   const handleAddCard = () => {
     const expiryDate = `${cardExpiryMonthInput}/${cardExpiryYearInput}`;
     store.createRuCard(cardNumInput, expiryDate, cardCVCInput);
+    setFormNewCard(false)
   };
 
   return (

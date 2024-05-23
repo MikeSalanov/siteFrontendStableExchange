@@ -28,7 +28,7 @@ const FormNewCard = observer(({
             Russian Card
           </button>
         </div>
-        {store.activeTabOfCardForm === CardFormType.WORLD ? <ForeignCardForm /> : <FormForAddRuCard />}
+        {store.activeTabOfCardForm === CardFormType.WORLD ? <ForeignCardForm /> : <FormForAddRuCard  setFormNewCard={setFormNewCard}/>}
       </div>
     </div>
     </div>

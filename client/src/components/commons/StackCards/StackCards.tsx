@@ -23,13 +23,13 @@ const StackCards = observer((props: PropsStackCards): JSX.Element => {
 
 
 useEffect(() => {
-store.setUserCards().then(response => {
+store.getUserCards().then(response => {
   console.log('Server response:', response);
 })
 .catch(error => {
   console.error('Error fetching data:', error);
 });
-}, [store])
+}, [])
 
 console.log(store.userCards);
 
@@ -55,7 +55,7 @@ console.log(store.userCards);
                   setActiveCard(index);
                 }}
               >
-                {String(card.card_number).slice(0, 4)} ***
+               {card.card_number}
               </div>
             )}
           </>

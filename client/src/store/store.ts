@@ -9,7 +9,7 @@ import AdminService from '../services/AdminService.ts';
 import UserService from '../services/UserServices.ts';
 import CardFormType from "../../classes/CardFormType.ts";
 import UserCardsService from '../services/UserCardsService.ts';
-import { UserCardsResponse } from '../models/response/userCardsService/UserCardsResponse.ts';
+import { UserCard } from '../models/response/userCardsService/UserCardsResponse.ts';
 
 export default class Store {
   user = {} as IUser;
@@ -20,7 +20,7 @@ export default class Store {
   priceTo = 0;
   currAmount = 0;
   activeTabOfCardForm = CardFormType.WORLD;
-  userCards : UserCardsResponse = [];
+  userCards: UserCard[] = [];
   
 
   constructor() {
@@ -58,14 +58,13 @@ export default class Store {
     this.activeTabOfCardForm = cardFormType ;
   }
   
-  async setUserCards() {
+  async getUserCards() {
     try {
       const response = await UserCardsService.getUserCards()
       console.log(response.data);
       this.userCards = response.data
       console.log(this.userCards.slice());
       return response
-    
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +74,7 @@ export default class Store {
     try {
       const response = await UserCardsService.createRuCard(card_number, expiry_date, cvc_cvv)
       console.log(response.data); 
+      await this.getUserCards() // TODO: выпилить, если с бека будет приходить объект с созданной картой
     } catch (error) {
       console.log(error);
     }
