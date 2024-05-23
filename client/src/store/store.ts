@@ -84,6 +84,7 @@ export default class Store {
     try {
       const response = await UserCardsService.createWorldCard(payment_method_id)
       console.log(response.data); 
+      return response
     } catch (error) {
       console.log(error);
     }
