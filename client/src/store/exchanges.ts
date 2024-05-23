@@ -22,6 +22,7 @@ async getExchanges (filters: {
     const response = await ExchangesService.getExchanges(filters)
     console.log(response.data);
     this.exchanges = response.data.exchanges
+    return response
   } catch (error) {
     console.log(error);
   }

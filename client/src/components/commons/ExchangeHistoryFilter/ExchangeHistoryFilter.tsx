@@ -36,11 +36,23 @@ const [filter, setFilter] = useState<FilterObj>({})
   console.log(filter);
 
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const id = event.target.value;
     setFilter((prevFilter) => ({ ...prevFilter, publicId : id}));
-  }
+}
   
+// const handleClearChange = () => {
+//   setFilter({
+//     dateRange: undefined,
+//     status: "Status",
+//     publicId: "",
+//     currencyFrom: "From",
+//     currencyTo: "To",
+//   });
+//   setToggleCalendar(false);
+// };
+
+
 useEffect(() => {
   const {dateRange, ...filters} = filter
 
@@ -57,7 +69,7 @@ useEffect(() => {
     dateTo: formattedDateTo
   })
   .then(response => {
-    console.log('Server response:', response.data);
+    console.log('Server response:', response?.data);
   })
   .catch(error => {
     console.error('Error fetching data:', error);
