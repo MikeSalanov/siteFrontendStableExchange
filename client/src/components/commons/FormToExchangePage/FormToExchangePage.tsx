@@ -35,7 +35,7 @@ function FormToExchangePage({
     'Tinkoff RUB': 'tscrub',
     'Sber RUB': 'sbrub',
   };
-
+  const [statusExchange, setStatusExchange] = useState<string>('');
   const [inputCurrencies] = useState<string[]>(['USD $']);
 
   const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']);
@@ -74,7 +74,7 @@ function FormToExchangePage({
   const [secondSubmit, setSecondSubmit] = useState<boolean>(false);
 
   const [currentBalance, setCurrentBalance] = useState<number>(0);
-
+  const [exchangeId, setExchangeId] = useState<string>('');
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputMoneyValue(Number(e.target.value.replace(/\D/g, '')));
     setOutputMoneyValue(
@@ -155,7 +155,7 @@ function FormToExchangePage({
     };
   }, []);
 
-  const firstSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const firstSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFirstSubmit(true);
     setLoader(true);
@@ -163,7 +163,7 @@ function FormToExchangePage({
       Number((prev + inputMoneyValue * store.priceTo).toFixed(2))
     );
 
-    const res = await fetch('http://stable-exchange.top/exchanges', {
+    fetch('http://stable-exchange.top/exchanges', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -173,16 +173,20 @@ function FormToExchangePage({
         currency_from: currenciesReverseOrder[currInputCurrency],
         currency_to: currenciesReverseOrder[currOutputCurrency],
         amount_from: Number(inputMoneyValue),
-        amount_to: Number(outputMoneyValue*100),
+        amount_to: Number(outputMoneyValue * 100),
         card_number_from: currInputCard.replace(/ /g, ''),
       }),
-    });
-    setLoader(false);
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setStatusExchange(res.status);
+        setExchangeId(res.id);
+      });
   };
 
   const secondSubmitHandler = async () => {
     setCurrentBalance(0);
-    const res = await fetch('http://stable-exchange.top/exchanges/payout', {
+    await fetch('http://stable-exchange.top/exchanges/payout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -193,14 +197,26 @@ function FormToExchangePage({
       }),
     });
 
-    if (res.ok) {
-      setSecondSubmit(true);
-    }
+    fetch(
+      `http://stable-exchange.top/exchanges/status?exchangeid=${exchangeId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => setStatusExchange(res.status));
+
+    setSecondSubmit(true);
   };
 
   return (
     <>
       <div className={styles.wrapperForm}>
+        <div>Статус Вашего обмена {statusExchange})</div>
         <form onSubmit={firstSubmitHandler} className={styles.form}>
           <div className="flex">
             {' '}

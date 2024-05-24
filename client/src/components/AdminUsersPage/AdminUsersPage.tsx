@@ -24,9 +24,21 @@ function AdminUsersPage(): JSX.Element {
 
   return (
     <>
+      <div className='flex justify-center'>
+        <div className={styles.buttonCustom}>
+          <Link to="/admin/exchanges">Транзакции</Link>
+        </div>
+        <div
+          className={styles.buttonCustom}
+          onClick={() => {
+            store.logout();
+          }}
+        >
+          Выйти
+        </div>
+      </div>
       <h1 className="mt-20 text-2xl text-slate-300">Пользователи</h1>
-      <div className={styles.buttonCustom}><Link to="/admin/exchanges">Транзакции</Link></div>
-      <div className={styles.buttonCustom} onClick={ ()=>{store.logout(); }}>Выйти</div>
+
       <div className={styles.wrapperUsersPage}>
         <table className={styles.tableUsers}>
           <thead className=" bg-zinc-500">
