@@ -6,6 +6,8 @@ import { Context } from '../../main';
 import { observer } from 'mobx-react-lite';
 
 function FormExchange(): JSX.Element {
+
+
   const { store } = useContext(Context);
 
   const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);

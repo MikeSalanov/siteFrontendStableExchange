@@ -40,18 +40,9 @@ function FormToExchangePage({
 
   const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']);
 
-  const inputCards: string[] = [
-    '1234 5678 91011 1213',
-    '0000 0000 0000 0000',
-    '1111 2222 3333 4444',
-  ];
-  const outputCards: string[] = [
-    '2222 5678 3333 4444',
-    '4444 3333 2222 1111',
-    '9999 6666 7777 2222',
-  ];
-  const [currInputCard, setCurrInputCard] = useState<string>(inputCards[0]);
-  const [currOutputCard, setCurrOutputCard] = useState<string>(outputCards[0]);
+  const [cards, setCards] = useState<{card_number:string, expiry_date:string}[]>([])
+   const [currInputCard, setCurrInputCard] = useState<string>(cards[0].card_number);
+  const [currOutputCard, setCurrOutputCard] = useState<string>(cards[0].card_number);
 
   const [currInputCurrency, setInputCurrency] = useState<string>(
     fromCurrency ? currenciesOrder[fromCurrency] : ''
@@ -184,9 +175,9 @@ function FormToExchangePage({
       });
   };
 
-  const secondSubmitHandler = async () => {
+  const secondSubmitHandler =  () => {
     setCurrentBalance(0);
-    await fetch('http://stable-exchange.top/exchanges/payout', {
+    fetch('http://stable-exchange.top/exchanges/payout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -213,6 +204,14 @@ function FormToExchangePage({
     setSecondSubmit(true);
   };
 
+  useEffect(()=>{
+
+   fetch('http://stable-exchange.top/bank-cards-service', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+  }}).then(res=>res.json()).then(res=>setCards(res))
+  },[])
   return (
     <>
       <div className={styles.wrapperForm}>
@@ -358,8 +357,8 @@ function FormToExchangePage({
                       : styles.customCardOptions
                   }
                 >
-                  {inputCards?.map((card) => {
-                    if (card !== currInputCard) {
+                  {cards?.map((card) => {
+                    if (card?.card_number !== currInputCard) {
                       return (
                         <p
                           className={styles.customCardOption}
@@ -369,7 +368,7 @@ function FormToExchangePage({
                             )
                           }
                         >
-                          {card}
+                          {card.card_number}
                         </p>
                       );
                     }
@@ -427,8 +426,8 @@ function FormToExchangePage({
                         : styles.customCardOptions
                     }
                   >
-                    {outputCards?.map((card) => {
-                      if (card !== currOutputCard) {
+                    {cards?.map((card) => {
+                      if (card?.card_number !== currOutputCard) {
                         return (
                           <p
                             className={styles.customCardOption}
@@ -438,7 +437,7 @@ function FormToExchangePage({
                               )
                             }
                           >
-                            {card}
+                            {card.card_number}
                           </p>
                         );
                       }
