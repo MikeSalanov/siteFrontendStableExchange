@@ -9,28 +9,18 @@ export default class Wallet {
     makeAutoObservable(this);
 }
 
-async getBalance () {
+async getInfo () {
 try {
   const response = await WalletService.getInfo()
-  console.log(response.data.balance);
+  console.log(response.data);
   this.balance = response.data.balance
+  this.publicAddress = response.data.publicAddress
 } 
 catch (error) {
   console.log(error);
 }
 }
 
-async getPublicAdress () {
-  try {
-    const response = await WalletService.getInfo()
-    console.log(response.data.balance);
-    this.publicAddress = response.data.publicAddress
-  } 
-  catch (error) {
-    console.log(error);
-  }
-
-}
 
 
 }

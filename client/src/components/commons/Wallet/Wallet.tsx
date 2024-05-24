@@ -11,8 +11,7 @@ function Wallet (): JSX.Element {
 
 
 useEffect(() => {
-  wallet.getBalance()
-  wallet.getPublicAdress()
+  wallet.getInfo()
 }, [])
 
   
