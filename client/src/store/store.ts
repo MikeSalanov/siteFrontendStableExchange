@@ -203,6 +203,17 @@ export default class Store {
       console.log(e);
     }
   }
+  
+  async toGetUserCards(): Promise<Array<{
+    card_number: string,
+    expiry_date: string
+  }>> {
+    const response: AxiosResponse<Array<{
+      card_number: string,
+      expiry_date: string
+    }>> = await UserService.toGetUserCards();
+    return response.data;
+  }
 
   async changePasswordUser({
     oldPassword,

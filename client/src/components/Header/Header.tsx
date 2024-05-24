@@ -14,9 +14,9 @@ function Header(): JSX.Element {
         {' '}
         <Link to="/">
           <img
-            src="../stablelogo.svg"
+            src="../stablelogo1.svg"
             alt="logo"
-            className=" h-36"
+            className=" h-52"
           />
         </Link>
       </div>

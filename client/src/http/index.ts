@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { AuthResponse } from '../models/response/authService/AuthResponse';
 
-
-
 export const BASE_URL: string = import.meta.env.VITE_BASE_URL ?
   `${import.meta.env.VITE_BASE_URL}` :
   `http://localhost`;
@@ -13,6 +11,17 @@ export const AUTH_API_URL: string = `${
   `${BASE_URL}`
 }/auth-service`;
 
+export const BANK_CARDS_API_URL: string = `${
+  BASE_URL.includes('localhost') ?
+    `${BASE_URL}:4003` :
+    `${BASE_URL}`
+}/bank-cards`;
+
+export const EXCHANGES_API_URL: string = `${
+  BASE_URL.includes('localhost') ?
+    `${BASE_URL}:4004` :
+    `${BASE_URL}`
+}/exchanges`;
 
 const $api = axios.create({
   withCredentials: true,

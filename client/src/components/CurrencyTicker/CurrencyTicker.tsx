@@ -45,11 +45,11 @@ function CurrencyTicker(): JSX.Element {
           return res.json();
         })
         .then((res) => {store.setPriceTo(res.USDT);
-          
+        
         }
         );
         fetch(
-          'https://min-api.cryptocompare.com/data/price?fsym=RUB&tsyms=USDT'
+          'https://min-api.cryptocompare.com/data/price?tsyms=USDT&fsym=RUB'
         )
           .then((res) => {
             setTimer(5);
@@ -80,7 +80,7 @@ function CurrencyTicker(): JSX.Element {
         <div className={styles.timerCurrencyBlock}>
           <p>Текущий курс:</p>
           <p>1 USD = {store.priceTo} USDT</p>
-          <p>{store.priceFrom} USDT = 1 RUB</p>
+          <p>1 USDT = {(1/store.priceFrom).toFixed(1)} RUB</p>
           <p className={colors[timer]}>0{timer}:00</p>
         </div>
       ) : (
