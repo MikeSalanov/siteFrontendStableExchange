@@ -76,7 +76,11 @@ const App = () => {
           }
         />
         <Route path="/exchange" element={<ExchangePage />} />
-        <Route path="/customer-account/wallet" element={<WalletPage />} />
+        <Route path="/customer-account/wallet" element={
+          <RequireIsAuth>
+            <WalletPage />
+          </RequireIsAuth>
+        } />
         <Route
           path="/customer-account/confirm-registration"
           element={<RegConfirmForm />}
