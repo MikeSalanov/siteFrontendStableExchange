@@ -35,23 +35,14 @@ function FormToExchangePage({
     'Tinkoff RUB': 'tscrub',
     'Sber RUB': 'sbrub',
   };
-
+  const [statusExchange, setStatusExchange] = useState<string>('');
   const [inputCurrencies] = useState<string[]>(['USD $']);
 
   const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']);
 
-  const inputCards: string[] = [
-    '1234 5678 91011 1213',
-    '0000 0000 0000 0000',
-    '1111 2222 3333 4444',
-  ];
-  const outputCards: string[] = [
-    '2222 5678 3333 4444',
-    '4444 3333 2222 1111',
-    '9999 6666 7777 2222',
-  ];
-  const [currInputCard, setCurrInputCard] = useState<string>(inputCards[0]);
-  const [currOutputCard, setCurrOutputCard] = useState<string>(outputCards[0]);
+  const [cards, setCards] = useState<{card_number:string, expiry_date:string}[]>([])
+   const [currInputCard, setCurrInputCard] = useState<string>(cards[0].card_number);
+  const [currOutputCard, setCurrOutputCard] = useState<string>(cards[0].card_number);
 
   const [currInputCurrency, setInputCurrency] = useState<string>(
     fromCurrency ? currenciesOrder[fromCurrency] : ''
@@ -74,7 +65,7 @@ function FormToExchangePage({
   const [secondSubmit, setSecondSubmit] = useState<boolean>(false);
 
   const [currentBalance, setCurrentBalance] = useState<number>(0);
-
+  const [exchangeId, setExchangeId] = useState<string>('');
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputMoneyValue(Number(e.target.value.replace(/\D/g, '')));
     setOutputMoneyValue(
@@ -155,7 +146,7 @@ function FormToExchangePage({
     };
   }, []);
 
-  const firstSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const firstSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFirstSubmit(true);
     setLoader(true);
@@ -163,7 +154,7 @@ function FormToExchangePage({
       Number((prev + inputMoneyValue * store.priceTo).toFixed(2))
     );
 
-    const res = await fetch('http://stable-exchange.top/exchanges', {
+    fetch('http://stable-exchange.top/exchanges', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -173,16 +164,20 @@ function FormToExchangePage({
         currency_from: currenciesReverseOrder[currInputCurrency],
         currency_to: currenciesReverseOrder[currOutputCurrency],
         amount_from: Number(inputMoneyValue),
-        amount_to: Number(outputMoneyValue*100),
+        amount_to: Number(outputMoneyValue * 100),
         card_number_from: currInputCard.replace(/ /g, ''),
       }),
-    });
-    setLoader(false);
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setStatusExchange(res.status);
+        setExchangeId(res.id);
+      });
   };
 
-  const secondSubmitHandler = async () => {
+  const secondSubmitHandler =  () => {
     setCurrentBalance(0);
-    const res = await fetch('http://stable-exchange.top/exchanges/payout', {
+    fetch('http://stable-exchange.top/exchanges/payout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -193,14 +188,34 @@ function FormToExchangePage({
       }),
     });
 
-    if (res.ok) {
-      setSecondSubmit(true);
-    }
+    fetch(
+      `http://stable-exchange.top/exchanges/status?exchangeid=${exchangeId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => setStatusExchange(res.status));
+
+    setSecondSubmit(true);
   };
 
+  useEffect(()=>{
+
+   fetch('http://stable-exchange.top/bank-cards-service', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+  }}).then(res=>res.json()).then(res=>setCards(res))
+  },[])
   return (
     <>
       <div className={styles.wrapperForm}>
+        <div>Статус Вашего обмена {statusExchange})</div>
         <form onSubmit={firstSubmitHandler} className={styles.form}>
           <div className="flex">
             {' '}
@@ -342,8 +357,8 @@ function FormToExchangePage({
                       : styles.customCardOptions
                   }
                 >
-                  {inputCards?.map((card) => {
-                    if (card !== currInputCard) {
+                  {cards?.map((card) => {
+                    if (card?.card_number !== currInputCard) {
                       return (
                         <p
                           className={styles.customCardOption}
@@ -353,7 +368,7 @@ function FormToExchangePage({
                             )
                           }
                         >
-                          {card}
+                          {card.card_number}
                         </p>
                       );
                     }
@@ -411,8 +426,8 @@ function FormToExchangePage({
                         : styles.customCardOptions
                     }
                   >
-                    {outputCards?.map((card) => {
-                      if (card !== currOutputCard) {
+                    {cards?.map((card) => {
+                      if (card?.card_number !== currOutputCard) {
                         return (
                           <p
                             className={styles.customCardOption}
@@ -422,7 +437,7 @@ function FormToExchangePage({
                               )
                             }
                           >
-                            {card}
+                            {card.card_number}
                           </p>
                         );
                       }

@@ -6,6 +6,8 @@ import { Context } from '../../main';
 import { observer } from 'mobx-react-lite';
 
 function FormExchange(): JSX.Element {
+
+
   const { store } = useContext(Context);
 
   const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
@@ -86,24 +88,6 @@ function FormExchange(): JSX.Element {
     };
   }, []);
 
-  // const changeInputCurrencyHandler = (
-  //   e: React.ChangeEvent<HTMLInputElement>
-  // ): void => {
-  //   console.log(e.target.value);
-  //
-  //   //   fetch(`/pairs?from=${e.target.value}`)
-  //   //     .then((res) => res.json)
-  //   //     .then((res) => setOutputCurrencies(res.currencies))
-  //   //     .catch((err) => console.log({ ERROR_GET_OUTPUT_CURRENCIES: err }));
-  // };
-  //
-  // //Запрос на получение имеющихся валют (для первого инпута)
-  // // useEffect(() => {
-  // //   fetch('./currencies')
-  // //     .then((res) => res.json())
-  // //     .then((res) => setInputCurrencies(res.currencies))
-  // //     .catch((err) => console.log({ ERROR_GET_CURRENCIES: err }));
-  // // }, []);
 
   return (
     <>
