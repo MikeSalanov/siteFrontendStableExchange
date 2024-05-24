@@ -1,7 +1,9 @@
-﻿import { useState } from 'react';
+﻿import { useContext, useEffect, useState } from 'react';
 import BankCard from '../BankCard/BankCard';
 import FormNewCard from '../FormNewCard/FormNewCard';
 import AddCardSVG from '../../../../public/add-card.svg';
+import { Context } from '../../../main';
+import { observer } from 'mobx-react-lite';
 
 interface CardInterface {
   cardNumber: string;
@@ -12,20 +14,36 @@ interface PropsStackCards {
   cards: CardInterface[];
 }
 
-function StackCards(props: PropsStackCards): JSX.Element {
+const StackCards = observer((props: PropsStackCards): JSX.Element => {
   const [activeCard, setActiveCard] = useState<number>(0);
   const [formNewCard, setFormNewCard] = useState<boolean>(false);
   const { cards } = props;
 
+  const {store} = useContext(Context)
+
+
+useEffect(() => {
+store.getUserCards().then(response => {
+  console.log('Server response:', response);
+})
+.catch(error => {
+  console.error('Error fetching data:', error);
+});
+}, [])
+
+console.log(store.userCards.slice());
+
+
+
   return (
     <>
       <div className="flex flex-col bg-gradient-to-r from-red-400 to-blue-800 rounded-xl">
-        {cards.map((card, index) => (
+        {store.userCards.map((card: {card_number: string, expiry_date: string}, index: number) => (
           <>
             {activeCard === index ? (
               <div className=" order-3">
                 <BankCard
-                  cardNumber={card.cardNumber}
+                  cardNumber={card.card_number}
                   expiry_date={card.expiry_date}
                 />
               </div>
@@ -37,7 +55,7 @@ function StackCards(props: PropsStackCards): JSX.Element {
                   setActiveCard(index);
                 }}
               >
-                {String(card.cardNumber).slice(0, 4)} ***
+               {card.card_number}
               </div>
             )}
           </>
@@ -57,6 +75,6 @@ function StackCards(props: PropsStackCards): JSX.Element {
       {formNewCard && <FormNewCard setFormNewCard={setFormNewCard} />}
     </>
   );
-}
+})
 
 export default StackCards;

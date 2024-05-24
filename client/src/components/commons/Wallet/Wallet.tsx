@@ -8,18 +8,20 @@ import CopySVG from '../../../../public/copy.svg';
 
 function Wallet (): JSX.Element {
   const {wallet} = useContext(Context)
-  
-  useEffect(() => {
-    wallet.getBalance()
-    wallet.getPublicAdress()
-  }, [])
 
-  const handleSubmit = () => {
-    navigator.clipboard.writeText(wallet.publicAddress).then(() => console.log('Address copied to clipboard:', wallet.publicAddress))
-    .catch(error => {
-      console.error('Failed to copy address:', error);
-    });
-  }
+
+useEffect(() => {
+  wallet.getInfo()
+}, [])
+
+  
+const handleSubmit = () => {
+navigator.clipboard.writeText(wallet.publicAddress).then(() => console.log('Address copied to clipboard:', wallet.publicAddress))
+.catch(error => {
+  console.error('Failed to copy address:', error);
+});
+
+}
 
   return (
     <div className={styles.wallet}>

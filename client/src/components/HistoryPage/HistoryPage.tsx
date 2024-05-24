@@ -1,96 +1,76 @@
-﻿import styles from './HistoryPage.module.scss';
-function HistoryPage(): JSX.Element {
-  interface HistoryItemInterface {
-    publicId: string;
-    status: string;
-    date: string;
-    time: string;
-    currencyFrom: string;
-    currencyTo: string;
-    amountFrom: number;
-    amountTo: number;
-  }
+﻿import { useContext } from "react";
+import Header from "../Header/Header";
+import ExchangeHistoryFilter from "../commons/ExchangeHistoryFilter/ExchangeHistoryFilter";
+import styles from "./HistoryPage.module.scss";
+import { Context } from "../../main";
 
-  const history: HistoryItemInterface[] = [
-    {
-      publicId: 'efefeerer34',
-      status: 'pending',
-      date: '21-07-2024',
-      time: '18:16',
-      currencyFrom: 'usd',
-      currencyTo: 'rubtsc',
-      amountFrom: 100,
-      amountTo: 1,
-    },
-    {
-      publicId: 'efefeerer34',
-      status: 'pending',
-      date: '21-07-2024',
-      time: '18:16',
-      currencyFrom: 'usd',
-      currencyTo: 'rubtsc',
-      amountFrom: 100,
-      amountTo: 1,
-    },
-    {
-      publicId: 'efefeerer34',
-      status: 'pending',
-      date: '21-07-2024',
-      time: '18:16',
-      currencyFrom: 'usd',
-      currencyTo: 'rubtsc',
-      amountFrom: 100,
-      amountTo: 1,
-    },
-  ];
+
+interface HistoryItemInterface {
+  publicId: string;
+  status: string;
+  date: string;
+  time: string;
+  currencyFrom: string;
+  currencyTo: string;
+  amountFrom: number;
+  amountTo: number;
+}
+
+function HistoryPage(): JSX.Element {
+  const { exchanges } = useContext(Context);
 
   return (
     <>
       <h1 className=" text-2xl text-slate-400">История операций</h1>
-      <div className={styles.wrapperHistoryPage}>
-        <table>
-          <thead className=" text-black bg-slate-400 rounded-t-lg">
-            <tr className='rounded-t-lg'>
-              <th className={styles.tableHead}>ID</th>
-              <th className={styles.tableHead}>Статус</th>
-              <th className={styles.tableHead}>Дата</th>
-              <th className={styles.tableHead}>Внесено</th>
-              <th className={styles.tableHead}>Выведено</th>
-            </tr>
-          </thead>{' '}
-          <tbody>
-            {history.map((item) => (
-              <tr className="hover:bg-slate-700">
-                <td className={styles.tableCeil}>{item.publicId}</td>
-                <td className={styles.tableCeil}>{item.status}</td>
-
-                <td className={styles.tableCeil}>
-                  <div className="flex flex-col items-center">
-                    {' '}
-                    <div>{item.date}</div>
-                    <div className=" text-slate-500">{item.time}</div>{' '}
-                  </div>
-                </td>
-                <td className={styles.tableCeil}> 
-                  <div className="flex flex-col items-center">
-                    {' '}
-                    <div>{item.currencyFrom}</div>
-                    <div className=" text-slate-500">
-                      {item.amountFrom}
-                    </div>{' '}
-                  </div>
-                </td>
-                <td className={styles.tableCeil}>
-                  <div className="flex flex-col  items-center">
-                    {' '}
-                    <div>{item.currencyTo}</div>
-                    <div className=" text-slate-500">{item.amountTo}</div>{' '}
-                  </div>
-                </td>
+      <br />
+      <div className={styles.filterAndExchanges}>
+        <ExchangeHistoryFilter />
+        <div className={styles.wrapperHistoryPage} >
+          <table style={{marginTop: 0}}>
+            <thead className=" text-black bg-slate-400">
+              <tr>
+                <th>ID</th>
+                <th>Статус</th>
+                <th>Дата</th>
+                <th>Внесено</th>
+                <th>Выведено</th>
               </tr>
-            ))}{' '}
-          </tbody>
-        </table>
+            </thead>{" "}
+            {exchanges.exchanges.map((item) => (
+              <tbody>
+                <tr className="hover:bg-slate-500">
+                  <td className=" text-blue-500">{item.publicId}</td>
+                  <td>{item.status}</td>
+
+                  <td>
+                    <div className="flex flex-col items-center">
+                      {" "}
+                      <div>{item.date}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="flex flex-col items-center">
+                      {" "}
+                      <div>{item.currency_from}</div>
+                      <div className=" text-slate-500">
+                        {item.amount_from}
+                      </div>{" "}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="flex flex-col  items-center">
+                      {" "}
+                      <div>{item.currency_to}</div>
+                      <div className=" text-slate-500">
+                        {item.currency_to}
+                      </div>{" "}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
+          </table>
+        </div>
       </div>
     </>
   );
