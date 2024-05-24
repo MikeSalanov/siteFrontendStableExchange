@@ -84,6 +84,7 @@ export default class Store {
     try {
       const response = await UserCardsService.createWorldCard(payment_method_id)
       console.log(response.data); 
+      await this.getUserCards() // TODO: выпилить, если с бека будет приходить объект с созданной картой
       return response
     } catch (error) {
       console.log(error);

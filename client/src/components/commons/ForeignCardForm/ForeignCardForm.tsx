@@ -45,7 +45,9 @@ const elementClasses = {
   invalid: "invalid",
 };
 
-const ForeignCardForm = () => {
+const ForeignCardForm = ({setFormNewCard}:{
+  setFormNewCard: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -107,7 +109,10 @@ const ForeignCardForm = () => {
 
         store
           .createWorldCard(paymentMethod.id)
-          .then((response) => console.log("Server response", response))
+          .then((response) => {
+            console.log("Server response", response?.data)
+            setFormNewCard(false)
+          })
           .catch((error) => console.error("Error fetching data", error));
       }
     }
@@ -127,9 +132,11 @@ const ForeignCardForm = () => {
   );
 };
 
-const AddCardFormWithStripe = () => (
+const AddCardFormWithStripe = ({setFormNewCard}:{
+  setFormNewCard: React.Dispatch<React.SetStateAction<boolean>>;
+}) => (
   <Elements stripe={stripePromise}>
-    <ForeignCardForm />
+    <ForeignCardForm setFormNewCard={setFormNewCard}/>
   </Elements>
 );
 

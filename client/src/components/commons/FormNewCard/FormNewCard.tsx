@@ -1,4 +1,4 @@
-import { observer } from "mobx-react-lite";
+﻿import { observer } from "mobx-react-lite";
 import CardFormType from "../../../../classes/CardFormType.ts";
 import Store from '../../../store/store.ts';
 import styles from "../FormForAddRuCard/FormForAddRuCard.module.scss";
@@ -28,7 +28,7 @@ const FormNewCard = observer(({
             Russian Card
           </button>
         </div>
-        {store.activeTabOfCardForm === CardFormType.WORLD ? <ForeignCardForm /> : <FormForAddRuCard  setFormNewCard={setFormNewCard}/>}
+        {store.activeTabOfCardForm === CardFormType.WORLD ? <ForeignCardForm setFormNewCard={setFormNewCard}/> : <FormForAddRuCard  setFormNewCard={setFormNewCard}/>}
       </div>
     </div>
     </div>

@@ -31,7 +31,7 @@ store.getUserCards().then(response => {
 });
 }, [])
 
-console.log(store.userCards);
+console.log(store.userCards.slice());
 
 
 
