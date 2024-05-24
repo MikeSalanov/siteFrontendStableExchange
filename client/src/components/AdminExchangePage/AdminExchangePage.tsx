@@ -71,10 +71,17 @@ function AdminExchangePage(): JSX.Element {
   return (
     <>
       <h1 className="mt-20 text-2xl text-slate-300">Обменные операции</h1>
-      <div>
+      <div className={styles.buttonCustom}>
         <Link to="/admin/users">Пользователи</Link>{' '}
-        <div onClick={store.logout}>Выйти</div>{' '}
       </div>
+      <div
+        className={styles.buttonCustom}
+        onClick={() => {
+          store.logout();
+        }}
+      >
+        Выйти
+      </div>{' '}
       <div className={styles.wrapperExchangePage}>
         <table className={styles.tableExchanges}>
           <thead className="text-black bg-slate-400 rounded-lg">
