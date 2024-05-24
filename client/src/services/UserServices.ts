@@ -2,8 +2,9 @@
 import { DeleteUserResponse } from '../models/response/authService/DeleteUserResponse';
 import { AuthResponse } from '../models/response/authService/AuthResponse';
 import { AUTH_API_URL } from '../http';
+import { ChangePasswordUserResponse } from '../models/response/authService/ChangePasswordUserResponse';
 
-const USER_API_URL = 'http://localhost:3000/user-service';
+const USER_API_URL = `${AUTH_API_URL}/user`;
 
 const $user_Res = axios.create({
   withCredentials: true,
@@ -45,8 +46,20 @@ $user_Res.interceptors.response.use(
 );
 
 export default class UserService {
-
   static async delUser(): Promise<AxiosResponse<DeleteUserResponse>> {
-    return $user_Res.delete<DeleteUserResponse>('/user');
+    return $user_Res.delete<DeleteUserResponse>('/');
+  }
+
+  static async changePassword({
+    oldPassword,
+    newPassword,
+  }: {
+    oldPassword: string;
+    newPassword: string;
+  }): Promise<AxiosResponse<ChangePasswordUserResponse>> {
+    return $user_Res.patch<ChangePasswordUserResponse>('/', {
+      newPassword,
+      oldPassword,
+    });
   }
 }

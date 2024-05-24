@@ -21,7 +21,6 @@ function HistoryPage(): JSX.Element {
 
   return (
     <>
-      <Header />
       <h1 className=" text-2xl text-slate-400">История операций</h1>
       <br />
       <div className={styles.filterAndExchanges}>

@@ -17,3 +17,6 @@ td {
 .buttonAccept {
   @apply bg-yellow-green-corp  w-max text-black text-xs  rounded-lg hover:transform hover:scale-110 transition-transform  p-2 active:scale-75;
 }
+.buttonCustom {
+  @apply bg-yellow-green-corp w-max px-4 py-2 rounded-lg hover:transform hover:scale-110 transition-transform text-xl disabled:opacity-75 text-black m-4 hover:cursor-pointer;
+}

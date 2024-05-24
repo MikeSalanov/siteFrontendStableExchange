@@ -1,19 +1,13 @@
-﻿import Footer from '../Footer/Footer';
-import FormExchange from '../FormExchange/FormExchange';
-import Header from '../Header/Header';
+﻿import FormExchange from '../FormExchange/FormExchange';
 import MainDescription from '../MainDescription/MainDescription';
+
 function MainPage(): JSX.Element {
   return (
-    <>
-      <div className=" items-center  h-screen flex-auto flex flex-col justify-between">
-        {' '}
-        <Header />
-        <FormExchange />
-        <MainDescription />
-      </div>
-
-      <Footer />
-    </>
+    <div className="items-center flex-auto flex flex-col justify-center gap-y-40">
+      {' '}
+      <FormExchange />
+      <MainDescription />
+    </div>
   );
 }
 

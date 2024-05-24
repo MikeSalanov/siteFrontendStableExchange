@@ -1,20 +1,18 @@
 ﻿import { useState } from 'react';
 import BankCard from '../BankCard/BankCard';
 import FormNewCard from '../FormNewCard/FormNewCard';
+import AddCardSVG from '../../../../public/add-card.svg';
 
-interface cardIterface {
-  cardNumber: number;
-  cvv: number;
-  month: number;
-  year: number;
-  owner: string;
+interface CardInterface {
+  cardNumber: string;
+  expiry_date: string
 }
 
-interface propsStackCards {
-  cards: cardIterface[];
+interface PropsStackCards {
+  cards: CardInterface[];
 }
 
-function StackCards(props: propsStackCards): JSX.Element {
+function StackCards(props: PropsStackCards): JSX.Element {
   const [activeCard, setActiveCard] = useState<number>(0);
   const [formNewCard, setFormNewCard] = useState<boolean>(false);
   const { cards } = props;
@@ -28,15 +26,12 @@ function StackCards(props: propsStackCards): JSX.Element {
               <div className=" order-3">
                 <BankCard
                   cardNumber={card.cardNumber}
-                  cvv={card.cvv}
-                  month={card.month}
-                  year={card.year}
-                  owner={card.owner}
+                  expiry_date={card.expiry_date}
                 />
               </div>
             ) : (
               <div
-                className=" w-60 h-7   border-solid  border-t rounded-t-xl border-slate-500 bg-gradient-to-r from-red-400 to-blue-800 order-2 hover: cursor-pointer pl-4"
+                className=" w-60 h-7 border-solid border-t rounded-t-xl border-slate-500 bg-gradient-to-r from-red-400 to-blue-800 order-2 hover: cursor-pointer pl-4"
                 id={`${index}`}
                 onClick={() => {
                   setActiveCard(index);
@@ -47,11 +42,11 @@ function StackCards(props: propsStackCards): JSX.Element {
             )}
           </>
         ))}
-        <div className=" w-60 h-7   border-solid border-slate-500  border-t rounded-t-xl bg-gradient-to-r from-red-400 to-blue-800  order-1 flex justify-center ">
+        <div className="w-60 h-7 border-solid border-slate-500 border-t rounded-t-xl bg-gradient-to-r from-red-400 to-blue-800  order-1 flex justify-center">
           {' '}
           <img
             width={15}
-            src="../../../public/add-card.svg"
+            src={AddCardSVG}
             alt=""
             className=" hover:cursor-pointer hover:transform hover:scale-150 transition-transform"
             onClick={() => setFormNewCard(true)}

@@ -1,5 +1,4 @@
-﻿import Header from '../Header/Header';
-import styles from './ProfilePage.module.scss';
+﻿import styles from './ProfilePage.module.scss';
 import FormProfile from '../commons/FormProfile/FormProfile';
 import StackCards from '../commons/StackCards/StackCards';
 
@@ -43,7 +42,6 @@ function ProfilePage(): JSX.Element {
 
   return (
     <>
-      <Header />
       <div className={styles.wrapperProfilePage}>
         <FormProfile />
         <StackCards cards={cards} />

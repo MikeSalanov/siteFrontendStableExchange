@@ -1,8 +1,9 @@
 .form {
-display: flex;
-flex-direction: column;
-gap: 16px;
-align-items: center;
+  margin-top: 12vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
 }
 
 .inputContainer {
@@ -11,6 +12,7 @@ align-items: center;
   gap: 8px;
   width: 100%;
   max-width: 400px;
+  padding: 5px;
 }
 
 .errorText {
@@ -24,4 +26,12 @@ align-items: center;
 
 .btn {
   background-color: aquamarine;
+}
+
+.inputCustom{
+  @apply rounded-xl bg-slate-600  p-6 h-10 text-white
+}
+
+.buttonConfirm{
+  @apply bg-yellow-green-corp  w-max text-black  rounded-lg hover:transform hover:scale-110 transition-transform  p-2 mt-4;
 }

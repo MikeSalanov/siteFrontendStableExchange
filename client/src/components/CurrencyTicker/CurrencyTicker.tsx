@@ -1,9 +1,12 @@
-﻿import { useEffect, useState } from 'react';
+﻿import { useContext, useEffect, useState } from 'react';
 import styles from './CurrencyTicker.module.scss';
 import { Hourglass } from 'react-loader-spinner';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../../main';
 
 function CurrencyTicker(): JSX.Element {
-  const [price, setPrice] = useState<null | number>(null);
+  const { store } = useContext(Context);
+
   const [timer, setTimer] = useState<number>(5);
 
   const colors: string[] = [
@@ -17,13 +20,45 @@ function CurrencyTicker(): JSX.Element {
 
   useEffect(() => {
     const intervalFetch = setInterval(() => {
-      fetch('https://alfabit.org/api/v1/cashe/operations/Tether(USDT)%20TRC20')
+      // fetch('https://alfabit.org/api/v1/cashe/operations/Tether(USDT)%20TRC20')
+      //   .then((res) => {
+      //     setTimer(5);
+      //     return res.json();
+      //   })
+      //   .then((res) => store.setPriceTo(res[0].exchange_rate.toFixed(4)))
+      //   .catch((e) => console.log({ ERROR_GET_CURRENCY: e }));
+      // fetch(
+      //   'https://alfabit.org/api/v1/cashe/operations/%D0%A2%D0%B8%D0%BD%D1%8C%D0%BA%D0%BE%D1%84%D1%84(RUB)'
+      // )
+      //   .then((res) => {
+      //     setTimer(5);
+      //     return res.json();
+      //   })
+      //   .then((res) => store.setPriceFrom(res[20].exchange_rate.toFixed(4)))
+      //   .catch((e) => console.log({ ERROR_GET_CURRENCY: e }));
+
+      fetch(
+        'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=USDT'
+      )
         .then((res) => {
           setTimer(5);
           return res.json();
         })
-        .then((res) => setPrice(res[0].exchange_rate.toFixed(4)))
-        .catch((e) => console.log({ ERROR_GET_CURRENCY: e }));
+        .then((res) => {store.setPriceTo(res.USDT);
+          
+        }
+        );
+        fetch(
+          'https://min-api.cryptocompare.com/data/price?fsym=RUB&tsyms=USDT'
+        )
+          .then((res) => {
+            setTimer(5);
+            return res.json();
+          })
+          .then((res) => {
+            store.setPriceFrom(res.USDT);
+          }
+          );
     }, 6000);
     return () => {
       clearInterval(intervalFetch);
@@ -41,10 +76,11 @@ function CurrencyTicker(): JSX.Element {
 
   return (
     <div className={styles.wrapperCurrencyTicker}>
-      {price ? (
+      {store.priceTo && store.priceFrom ? (
         <div className={styles.timerCurrencyBlock}>
-          <p>Текущий курс: 1 USDT = {price} RUB</p>
-
+          <p>Текущий курс:</p>
+          <p>1 USD = {store.priceTo} USDT</p>
+          <p>{store.priceFrom} USDT = 1 RUB</p>
           <p className={colors[timer]}>0{timer}:00</p>
         </div>
       ) : (
@@ -64,4 +100,4 @@ function CurrencyTicker(): JSX.Element {
   );
 }
 
-export default CurrencyTicker;
+export default observer(CurrencyTicker);

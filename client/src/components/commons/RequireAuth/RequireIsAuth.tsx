@@ -1,6 +1,7 @@
 ﻿import { Navigate } from 'react-router-dom';
 import { Context } from '../../../main';
 import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
 function RequireIsAuth({ children }: { children: JSX.Element }): JSX.Element {
   const { store } = useContext(Context);
@@ -12,4 +13,4 @@ function RequireIsAuth({ children }: { children: JSX.Element }): JSX.Element {
   return children;
 }
 
-export default RequireIsAuth;
+export default observer(RequireIsAuth);

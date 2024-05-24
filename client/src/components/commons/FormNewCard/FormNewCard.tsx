@@ -1,37 +1,35 @@
-﻿import styles from './FormNewCard.module.scss';
+import { observer } from "mobx-react-lite";
+import CardFormType from "../../../../classes/CardFormType.ts";
+import Store from '../../../store/store.ts';
+import styles from "../FormForAddRuCard/FormForAddRuCard.module.scss";
+import FormForAddRuCard from "../FormForAddRuCard/FormForAddRuCard.tsx";
+import ForeignCardForm from "../ForeignCardForm/ForeignCardForm.tsx";
 
-function FormNewCard({
-  
+const store: Store = new Store();
+
+const FormNewCard = observer(({
   setFormNewCard,
 }: {
   setFormNewCard: React.Dispatch<React.SetStateAction<boolean>>;
-}): JSX.Element {
+}): JSX.Element => {
+  
   return (
     <div className={styles.modalWrapper} onClick={() => setFormNewCard(false)}>
-      <div className={styles.modalWindow} onClick={(e) => e.stopPropagation()}>
-        {' '}
-        <div className="flex flex-col gap-2">
-          <label>Номер карты:</label>
-          <input type="text" placeholder="0000 0000 0000 0000" />
-          <label>Имя владельца карты:</label>
-          <input type="text" placeholder="IVAN IVANOV" />
-          <label>Дата окончания действия:</label>
-          <div className="flex">
-            <input className=' w-10' type="text" placeholder="ММ" /> /
-            <input className=' w-10 ml-2' type="text" placeholder="ГГ" />
-          </div>
-          <label>CVV/CVC:</label>
-          <input type="text" placeholder="123" />
-          <div className="flex justify-center">
-            {' '}
-            <button className={styles.buttonNewCard}>
-              Добавить новую карту
-            </button>
-          </div>
+    <div className={styles.modalWindow} onClick={(e) => e.stopPropagation()}>
+      <div className="formOfAddingCard">
+        <div>
+          <button onClick={() => store.setActiveTab(CardFormType.WORLD)} className={styles.btn}>
+            Foreign Card
+          </button>
+          <button onClick={() => store.setActiveTab(CardFormType.RU)} className={styles.btn}>
+            Russian Card
+          </button>
         </div>
+        {store.activeTabOfCardForm === CardFormType.WORLD ? <ForeignCardForm /> : <FormForAddRuCard />}
       </div>
     </div>
+    </div>
   );
-}
+});
 
 export default FormNewCard;

@@ -1,15 +1,11 @@
 import Wallet from "../commons/Wallet/Wallet";
-import Header from "../Header/Header";
-
-
 
 function WalletPage () {
   return (
     <>
-    <Header/>
-    <Wallet/>
+      <Wallet/>
     </>
     );
 }
- 
+
 export default WalletPage;
