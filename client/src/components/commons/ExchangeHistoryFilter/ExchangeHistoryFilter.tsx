@@ -88,10 +88,10 @@ useEffect(() => {
           </div>
           <div className={styles.exchangeID_from_to_filterContainer}>
             <div>
-              <input type="text" placeholder="ID" name="exchangeId" onChange={handleInputChange} />
+              <input type="text" placeholder="ID" name="exchangeId" onChange={handleInputChange} value={filter.publicId}/>
             </div>
-            <CurrencyFromFilter setFilter={setFilter}/>
-            <CurrencyToFilter setFilter={setFilter}/>
+            <CurrencyFromFilter setFilter={setFilter} currencyFrom={filter.currencyFrom}/>
+            <CurrencyToFilter setFilter={setFilter} currencyTo={filter.currencyTo}/>
           </div>
         </div>
         <div className={styles.divClearBtn}>

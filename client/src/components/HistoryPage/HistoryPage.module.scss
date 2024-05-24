@@ -1,6 +1,15 @@
-﻿.wrapperHistoryPage {
+﻿
+
+.filterAndExchanges {
+  margin-inline: 20px
+}
+
+
+.wrapperHistoryPage {
   @apply flex flex-col h-full mx-auto;
 }
+
+
 
 
 table{

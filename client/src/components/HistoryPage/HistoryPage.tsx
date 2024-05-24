@@ -3,6 +3,8 @@ import Header from "../Header/Header";
 import ExchangeHistoryFilter from "../commons/ExchangeHistoryFilter/ExchangeHistoryFilter";
 import styles from "./HistoryPage.module.scss";
 import { Context } from "../../main";
+
+
 interface HistoryItemInterface {
   publicId: string;
   status: string;
@@ -17,45 +19,12 @@ interface HistoryItemInterface {
 function HistoryPage(): JSX.Element {
   const { exchanges } = useContext(Context);
 
-  // const history: HistoryItemInterface[] = [
-  //   {
-  //     publicId: 'efefeerer34',
-  //     status: 'pending',
-  //     date: '21-07-2024',
-  //     time: '18:16',
-  //     currencyFrom: 'usd',
-  //     currencyTo: 'rubtsc',
-  //     amountFrom: 100,
-  //     amountTo: 1,
-  //   },
-  //   {
-  //     publicId: 'efefeerer34',
-  //     status: 'pending',
-  //     date: '21-07-2024',
-  //     time: '18:16',
-  //     currencyFrom: 'usd',
-  //     currencyTo: 'rubtsc',
-  //     amountFrom: 100,
-  //     amountTo: 1,
-  //   },
-  //   {
-  //     publicId: 'efefeerer34',
-  //     status: 'pending',
-  //     date: '21-07-2024',
-  //     time: '18:16',
-  //     currencyFrom: 'usd',
-  //     currencyTo: 'rubtsc',
-  //     amountFrom: 100,
-  //     amountTo: 1,
-  //   },
-  // ];
-
   return (
     <>
       <Header />
       <h1 className=" text-2xl text-slate-400">История операций</h1>
       <br />
-      <div>
+      <div className={styles.filterAndExchanges}>
         <ExchangeHistoryFilter />
         <div className={styles.wrapperHistoryPage} >
           <table style={{marginTop: 0}}>
@@ -78,7 +47,6 @@ function HistoryPage(): JSX.Element {
                     <div className="flex flex-col items-center">
                       {" "}
                       <div>{item.date}</div>
-                      {/* <div className=" text-slate-500">{item.time}</div>{" "} */}
                     </div>
                   </td>
                   <td>
