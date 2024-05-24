@@ -5,7 +5,7 @@ import { BASE_URL, AUTH_API_URL } from '../http';
 
 export const $apiWallet = axios.create({
   withCredentials: true,
-  baseURL: BASE_URL.includes('localhost') ? `${BASE_URL}:4000/wallet` : `${BASE_URL}/wallet`
+  baseURL: BASE_URL.includes('localhost') ? `${BASE_URL}:4000/wallet` : `${BASE_URL}:4000/wallet`
 });
 
 
