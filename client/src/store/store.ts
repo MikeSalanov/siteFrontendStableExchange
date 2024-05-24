@@ -8,6 +8,8 @@ import { RegResponse } from '../models/response/authService/RegResponse.ts';
 import AdminService from '../services/AdminService.ts';
 import UserService from '../services/UserServices.ts';
 import CardFormType from "../../classes/CardFormType.ts";
+import UserCardsService from '../services/UserCardsService.ts';
+import { UserCard } from '../models/response/userCardsService/UserCardsResponse.ts';
 
 export default class Store {
   user = {} as IUser;
@@ -18,7 +20,8 @@ export default class Store {
   priceTo = 0;
   currAmount = 0;
   activeTabOfCardForm = CardFormType.WORLD;
-  userCards = [];
+  userCards: UserCard[] = [];
+  
 
   constructor() {
     makeAutoObservable(this);
@@ -55,9 +58,39 @@ export default class Store {
     this.activeTabOfCardForm = cardFormType ;
   }
   
-  // setUserCards(cards: Array<{card_number: string, expiry_date: string}>) {
-  //   cards.forEach(card => this.userCards.push(card));
-  // }
+  async getUserCards() {
+    try {
+      const response = await UserCardsService.getUserCards()
+      console.log(response.data);
+      this.userCards = response.data
+      console.log(this.userCards.slice());
+      return response
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async createRuCard(card_number: string, expiry_date: string, cvc_cvv: string) {
+    try {
+      const response = await UserCardsService.createRuCard(card_number, expiry_date, cvc_cvv)
+      console.log(response.data); 
+      await this.getUserCards() // TODO: выпилить, если с бека будет приходить объект с созданной картой
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async createWorldCard(payment_method_id: string) {
+    try {
+      const response = await UserCardsService.createWorldCard(payment_method_id)
+      console.log(response.data); 
+      await this.getUserCards() // TODO: выпилить, если с бека будет приходить объект с созданной картой
+      return response
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   async login(email: string, password: string) {
     try {
