@@ -1,6 +1,7 @@
-﻿import { useEffect, useState } from 'react';
+﻿import { useContext, useEffect, useState } from 'react';
 import styles from './FormToExchangePage.module.scss';
 import { RotatingLines } from 'react-loader-spinner';
+import { Context } from '../../../main';
 
 function FormToExchangePage({
   fromCurrency,
@@ -9,10 +10,14 @@ function FormToExchangePage({
   fromCurrency: string | null;
   toCurrency: string | null;
 }): JSX.Element {
-  const [inputMoneyValue, setInputMoneyValue] = useState<number>(0);
-  const [outputMoneyValue, setOutputMoneyValue] = useState<number>(0);
-  const EXCHANGE_RATE: number = 100; // Захардкодил курс для мгновенного перевода при изменении одного из инпутов в дальнейшем скорее всего он будет приходить из бэка
+  const { store } = useContext(Context);
 
+  const [inputMoneyValue, setInputMoneyValue] = useState<number>(
+    store.currAmount
+  );
+  const [outputMoneyValue, setOutputMoneyValue] = useState<number>(
+    Number(((store.currAmount * store.priceTo) / store.priceFrom).toFixed(2))
+  );
   const currenciesOrder: {
     [currencyName: string]: string;
   } = {
@@ -22,9 +27,18 @@ function FormToExchangePage({
     sbrub: 'Sber RUB',
   };
 
-  const [inputCurrencies] = useState<string[]>(['USD $', 'EUR €']); // массив с вводимыми валютами (те, которые переводит пользователь)
+  const currenciesReverseOrder: {
+    [currencyName: string]: string;
+  } = {
+    'USD $': 'usd',
+    'EUR €': 'eur',
+    'Tinkoff RUB': 'tscrub',
+    'Sber RUB': 'sbrub',
+  };
 
-  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']); // массив с выводимыми валютами (те, которые хочет получить пользователь)
+  const [inputCurrencies] = useState<string[]>(['USD $']);
+
+  const [outputCurrencies] = useState<string[]>(['Tinkoff RUB', 'Sber RUB']);
 
   const inputCards: string[] = [
     '1234 5678 91011 1213',
@@ -62,13 +76,22 @@ function FormToExchangePage({
   const [currentBalance, setCurrentBalance] = useState<number>(0);
 
   const inputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInputMoneyValue(Number(e.target.value));
-    setOutputMoneyValue(Number(e.target.value) * EXCHANGE_RATE);
+    setInputMoneyValue(Number(e.target.value.replace(/\D/g, '')));
+    setOutputMoneyValue(
+      Number(
+        (
+          (Number(e.target.value.replace(/\D/g, '')) * store.priceTo) /
+          store.priceFrom
+        ).toFixed(2)
+      )
+    );
   };
 
   const outputMoneyHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setOutputMoneyValue(Number(e.target.value));
-    setInputMoneyValue(Number(e.target.value) / EXCHANGE_RATE);
+    setOutputMoneyValue(Number(e.target.value.replace(/\D/g, '')));
+    setInputMoneyValue(
+      Number(e.target.value.replace(/\D/g, '')) / store.priceTo
+    );
   };
 
   const clickOutsideInput = (e: Event): void => {
@@ -132,36 +155,69 @@ function FormToExchangePage({
     };
   }, []);
 
-  const confirmInputCardHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const firstSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFirstSubmit(true);
     setLoader(true);
-    setCurrentBalance((prev: number) => prev + outputMoneyValue);
-    setTimeout(() => {
-      setLoader(false);
-    }, 5000);
+    setCurrentBalance((prev: number) =>
+      Number((prev + inputMoneyValue * store.priceTo).toFixed(2))
+    );
+
+    const res = await fetch('http://stable-exchange.top/exchanges', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({
+        currency_from: currenciesReverseOrder[currInputCurrency],
+        currency_to: currenciesReverseOrder[currOutputCurrency],
+        amount_from: Number(inputMoneyValue),
+        amount_to: Number(outputMoneyValue*100),
+        card_number_from: currInputCard.replace(/ /g, ''),
+      }),
+    });
+    setLoader(false);
+  };
+
+  const secondSubmitHandler = async () => {
+    setCurrentBalance(0);
+    const res = await fetch('http://stable-exchange.top/exchanges/payout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({
+        card_number_to: currOutputCard.replace(/ /g, ''),
+      }),
+    });
+
+    if (res.ok) {
+      setSecondSubmit(true);
+    }
   };
 
   return (
     <>
       <div className={styles.wrapperForm}>
-        <form onSubmit={confirmInputCardHandler} className={styles.form}>
+        <form onSubmit={firstSubmitHandler} className={styles.form}>
           <div className="flex">
             {' '}
             <div className="flex flex-col">
               {' '}
-              <span className=" bg-white text-xs  text-left p-1">
+              <span className=" bg-input-gray text-xs text-gray-500 text-left p-2 rounded-tl-xl">
                 Вы отправите
               </span>{' '}
               <input
-                className=" bg-white focus:outline-none  pl-2 h-full"
-                type="number"
+                className=" bg-input-gray focus:outline-none text- pl-4 pb-2 h-full rounded-bl-xl"
+                type="text"
                 onChange={inputMoneyHandler}
                 value={inputMoneyValue}
                 disabled={firstSubmit}
               />
             </div>{' '}
-            <div className="flex  items-center bg-white">
+            <div className="flex  items-center bg-input-currency">
               <div className={styles.customSelect}>
                 <div
                   id="input-custom-select"
@@ -169,7 +225,8 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currOption : styles.currOptionDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setInputCurrencyHidden((prev:boolean) => !prev);
+                    !firstSubmit &&
+                      setInputCurrencyHidden((prev: boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -206,18 +263,18 @@ function FormToExchangePage({
             {' '}
             <div className="flex flex-col">
               {' '}
-              <span className=" bg-white text-xs text-left p-1">
+              <span className=" bg-input-gray text-xs text-gray-500 text-left p-2 rounded-tl-xl">
                 Вы получите
               </span>{' '}
               <input
-                className=" bg-white focus:outline-none appearance-none pl-2 h-full"
-                type="number"
+                className=" bg-input-gray focus:outline-none text-white appearance-none pl-4 pb-2 h-full rounded-bl-xl"
+                type="text"
                 onChange={outputMoneyHandler}
                 value={outputMoneyValue}
-                disabled={firstSubmit}
+                disabled={true}
               />
             </div>{' '}
-            <div className="flex  items-center bg-white">
+            <div className="flex  items-center bg-input-currency">
               <div className={styles.customSelect}>
                 <div
                   id="output-custom-select"
@@ -225,7 +282,8 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currOption : styles.currOptionDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setOutputCurrencyHidden((prev:boolean) => !prev);
+                    !firstSubmit &&
+                      setOutputCurrencyHidden((prev: boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -270,7 +328,8 @@ function FormToExchangePage({
                     !firstSubmit ? styles.currCard : styles.currCardDisabled
                   }
                   onClick={() => {
-                    !firstSubmit && setInputCardHidden((prev:boolean) => !prev);
+                    !firstSubmit &&
+                      setInputCardHidden((prev: boolean) => !prev);
                   }}
                 >
                   {' '}
@@ -299,7 +358,6 @@ function FormToExchangePage({
                       );
                     }
                   })}
-                  <p className={styles.customOption}>Добавить новую карту +</p>
                 </div>
               </div>
             </div>
@@ -369,21 +427,12 @@ function FormToExchangePage({
                         );
                       }
                     })}
-                    <p className={styles.customOption}>
-                      Добавить новую карту +
-                    </p>
-                    <p className={styles.customOption}>
-                      Оставить средства в кошелке
-                    </p>
                   </div>
                 </div>
               </div>
               <button
                 type="submit"
-                onClick={() => {
-                  setSecondSubmit(true);
-                  setCurrentBalance((prev:number) => prev - outputMoneyValue);
-                }}
+                onClick={secondSubmitHandler}
                 className={styles.buttonExchange}
                 disabled={secondSubmit}
               >

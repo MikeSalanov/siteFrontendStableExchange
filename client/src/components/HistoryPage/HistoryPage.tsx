@@ -1,5 +1,4 @@
-﻿import Header from '../Header/Header';
-import styles from './HistoryPage.module.scss';
+﻿import styles from './HistoryPage.module.scss';
 function HistoryPage(): JSX.Element {
   interface HistoryItemInterface {
     publicId: string;
@@ -47,40 +46,41 @@ function HistoryPage(): JSX.Element {
 
   return (
     <>
-      <Header />
       <h1 className=" text-2xl text-slate-400">История операций</h1>
       <div className={styles.wrapperHistoryPage}>
         <table>
-          <thead className=" text-black bg-slate-400">
-            <tr>
-              <th>ID</th>
-              <th>Статус</th>
-              <th>Дата</th>
-              <th>Внесено</th>
-              <th>Выведено</th>
+          <thead className=" text-black bg-slate-400 rounded-t-lg">
+            <tr className='rounded-t-lg'>
+              <th className={styles.tableHead}>ID</th>
+              <th className={styles.tableHead}>Статус</th>
+              <th className={styles.tableHead}>Дата</th>
+              <th className={styles.tableHead}>Внесено</th>
+              <th className={styles.tableHead}>Выведено</th>
             </tr>
           </thead>{' '}
-          {history.map((item) => (
-            <tbody>
-              <tr className="hover:bg-slate-500">
-                <td className=" text-blue-500">{item.publicId}</td>
-                <td>{item.status}</td>
+          <tbody>
+            {history.map((item) => (
+              <tr className="hover:bg-slate-700">
+                <td className={styles.tableCeil}>{item.publicId}</td>
+                <td className={styles.tableCeil}>{item.status}</td>
 
-                <td>
+                <td className={styles.tableCeil}>
                   <div className="flex flex-col items-center">
                     {' '}
                     <div>{item.date}</div>
                     <div className=" text-slate-500">{item.time}</div>{' '}
                   </div>
                 </td>
-                <td>
+                <td className={styles.tableCeil}> 
                   <div className="flex flex-col items-center">
                     {' '}
                     <div>{item.currencyFrom}</div>
-                    <div className=" text-slate-500">{item.amountFrom}</div>{' '}
+                    <div className=" text-slate-500">
+                      {item.amountFrom}
+                    </div>{' '}
                   </div>
                 </td>
-                <td>
+                <td className={styles.tableCeil}>
                   <div className="flex flex-col  items-center">
                     {' '}
                     <div>{item.currencyTo}</div>
@@ -88,8 +88,8 @@ function HistoryPage(): JSX.Element {
                   </div>
                 </td>
               </tr>
-            </tbody>
-          ))}
+            ))}{' '}
+          </tbody>
         </table>
       </div>
     </>

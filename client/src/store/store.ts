@@ -6,12 +6,19 @@ import { AuthResponse } from '../models/response/authService/AuthResponse.ts';
 import { AUTH_API_URL } from '../http';
 import { RegResponse } from '../models/response/authService/RegResponse.ts';
 import AdminService from '../services/AdminService.ts';
+import UserService from '../services/UserServices.ts';
+import CardFormType from "../../classes/CardFormType.ts";
 
 export default class Store {
   user = {} as IUser;
-  isAuth = localStorage.getItem('token') !== null;
+  isAuth = false;
   isLoading = false;
-  email = '';
+  email = this.user.email;
+  priceFrom = 0;
+  priceTo = 0;
+  currAmount = 0;
+  activeTabOfCardForm = CardFormType.WORLD;
+  userCards = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -31,6 +38,26 @@ export default class Store {
   setEmail(email: string) {
     this.email = email;
   }
+
+  setPriceFrom(price: number) {
+    this.priceFrom = price;
+  }
+  
+  setPriceTo(price: number) {
+    this.priceTo = price;
+  }
+
+  setCurrAmount(amount: number) {
+    this.currAmount = amount;
+  }
+  
+  setActiveTab(cardFormType: CardFormType) {
+    this.activeTabOfCardForm = cardFormType ;
+  }
+  
+  // setUserCards(cards: Array<{card_number: string, expiry_date: string}>) {
+  //   cards.forEach(card => this.userCards.push(card));
+  // }
 
   async login(email: string, password: string) {
     try {
@@ -85,7 +112,6 @@ export default class Store {
     try {
       localStorage.removeItem('token');
       await AuthService.logout();
-
       this.setAuth(false);
       this.setUser({} as IUser);
     } catch (e) {
@@ -116,6 +142,48 @@ export default class Store {
     try {
       const response = await AdminService.getUsers();
       return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async adminDeleteUser(id: string) {
+    try {
+      const response = await AdminService.delUser(id);
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async deleteUser() {
+    try {
+      const response = await UserService.delUser();
+      console.log(response);
+      if (response.status === 200) {
+        await this.logout();
+        return true;
+      } else {
+        console.log('Не удалось выполнить удаление пользователя');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async changePasswordUser({
+    oldPassword,
+    newPassword,
+  }: {
+    oldPassword: string;
+    newPassword: string;
+  }) {
+    try {
+      const response = await UserService.changePassword({
+        oldPassword,
+        newPassword,
+      });
+      return response;
     } catch (e) {
       console.log(e);
     }

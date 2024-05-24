@@ -1,4 +1,8 @@
-﻿import styles from './AdminExchangePage.module.scss';
+﻿import { Link } from 'react-router-dom';
+import styles from './AdminExchangePage.module.scss';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../../main';
+import { useContext } from 'react';
 function AdminExchangePage(): JSX.Element {
   interface ExchangeInterface {
     publicId: string;
@@ -63,13 +67,24 @@ function AdminExchangePage(): JSX.Element {
       amountTo: 1,
     },
   ];
-
+  const { store } = useContext(Context);
   return (
     <>
       <h1 className="mt-20 text-2xl text-slate-300">Обменные операции</h1>
+      <div className={styles.buttonCustom}>
+        <Link to="/admin/users">Пользователи</Link>{' '}
+      </div>
+      <div
+        className={styles.buttonCustom}
+        onClick={() => {
+          store.logout();
+        }}
+      >
+        Выйти
+      </div>{' '}
       <div className={styles.wrapperExchangePage}>
         <table className={styles.tableExchanges}>
-          <thead className=" text-black bg-slate-400 rounded-lg">
+          <thead className="text-black bg-slate-400 rounded-lg">
             <tr className="rounded-t-lg">
               <th className="rounded-tl-lg">ID</th>
               <th>Статус</th>
@@ -97,7 +112,7 @@ function AdminExchangePage(): JSX.Element {
                   <div className="flex flex-col items-center">
                     {' '}
                     <div>{item.date}</div>
-                    <div className=" text-slate-500">{item.time}</div>{' '}
+                    <div className="text-slate-500">{item.time}</div>{' '}
                   </div>
                 </td>
                 <td>
@@ -125,4 +140,4 @@ function AdminExchangePage(): JSX.Element {
   );
 }
 
-export default AdminExchangePage;
+export default observer(AdminExchangePage);

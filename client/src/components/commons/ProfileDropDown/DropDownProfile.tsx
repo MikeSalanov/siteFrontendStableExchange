@@ -2,6 +2,12 @@
 import { useContext, useEffect, useState } from 'react';
 import DropDownProfileItem from './DropDownProfileItem';
 import { Context } from '../../../main';
+import CircleProfileSVG from '../../../../public/bx-user-circle.svg';
+import UserSVG from '../../../../public/bx-user.svg';
+import TimeSVG from '../../../../public/bx-time.svg';
+import WalletSVG from '../../../../public/bx-wallet.svg';
+import LogOutSVG from '../../../../public/bx-log-out.svg';
+import { observer } from 'mobx-react-lite';
 
 function DropDownProfile(): JSX.Element {
   const { store } = useContext(Context);
@@ -9,20 +15,20 @@ function DropDownProfile(): JSX.Element {
   const options = [
     {
       value: store.isAuth ? store.user.email : 'Имя пользователя',
-      icon: '../../public/bx-user.svg',
+      icon: UserSVG,
       route: '/customer-account/settings',
     },
     {
       value: 'История',
-      icon: '../../public/bx-time.svg',
+      icon: TimeSVG,
       route: '/customer-account/history',
     },
     {
       value: 'Кошелек',
-      icon: '../../public/bx-wallet.svg',
+      icon: WalletSVG,
       route: '/customer-account/wallet',
     },
-    { value: 'Выйти', icon: '../../public/bx-log-out.svg', route: '' },
+    { value: 'Выйти', icon: LogOutSVG, route: '' },
   ];
   const [hiddenDropDown, setHiddenDropDown] = useState<boolean>(true);
 
@@ -38,10 +44,10 @@ function DropDownProfile(): JSX.Element {
       document.removeEventListener('click', clickOutside);
     };
   }, []);
-
+  
   return (
     <>
-      <div className={hiddenDropDown ? styles.dropDown : styles.dropDownClick}>
+      {store.user.email!=='admin@admin'&&<div className={hiddenDropDown ? styles.dropDown : styles.dropDownClick}>
         <div
           className={
             hiddenDropDown ? styles.headerItem : styles.headerItemClick
@@ -52,7 +58,7 @@ function DropDownProfile(): JSX.Element {
             setHiddenDropDown((prev) => !prev);
           }}
         >
-          <img src="../../public/bx-user-circle.svg" alt="bx-user-circle" />
+          <img src={CircleProfileSVG} alt="bx-user-circle"/>
           <p>Профиль</p>{' '}
         </div>
         <div
@@ -65,10 +71,10 @@ function DropDownProfile(): JSX.Element {
               route={option.route}
               onClick={
                 option.value === 'Выйти'
-                  ? (e) => {
-                      e.stopPropagation();
+                  ? () => {
+                      
                       store.logout();
-                      console.log('Выход нажат');
+                      
                       
                     }
                   : undefined
@@ -76,9 +82,10 @@ function DropDownProfile(): JSX.Element {
             />
           ))}
         </div>
-      </div>
+      </div>}
+      
     </>
   );
 }
 
-export default DropDownProfile;
+export default observer(DropDownProfile);
