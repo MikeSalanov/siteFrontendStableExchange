@@ -1,0 +1,22 @@
+﻿.wrapperUsersPage {
+  @apply  flex flex-col h-full mx-auto;
+}
+
+
+.tableUsers{
+  @apply  mt-8 rounded-2xl  bg-zinc-600 border-collapse
+}
+
+th{
+  @apply  text-black text-lg font-normal
+}
+
+
+
+td{
+  @apply  px-16 py-9
+}
+
+.buttonCustom {
+  @apply bg-yellow-green-corp w-max px-4 py-2 rounded-lg hover:transform hover:scale-110 transition-transform text-xl disabled:opacity-75 text-black m-4 hover:cursor-pointer;
+}

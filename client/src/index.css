@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body {
+  height: 100%;
+  width: 100dvw;
+  overflow-x: hidden;
+  background-color: #343443;
+  box-sizing: border-box;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'],
+input[type='number']:hover,
+input[type='number']:focus {
+  appearance: none;
+  -moz-appearance: textfield;
+}

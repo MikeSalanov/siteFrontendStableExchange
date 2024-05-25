@@ -1,0 +1,42 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  }
+  
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 400px;
+    padding: 5px;
+  }
+  
+  .errorText {
+    color: rgb(158, 3, 3);
+  
+  }
+  
+  .label {
+    color:rgb(205 255 0)
+  }
+  
+  .btn {
+    background-color: aquamarine;
+  }
+
+  h1 {
+text-align: center;
+color: white;
+margin-bottom: 25px;
+  }
+
+  .inputCustom{
+    @apply rounded-xl bg-slate-600  p-6 h-10 text-white
+  }
+  
+  .buttonConfirm{
+    @apply bg-yellow-green-corp  w-max text-black  rounded-lg hover:transform hover:scale-110 transition-transform  p-2 mt-4;
+  }

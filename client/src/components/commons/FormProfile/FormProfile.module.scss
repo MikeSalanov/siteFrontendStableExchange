@@ -1,0 +1,9 @@
+﻿.profileFormWrapper {
+  @apply  h-full w-full flex items-center justify-center  m-7 ;
+}
+.buttonChangePassword{
+  @apply bg-yellow-green-corp  w-max text-black  rounded-lg hover:transform hover:scale-110 transition-transform  p-2 mt-4;
+}
+.inputPassword{
+  @apply rounded-xl bg-slate-600  p-6 h-10
+}

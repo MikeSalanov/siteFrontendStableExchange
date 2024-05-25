@@ -1,0 +1,31 @@
+﻿.wrapperForm {
+  @apply bg-black-change-now flex flex-col justify-center items-center mt-14 gap-10;
+}
+
+.form {
+  @apply flex p-5 flex-col gap-5 border border-solid border-gray-500 rounded-lg w-auto;
+}
+
+.buttonExchange {
+  @apply bg-yellow-green-corp w-max px-4 py-2 rounded-lg hover:transform hover:scale-110 transition-transform text-xl;
+}
+
+.customSelect {
+  @apply bg-input-currency h-full w-40 text-white items-center;
+}
+
+.currOption {
+  @apply flex hover:cursor-pointer  items-center gap-3 text-xl justify-between p-2;
+}
+
+.customOptionsHidden {
+  @apply hidden;
+}
+
+.customOptions {
+  @apply flex flex-col absolute  bg-input-currency w-40;
+}
+
+.customOption {
+  @apply hover:cursor-pointer hover:bg-slate-400 text-xl p-2 border-t  border-slate-950;
+}
