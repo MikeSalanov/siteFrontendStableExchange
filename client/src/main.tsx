@@ -8,9 +8,9 @@ import { spy } from 'mobx';import Exchanges from './store/exchanges.ts'
 
 
 interface State {
-    store: Store,
-    wallet: Wallet
-    exchanges: Exchanges
+  store: Store,
+  wallet: Wallet
+  exchanges: Exchanges
 }
 
 const store = new Store()
@@ -20,7 +20,7 @@ const exchanges = new Exchanges()
 export const Context = createContext<State>({
   store,
   wallet,
-    exchanges,
+  exchanges,
 });
 spy((ev) => {
   if (ev.type === 'action') {

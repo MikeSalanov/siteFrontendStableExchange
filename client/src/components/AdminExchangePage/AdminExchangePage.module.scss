@@ -1,4 +1,7 @@
-﻿.wrapperExchangePage {
+﻿.buttonPaid {
+  @apply bg-gray-600 w-max text-white text-xs  rounded-lg hover:transform hover:scale-110 transition-transform  p-2 active:scale-75;
+}
+.wrapperExchangePage {
   @apply flex flex-col h-full mx-auto;
 }
 

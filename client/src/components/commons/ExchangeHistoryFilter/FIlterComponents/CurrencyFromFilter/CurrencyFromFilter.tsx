@@ -2,7 +2,7 @@ import { FilterObj } from "../../ExchangeHistoryFilter";
 
 type CurrencyFromFilterProps = {
   setFilter: React.Dispatch<React.SetStateAction<FilterObj>>;
-  currencyFrom: FilterObj["currencyFrom"]
+  currencyFrom: FilterObj["currencyFrom"] | undefined
 }
 
 
@@ -16,20 +16,19 @@ const handleCurrencyFrom = (event: React.ChangeEvent<HTMLSelectElement>) => {
 
 
 
-  return (  
+  return (
     <div>
-    <select defaultValue="From" onChange={handleCurrencyFrom} value={currencyFrom}>
+    <select defaultValue="From" onChange={handleCurrencyFrom} value={currencyFrom || 'From'}>
       <option disabled hidden>
         From
       </option>
-      <option value="sberRub">Sber rub</option>
-      <option value="tinkRub">Tinkof rub</option>
-      <option value="dol">Dollar</option>
-      <option value="eur">Euro</option>
+      <option value="sbrub">sbrub</option>
+      <option value="tscrub">tscrub</option>
+      <option value="usd">usd</option>
     </select>
   </div>
-    
+  
   );
 }
- 
+
 export default CurrencyFromFilter;

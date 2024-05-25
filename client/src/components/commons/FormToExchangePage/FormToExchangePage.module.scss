@@ -1,4 +1,8 @@
-﻿.wrapperForm {
+﻿#tx-link {
+  color: #ccff00;
+}
+
+.wrapperForm {
   @apply flex flex-col mx-auto sm:w-2/4 w-full;
 }
 

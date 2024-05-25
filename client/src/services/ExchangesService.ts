@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { ExchangesResponse } from '../models/response/exchangesService/ExchangesResponse';
+import { Exchange } from '../models/response/exchangesService/ExchangesResponse';
 import {AuthResponse} from "../models/response/authService/AuthResponse";
+import { EXCHANGES_API_URL } from "../http";
 
 // export const API_URL_EXCHANGES = `http://5.35.80.205:4000/exchanges-service`
 
@@ -8,9 +9,8 @@ import {AuthResponse} from "../models/response/authService/AuthResponse";
 
 export const $apiExchanges = axios.create({
     withCredentials: true,
-    baseURL: import.meta.env.VITE_EXCHANGES_BASE_URL
+    baseURL: EXCHANGES_API_URL
 })
-
 
 $apiExchanges.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
@@ -37,14 +37,14 @@ $apiExchanges.interceptors.response.use((config) => {
 
 export default class ExchangesService {
   static async getExchanges(filters: {
-    dateFrom?: string, 
-    dateTo?: string, 
-    status?: string, 
-    publicId?: string, 
-    currencyFrom?: string, 
-    currencyTo?: string 
+    dateFrom?: string,
+    dateTo?: string,
+    status?: string,
+    publicId?: string,
+    currencyFrom?: string,
+    currencyTo?: string
   }
-  ): Promise<AxiosResponse<ExchangesResponse>> {
-    return $apiExchanges.get<ExchangesResponse>('/exchanges', {params: filters} );
+  ): Promise<AxiosResponse<Array<Exchange>>> {
+    return $apiExchanges.get<Array<Exchange>>('/', {params: filters} );
   }
 }

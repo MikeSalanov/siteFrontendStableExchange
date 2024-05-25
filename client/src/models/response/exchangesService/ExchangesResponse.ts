@@ -1,15 +1,16 @@
 
 export interface Exchange {
-  publicId: string,
+  id: string,
+  public_id: string,
+  user_id: string,
   status: string,
-  date: string,
   currency_from: string,
   currency_to: string,
-  amount_from: number,
-  amount_to: number,
-}
-
-
-export interface ExchangesResponse {
-exchanges: Array<Exchange>
+  amount_from: string,
+  amount_to: string,
+  transaction_usdt_hash: string,
+  card_number_from: string,
+  card_number_to: string | null,
+  createdAt: string,
+  updatedAt: string
 }

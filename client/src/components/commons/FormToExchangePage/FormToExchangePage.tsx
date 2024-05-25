@@ -189,8 +189,8 @@ function FormToExchangePage({
       body: JSON.stringify({
         currency_from: currenciesReverseOrder[currInputCurrency],
         currency_to: currenciesReverseOrder[currOutputCurrency],
-        amount_from: Number(inputMoneyValue),
-        amount_to: Number(outputMoneyValue * 100),
+        amount_from: Number(inputMoneyValue * 100),
+        amount_to: Number(outputMoneyValue),
         card_number_from: currInputCard.replace(/ /g, ''),
       }),
     });
@@ -200,6 +200,7 @@ function FormToExchangePage({
 
   const secondSubmitHandler = async () => {
     setCurrentBalance(0);
+    setLoader(true);
     const res = await fetch(`${EXCHANGES_API_URL}/payout?exchangeId=${exchange?.public_id}`, {
       method: 'POST',
       headers: {
@@ -213,19 +214,24 @@ function FormToExchangePage({
 
     if (res.ok) {
       setSecondSubmit(true);
-      const responseOfGettingStatusOfExchange = await fetch(`${EXCHANGES_API_URL}/status?exchangeId=${exchange?.public_id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({
-          card_number_to: cards[0].replace(/ /g, ''),
-        }),
-      });
-      const bodyOfGettingStatus: { status: string } = await responseOfGettingStatusOfExchange.json();
-      if (exchange) setExchange({ ...exchange, status: bodyOfGettingStatus.status })
+      const responseOfPayoutedExchange: {
+        currency_from: string,
+        currency_to: string,
+        amount_from: number,
+        amount_to: number,
+        user_id: string,
+        public_id: string,
+        status: string,
+        transaction_usdt_hash: string,
+        card_number_from: string,
+        card_number_to: string | null,
+        id: string,
+        createdAt: string,
+        updatedAt: string
+      } = await res.json();
+      setExchange(responseOfPayoutedExchange);
     }
+    setLoader(false);
   };
   
   return (
@@ -348,7 +354,7 @@ function FormToExchangePage({
           </div>
           <div className="flex flex-col items-center">
             <div className=" text-sm mb-4">
-              Выберите карту с которой будут зачислены средства
+              Выберите карту с которой будут списаны средства
             </div>
             <div className="flex  items-center bg-white">
               <div className={styles.customCardsSelect}>
@@ -421,7 +427,7 @@ function FormToExchangePage({
                 Ваш обмен в статусе
               </div>
               <h2 className=" text-xl mb-4">{exchange?.status}</h2>
-              <a href={`https://etherscan.io/tx/${exchange?.transaction_usdt_hash}`} target={"_blank"}>Ссылка на транзакцию</a>
+              <p><a href={`https://etherscan.io/tx/${exchange?.transaction_usdt_hash}`} target={"_blank"} id={'tx-link'}>💸Ссылка на транзакцию🔗</a></p>
               <div className=" text-sm mb-4">
                 Выберите карту на которую будут зачислены средства
               </div>
@@ -479,7 +485,7 @@ function FormToExchangePage({
               {secondSubmit && (
                 <div className="flex flex-col items-center">
                   <img width={50} src="done-round.svg" alt="done-round.svg" />{' '}
-                  <p>Средства успешно зачислены</p>
+                  <p>Ваша заявка успешно зарегистрирована к выплате</p>
                 </div>
               )}
             </div>

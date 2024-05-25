@@ -1,8 +1,9 @@
-﻿import { useContext } from "react";
+﻿import {useContext, useEffect} from "react";
 import Header from "../Header/Header";
 import ExchangeHistoryFilter from "../commons/ExchangeHistoryFilter/ExchangeHistoryFilter";
 import styles from "./HistoryPage.module.scss";
 import { Context } from "../../main";
+import { observer } from "mobx-react-lite";
 
 
 interface HistoryItemInterface {
@@ -19,6 +20,10 @@ interface HistoryItemInterface {
 function HistoryPage(): JSX.Element {
   const { exchanges } = useContext(Context);
 
+  useEffect(() => {
+    exchanges.getExchanges({});
+  }, []);
+  
   return (
     <>
       <h1 className=" text-2xl text-slate-400">История операций</h1>
@@ -39,13 +44,12 @@ function HistoryPage(): JSX.Element {
             {exchanges.exchanges.map((item) => (
               <tbody>
                 <tr className="hover:bg-slate-500">
-                  <td className=" text-blue-500">{item.publicId}</td>
+                  <td className=" text-blue-500">{item.public_id}</td>
                   <td>{item.status}</td>
-
                   <td>
                     <div className="flex flex-col items-center">
                       {" "}
-                      <div>{item.date}</div>
+                      <div>{item.createdAt}</div>
                     </div>
                   </td>
                   <td>
@@ -62,7 +66,7 @@ function HistoryPage(): JSX.Element {
                       {" "}
                       <div>{item.currency_to}</div>
                       <div className=" text-slate-500">
-                        {item.currency_to}
+                        {item.amount_to}
                       </div>{" "}
                     </div>
                   </td>
@@ -76,4 +80,4 @@ function HistoryPage(): JSX.Element {
   );
 }
 
-export default HistoryPage;
+export default observer(HistoryPage);
